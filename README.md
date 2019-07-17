@@ -1,5 +1,5 @@
-# Comp371Project
-Project for Comp371
+# Graphcis Project -> Remaking a game???
+Project -> Comp three seven one
 
 Group:
 1. Steven Zanga
