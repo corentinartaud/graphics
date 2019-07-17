@@ -1,4 +1,4 @@
-# Graphcis Project -> Remaking a game???
+# Graphcis Project
 Project -> Comp three seven one
 
 Group:
