@@ -1,5 +1,4 @@
-# Graphcis Project
-Project -> Comp three seven one
+# Graphics Project
 
 Group:
 1. Steven Zanga
