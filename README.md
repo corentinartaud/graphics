@@ -12,4 +12,4 @@ Group:
 
 
 # Documentation 
-https://docs.google.com/document/d/12jM8nGVBvGTpt1hTIwPdD2K3t-YYogyF0CjtA7uXzVk/
+https://docs.google.com/document/d/12jM8nGVBvGTpt1hTIwPdD2K3t-YYogyF0CjtA7uXzVk/edit?usp=sharing
