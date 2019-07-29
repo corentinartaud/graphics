@@ -5,8 +5,7 @@ Group:
 2. Yashar Dabiran
 3. Corentin Artaud
 4. Michael Yablonovitch
-5. Salman Rahman
-6. Jad Safah
+5. Jad Safah
 
 
 

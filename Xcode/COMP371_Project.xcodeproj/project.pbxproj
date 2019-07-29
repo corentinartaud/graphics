@@ -80,6 +80,7 @@
 		30B901A222EF7CA4005246B4 /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		30B901A322EF7CA4005246B4 /* StaticCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticCamera.h; sourceTree = "<group>"; };
 		30B901A422EF7CA4005246B4 /* World.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = World.h; sourceTree = "<group>"; };
+		30B901B722EF83FC005246B4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +133,7 @@
 				034F0BB31A7010160028E1BA /* Resources */,
 				034F0BB11A700D0F0028E1BA /* Linked Frameworks */,
 				0371ABCC1A6EAF2E00029CF8 /* Products */,
+				30B901B722EF83FC005246B4 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
