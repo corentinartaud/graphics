@@ -79,6 +79,7 @@
 		30B901A422EF7CA4005246B4 /* World.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = World.h; sourceTree = "<group>"; };
 		30B901B722EF83FC005246B4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		A515204C22F9BB0C00040E07 /* Textures */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Textures; path = ../Assets/Textures; sourceTree = "<group>"; };
+		A5E099F022F9BEDB009A45FD /* Box2D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Box2D; path = ../ThirdParty/Box2D; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +103,7 @@
 		034F0BB11A700D0F0028E1BA /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A5E099F022F9BEDB009A45FD /* Box2D */,
 				03CF97D01B56DF9A00F60482 /* libfreeimage.a */,
 				03DA72D122B02FC5009C7A21 /* libGLEW.a */,
 				0333752322AEEB3000887DBC /* libglfw3.a */,
@@ -132,6 +134,7 @@
 				034F0BB11A700D0F0028E1BA /* Linked Frameworks */,
 				0371ABCC1A6EAF2E00029CF8 /* Products */,
 				30B901B722EF83FC005246B4 /* README.md */,
+				A5E099F122F9BF87009A45FD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -227,6 +230,13 @@
 				30B9018F22EF7CA3005246B4 /* ParsingHelper.h */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		A5E099F122F9BF87009A45FD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -417,6 +427,7 @@
 					"../ThirdParty/glfw-3.3/include",
 					"../ThirdParty/glew-2.1.0/include",
 					"../ThirdParty/FreeImage-3170/Source",
+					../ThirdParty/Box2D,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -439,6 +450,7 @@
 					"../ThirdParty/glfw-3.3/include",
 					"../ThirdParty/glew-2.1.0/include",
 					"../ThirdParty/FreeImage-3170/Source",
+					../ThirdParty/Box2D,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
