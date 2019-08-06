@@ -10,13 +10,13 @@
 
 #include <stdio.h>
 
-TextureLoader::TextureLoader()
-: mWidth(0), mHeight(0), mInternalFormat(GL_RGBA8), mImageFormat(GL_BGRA), mWrapS(GL_REPEAT), mWrapT(GL_REPEAT), mFilterMin(GL_LINEAR), mFilterMax(GL_LINEAR) {
+TextureLoader::TextureLoader() : mWidth(0), mHeight(0), mInternalFormat(GL_RGBA8), mImageFormat(GL_BGRA), mWrapS(GL_REPEAT), mWrapT(GL_REPEAT), mFilterMin(GL_LINEAR), mFilterMax(GL_LINEAR) {
+    // Generate the texture with the mID of the texture
     glGenTextures(1, &this->mID);
 }
 
-void TextureLoader::Generate(GLuint width, GLuint height, unsigned char* data)
-{
+void TextureLoader::Generate(GLuint width, GLuint height, unsigned char* data) {
+    // Store width and height of texture
     this->mWidth = width;
     this->mHeight = height;
     // Create Texture
@@ -31,8 +31,8 @@ void TextureLoader::Generate(GLuint width, GLuint height, unsigned char* data)
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void TextureLoader::Bind() const
-{
+// Binding the texture
+void TextureLoader::Bind() const {
     glBindTexture(GL_TEXTURE_2D, this->mID);
 }
 

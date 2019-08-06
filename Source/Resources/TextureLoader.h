@@ -11,8 +11,10 @@
 
 #include <GL/glew.h>
 
-// Texture2D is able to store and configure a texture in OpenGL.
-// It also hosts utility functions for easy management.
+/*
+TextureLoader stores and configures a texture in OpenGL.
+It hosts basic utility functions for easy management of textures.
+*/
 class TextureLoader {
 public:
     // Holds the ID of the texture object, used for all texture operations to reference to this particlar texture
@@ -27,10 +29,13 @@ public:
     GLuint mWrapT; // Wrapping mode on T axis
     GLuint mFilterMin; // Filtering mode if texture pixels < screen pixels
     GLuint mFilterMax; // Filtering mode if texture pixels > screen pixels
+    
     // Constructor (sets default texture modes)
     TextureLoader();
+    
     // Generates texture from image data
     void Generate(GLuint width, GLuint height, unsigned char* data);
+    
     // Binds the texture as the current active GL_TEXTURE_2D texture object
     void Bind() const;
 };

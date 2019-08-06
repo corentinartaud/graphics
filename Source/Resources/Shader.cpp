@@ -6,8 +6,6 @@
 //  Copyright © 2019 Concordia. All rights reserved.
 //
 
-#include <stdio.h>
-
 #include "Shader.h"
 
 #include <iostream>
