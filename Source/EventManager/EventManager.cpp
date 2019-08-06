@@ -76,7 +76,7 @@ void EventManager::Initialize() {
     glfwSetKeyCallback(spWindow, key_callback);
 
     // Black background
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     
     // OpenGL configuration
     glViewport(0, 0, EventManager::GetScreenWidth(), EventManager::GetScreenHeight());

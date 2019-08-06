@@ -61,14 +61,11 @@ void Game::ProcessInput(GLfloat dt) {
         if (this->mKeys[GLFW_KEY_D] || this->mKeys[GLFW_KEY_RIGHT] ) {
             if (player->mPosition.x <= this->mWidth - player->mSize.x)
                 player->mPosition.x += velocity;
-            
         }
         if (this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) {
             // @TODO MUST IMPLEMENT GRAVITY AND ALL THAT SHIT 
-            if (player->mPosition.y <= this->mHeight / 2)
-                player->mPosition.y += velocity;
-            else
-                player->mPosition.y -= velocity;
+            player->mPosition = player->mPosition + player->mVelocity * dt;
+            player->mVelocity = player->mVelocity + player->mGravity * dt;
         }
     }
 }
@@ -77,7 +74,7 @@ void Game::Render() {
     EventManager::BeginFrame();
     if (this->mState == GAME_ACTIVE) {
         // Draw background
-        renderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->mWidth, this->mHeight), 0.0f);
+        renderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->mWidth, this->mHeight), 360.0f);
         // Draw level
         this->Levels[this->Level].Draw(*renderer);
         // Draw player
