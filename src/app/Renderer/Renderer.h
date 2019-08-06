@@ -14,7 +14,7 @@ struct GLFWwindow;
 // Include GLEW - OpenGL Extension Wrangler
 #define GLEW_STATIC 1
 #include <GL/glew.h>
-
+#include <string>
 #include <vector>
 #include <glm/glm.hpp>
 
