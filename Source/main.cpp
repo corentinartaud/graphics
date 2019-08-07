@@ -8,9 +8,14 @@
 
 #include "Game.h"
 #include "EventManager.h"
+#include "GUIMainMenu.h"
+
 
 int main(int argv, char* argc[]) {
     EventManager::Initialize();
+    
+    GUIMainMenu mainMenu;
+    mainMenu.Initiailize();
     
     Game goldenSphere(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
     
