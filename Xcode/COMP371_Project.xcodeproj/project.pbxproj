@@ -87,6 +87,8 @@
 		30A10FAF22FA5FB80022E952 /* GUIElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GUIElement.h; sourceTree = "<group>"; };
 		30A10FB022FA61520022E952 /* GUIElement.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GUIElement.cpp; sourceTree = "<group>"; };
 		30B901B722EF83FC005246B4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		A515204C22F9BB0C00040E07 /* Textures */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Textures; path = ../Assets/Textures; sourceTree = "<group>"; };
+		A5E099F022F9BEDB009A45FD /* Box2D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Box2D; path = ../ThirdParty/Box2D; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,9 +113,10 @@
 		034F0BB11A700D0F0028E1BA /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				308A22CF22EFC604007B1BC9 /* libfreeimage.a */,
-				308A22CD22EFC5F7007B1BC9 /* libglfw3.a */,
-				308A22CB22EFC5E9007B1BC9 /* libGLEW.a */,
+				A5E099F022F9BEDB009A45FD /* Box2D */,
+				03CF97D01B56DF9A00F60482 /* libfreeimage.a */,
+				03DA72D122B02FC5009C7A21 /* libGLEW.a */,
+				0333752322AEEB3000887DBC /* libglfw3.a */,
 				038B791D1A6FF3EB00111E36 /* IOKit.framework */,
 				038B791B1A6FF3D100111E36 /* CoreFoundation.framework */,
 				038B79191A6FF39000111E36 /* CoreVideo.framework */,
@@ -142,6 +145,7 @@
 				034F0BB11A700D0F0028E1BA /* Linked Frameworks */,
 				0371ABCC1A6EAF2E00029CF8 /* Products */,
 				30B901B722EF83FC005246B4 /* README.md */,
+				A5E099F122F9BF87009A45FD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -214,6 +218,13 @@
 				30A10FB022FA61520022E952 /* GUIElement.cpp */,
 			);
 			path = GUI;
+			sourceTree = "<group>";
+		};
+		A5E099F122F9BF87009A45FD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -405,6 +416,7 @@
 					"../ThirdParty/glfw-3.3/include",
 					"../ThirdParty/glew-2.1.0/include",
 					"../ThirdParty/FreeImage-3170/Source",
+					../ThirdParty/Box2D,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -428,6 +440,7 @@
 					"../ThirdParty/glfw-3.3/include",
 					"../ThirdParty/glew-2.1.0/include",
 					"../ThirdParty/FreeImage-3170/Source",
+					../ThirdParty/Box2D,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
