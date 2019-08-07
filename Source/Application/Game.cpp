@@ -28,7 +28,7 @@ Game::~Game() {
 
 void Game::Initialize() {
     // Load shaders
-    ResourceManager::LoadShader("Shaders/texture.vertexshader", "Shaders/texture.fragmentshader", nullptr, "texture");
+    ResourceManager::LoadShader("Shaders/texture.vertexshader", "Shaders/texture.fragmentshader", "texture");
     // Configure shaders
     glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->mWidth), static_cast<GLfloat>(this->mHeight), 0.0f, -1.0f, 1.0f);
     ResourceManager::GetShader("texture").Use().SetInteger("image", 0);
@@ -62,11 +62,12 @@ void Game::ProcessInput(GLfloat dt) {
             if (player->mPosition.x <= this->mWidth - player->mSize.x)
                 player->mPosition.x += velocity;
         }
-        if (this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) {
-            // @TODO MUST IMPLEMENT GRAVITY AND ALL THAT SHIT 
-            player->mPosition = player->mPosition + player->mVelocity * dt;
-            player->mVelocity = player->mVelocity + player->mGravity * dt;
+        if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && player->mVelocity.y == 0) {
+            // @TODO MUST IMPLEMENT GRAVITY AND ALL THAT SHIT
+            player->mVelocity.y = 0.0035f;
         }
+        if (player->mVelocity.y > 0)
+            player->mPosition.y -= 0.00001f;
     }
 }
 
