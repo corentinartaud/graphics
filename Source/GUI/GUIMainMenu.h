@@ -8,6 +8,7 @@
 
 #ifndef GUIGameMenu_h
 #define GUIGameMenu_h
+#include <memory>
 
 class TextureLoader;
 class GUIButton;
