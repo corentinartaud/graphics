@@ -16,7 +16,7 @@ using namespace std;
 
 GUIMainMenu::GUIMainMenu() { }
 
-bool GUIMainMenu::Initiailize() {
+bool GUIMainMenu::Initialize() {
     currentSelection = 0;
     // start game
     std::shared_ptr<GUIButton> startGame(new GUIButton); // selection 0
@@ -35,16 +35,22 @@ bool GUIMainMenu::Initiailize() {
     return true;
 }
 
-void GUIMainMenu::Update(float dt) { }
+void GUIMainMenu::Update(float dt) {
+    
+    
+}
 
-void GUIMainMenu::RenderBackground() { }
+void GUIMainMenu::RenderBackground() {
+    
+    
+}
 
 void GUIMainMenu::select(){
     switch(currentSelection){
         
         case 0: ; // start game
         case 1: ; // continue game
-        case 2: ; // exit game 
+        case 2: ; // exit game
     }
 };
 

@@ -18,7 +18,7 @@ public:
     GUIMainMenu();
     
     // initializes the in-game menu and its all its relevant controls
-    bool Initiailize();
+    bool Initialize();
     // updates the game menu plus all its controls
     void Update(float dt);
     // render the background texture and color

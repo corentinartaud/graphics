@@ -54,6 +54,7 @@ void Game::Initialize() {
 
 void Game::Update(float dt) { }
 
+// process input for every frame during game state
 void Game::ProcessInput(GLfloat dt) {
 
     if (this->mState == GAME_ACTIVE) {
@@ -67,6 +68,7 @@ void Game::ProcessInput(GLfloat dt) {
             if (player->mPosition.x <= this->mWidth - player->mSize.x)
                 player->mPosition.x += velocity;
         }
+        //jumping 
         if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP])) {
 
             if(player->mPosition.y > 300){
