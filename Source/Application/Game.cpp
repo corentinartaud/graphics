@@ -154,7 +154,6 @@ std::string Game::getAnimationTexture(float positionX) {
 		"Textures/Player/walk/Mirrored/w5.png",
 		"Textures/Player/walk/Mirrored/w6.png"
 	};
-
 #define still 0
 #define forward 1
 #define backward 2
@@ -188,22 +187,19 @@ std::string Game::getAnimationTexture(float positionX) {
 #define totalCycleTime 0.5f //in seconds
 	float cycleTime = floatModulo(timeElapsed, totalCycleTime);
 	uint8_t frameNumber = cycleTime / (totalCycleTime / 6);	//calculate frame number from 1-6
-
 	std::string framePath;
-
 	if (mirroredStatus == true){
 		if (direction == 0){
 			framePath = standLeft[frameNumber];
 		}
 		else framePath = walkLeft[frameNumber];
 	}
-	else{
-		if (direction == 0){
+	else {
+		if (direction == 0) {
 			framePath = standRight[frameNumber];
 		}
 		else framePath = walkRight[frameNumber];
 	}
-
 #if defined(PLATFORM_OSX)	
 	return framePath;
 #else 
