@@ -19,37 +19,36 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\Application\Game.cpp" />
-    <ClCompile Include="..\Source\Application\GameLevel.cpp" />
-    <ClCompile Include="..\Source\Application\GameObject.cpp" />
-    <ClCompile Include="..\Source\EventManager\EventManager.cpp" />
-    <ClCompile Include="..\Source\GUI\GUIButton.cpp" />
-    <ClCompile Include="..\Source\GUI\GUIElement.cpp" />
-    <ClCompile Include="..\Source\GUI\GUIMainMenu.cpp" />
-    <ClCompile Include="..\Source\main.cpp" />
-    <ClCompile Include="..\Source\Resources\Renderer.cpp" />
-    <ClCompile Include="..\Source\Resources\ResourceManager.cpp" />
-    <ClCompile Include="..\Source\Resources\Shader.cpp" />
-    <ClCompile Include="..\Source\Resources\TextureLoader.cpp" />
+    <ClCompile Include="..\src\app\Camera\Camera.cpp" />
+    <ClCompile Include="..\src\app\Camera\FirstPersonCamera.cpp" />
+    <ClCompile Include="..\src\app\Camera\StaticCamera.cpp" />
+    <ClCompile Include="..\src\app\Engine\Animation.cpp" />
+    <ClCompile Include="..\src\app\Engine\World.cpp" />
+    <ClCompile Include="..\src\app\EventManager\EventManager.cpp" />
+    <ClCompile Include="..\src\app\Model\CubeModel.cpp" />
+    <ClCompile Include="..\src\app\Model\Model.cpp" />
+    <ClCompile Include="..\src\app\Model\SphereModel.cpp" />
+    <ClCompile Include="..\src\app\Renderer\Renderer.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Source\Application\Game.h" />
-    <ClInclude Include="..\Source\Application\GameLevel.h" />
-    <ClInclude Include="..\Source\Application\GameObject.h" />
-    <ClInclude Include="..\Source\EventManager\EventManager.h" />
-    <ClInclude Include="..\Source\GUI\GUIButton.h" />
-    <ClInclude Include="..\Source\GUI\GUIElement.h" />
-    <ClInclude Include="..\Source\GUI\GUIMainMenu.h" />
-    <ClInclude Include="..\Source\Resources\Renderer.h" />
-    <ClInclude Include="..\Source\Resources\ResourceManager.h" />
-    <ClInclude Include="..\Source\Resources\Shader.h" />
-    <ClInclude Include="..\Source\Resources\TextureLoader.h" />
+    <ClInclude Include="..\src\app\Camera\Camera.h" />
+    <ClInclude Include="..\src\app\Camera\FirstPersonCamera.h" />
+    <ClInclude Include="..\src\app\Camera\StaticCamera.h" />
+    <ClInclude Include="..\src\app\Engine\Animation.h" />
+    <ClInclude Include="..\src\app\Engine\World.h" />
+    <ClInclude Include="..\src\app\EventManager\EventManager.h" />
+    <ClInclude Include="..\src\app\Helper\ParsingHelper.h" />
+    <ClInclude Include="..\src\app\Model\CubeModel.h" />
+    <ClInclude Include="..\src\app\Model\Model.h" />
+    <ClInclude Include="..\src\app\Model\SphereModel.h" />
+    <ClInclude Include="..\src\app\Renderer\Renderer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{277EAE68-9EED-4EFF-BAD3-2A70787A3E8D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Assignment1</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -99,7 +98,7 @@
     <OutDir>$(SolutionDir)/../Bin/</OutDir>
     <IntDir>$(SolutionDir)/../Build/$(Configuration)/</IntDir>
     <TargetName>$(ProjectName)-$(Configuration)</TargetName>
-    <IncludePath>C:\Users\Mike Yabz\Documents\graphics\Assets\Shaders;C:\Users\Mike Yabz\Documents\graphics\Source\Resources;C:\Users\Mike Yabz\Documents\graphics\Source\GUI;C:\Users\Mike Yabz\Documents\graphics\Source\EventManager;C:\Users\Mike Yabz\Documents\graphics\Source\Application;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\mike.y\Documents\graphics\src\app\Renderer;C:\Users\mike.y\Documents\graphics\src\app\Model;C:\Users\mike.y\Documents\graphics\src\app\Helper;C:\Users\mike.y\Documents\graphics\src\app\EventManager;C:\Users\mike.y\Documents\graphics\src\app\Camera;C:\Users\mike.y\Documents\graphics\src\app\Engine;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)-$(Configuration)</TargetName>
@@ -121,13 +120,13 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Mike Yabz\Documents\graphics\ThirdParty\Box2D;../ThirdParty/glew-2.1.0/include;../ThirdParty/FreeImage-3170/Source;../ThirdParty/glfw-3.3/include;../ThirdParty/glm</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\mike.y\Documents\graphics\ThirdParty\Box2D;../ThirdParty/glew-2.1.0/include;../ThirdParty/FreeImage-3170/Source;../ThirdParty/glfw-3.3/include;../ThirdParty/glm</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../ThirdParty/FreeImage-3170/lib/win32;../ThirdParty/glew-2.1.0/lib/win32;../ThirdParty/glfw-3.3/lib/win32/lib-vc2017</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\mike.y\Documents\graphics\ThirdParty;../ThirdParty/FreeImage-3170/lib/win32;../ThirdParty/glew-2.1.0/lib/win32;../ThirdParty/glfw-3.3/lib/win32/lib-vc2017</AdditionalLibraryDirectories>
       <AdditionalDependencies>FreeImage.lib;opengl32.lib;glew32s.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <BuildLog>

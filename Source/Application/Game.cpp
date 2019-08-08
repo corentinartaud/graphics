@@ -26,30 +26,17 @@ Game::~Game() {
     
 }
 
-
 void Game::Initialize() {
-
-
     // Load shaders
-	#if defined(PLATFORM_OSX)	
-	ResourceManager::LoadShader("Shaders/texture.vertexshader", "../Assets/Shaders/texture.fragmentshader", "texture");
-	#else
-	ResourceManager::LoadShader("../Assets/Shaders/texture.vertexshader", "../Assets/Shaders/texture.fragmentshader", "texture");
-	#endif
+    ResourceManager::LoadShader("Shaders/texture.vertexshader", "Shaders/texture.fragmentshader", "texture");
     // Configure shaders
     glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->mWidth), static_cast<GLfloat>(this->mHeight), 0.0f, -1.0f, 1.0f);
     ResourceManager::GetShader("texture").Use().SetInteger("image", 0);
     ResourceManager::GetShader("texture").SetMatrix4("projection", projection);
     // Load textures
-	#if defined(PLATFORM_OSX)	
-	ResourceManager::LoadTexture("Textures/background.jpg", GL_TRUE, "background");
-	ResourceManager::LoadTexture("Textures/Player/stand/s1.png", GL_TRUE, "player");
-	ResourceManager::LoadTexture("Textures/Platform/Grass.png", GL_TRUE, "grass");
-	#else
-	ResourceManager::LoadTexture("../Assets/Textures/background.jpg", GL_TRUE, "background");
-	ResourceManager::LoadTexture("../Assets/Textures/Player/stand/s1.png", GL_TRUE, "player");
-	ResourceManager::LoadTexture("../Assets/Textures/Platform/Grass.png", GL_TRUE, "grass");
-	#endif
+    ResourceManager::LoadTexture("Textures/background.jpg", GL_TRUE, "background");
+    ResourceManager::LoadTexture("Textures/Player/stand/s1.png", GL_TRUE, "player");
+    ResourceManager::LoadTexture("Textures/Platform/Grass.png", GL_TRUE, "grass");
     // Set render-specific controls
     renderer = new Renderer(ResourceManager::GetShader("texture"));
     // Load levels

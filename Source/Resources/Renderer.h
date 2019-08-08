@@ -9,7 +9,6 @@
 #ifndef Renderer_h
 #define Renderer_h
 
-#define GLEW_STATIC 1
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
