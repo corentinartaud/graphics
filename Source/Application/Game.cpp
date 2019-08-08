@@ -122,6 +122,39 @@ float floatModulo(float top, float bottom)
 }
 
 std::string Game::getAnimationTexture(float positionX) {
+	const std::string standRight[6] = {
+		"Textures/Player/stand/s1.png",
+		"Textures/Player/stand/s2.png",
+		"Textures/Player/stand/s3.png",
+		"Textures/Player/stand/s4.png",
+		"Textures/Player/stand/s5.png",
+		"Textures/Player/stand/s6.png"
+	};
+	const std::string walkRight[6] = {
+		"Textures/Player/walk/w1.png",
+		"Textures/Player/walk/w2.png",
+		"Textures/Player/walk/w3.png",
+		"Textures/Player/walk/w4.png",
+		"Textures/Player/walk/w5.png",
+		"Textures/Player/walk/w6.png"
+	};
+	const std::string standLeft[6] = {
+		"Textures/Player/stand/Mirrored/s1.png",
+		"Textures/Player/stand/Mirrored/s2.png",
+		"Textures/Player/stand/Mirrored/s3.png",
+		"Textures/Player/stand/Mirrored/s4.png",
+		"Textures/Player/stand/Mirrored/s5.png",
+		"Textures/Player/stand/Mirrored/s6.png"
+	};
+	const std::string walkLeft[6] = {
+		"Textures/Player/walk/Mirrored/w1.png",
+		"Textures/Player/walk/Mirrored/w2.png",
+		"Textures/Player/walk/Mirrored/w3.png",
+		"Textures/Player/walk/Mirrored/w4.png",
+		"Textures/Player/walk/Mirrored/w5.png",
+		"Textures/Player/walk/Mirrored/w6.png"
+	};
+
 #define still 0
 #define forward 1
 #define backward 2
@@ -154,23 +187,26 @@ std::string Game::getAnimationTexture(float positionX) {
 	//calculate which animation frame to be in
 #define totalCycleTime 0.5f //in seconds
 	float cycleTime = floatModulo(timeElapsed, totalCycleTime);
-	uint8_t frameNumber = cycleTime / (totalCycleTime / 6) + 1;	//calculate frame number from 1-6
-		//Build animation frame location string
-	std::string standOrWalk = "walk/";
-	std::string standOrWalkSingleLetterPrefix = "w";
-	std::string mirrored = "";
-	if (direction == 0) {
-		standOrWalk = "stand/";
-		standOrWalkSingleLetterPrefix = "s";
-	}
-	if (mirroredStatus == true) {
-		mirrored = "Mirrored/";
-	}
-	std::string windowsPrefix = "";
-#if !defined(PLATFORM_OSX)
-	windowsPrefix = "../Assets/";
-#endif
-	std::string location = windowsPrefix + "Textures/Player/" + standOrWalk + mirrored + standOrWalkSingleLetterPrefix + std::to_string(frameNumber) + ".png";
-	return location;
-}
+	uint8_t frameNumber = cycleTime / (totalCycleTime / 6);	//calculate frame number from 1-6
 
+	std::string framePath;
+
+	if (mirroredStatus == true){
+		if (direction == 0){
+			framePath = standLeft[frameNumber];
+		}
+		else framePath = walkLeft[frameNumber];
+	}
+	else{
+		if (direction == 0){
+			framePath = standRight[frameNumber];
+		}
+		else framePath = walkRight[frameNumber];
+	}
+
+#if defined(PLATFORM_OSX)	
+	return framePath;
+#else 
+	return "../Assets/" + framePath;
+#endif
+}
