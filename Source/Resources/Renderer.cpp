@@ -46,13 +46,13 @@ void Renderer::Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size
 void Renderer::configureQuad() {
     GLfloat vertices[] = {
         // Pos      // Tex
-        0.0f, 1.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, 1.0f,
-        1.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 1.0f,
+        1.0f, 0.0f, 0.0f, 1.0f,
+        0.0f, 1.0f, 1.0f, 0.0f,
         
-        1.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f, 1.0f
+        0.0f, 1.0f, 1.0f, 0.0f,
+        1.0f, 0.0f, 0.0f, 1.0f,
+        1.0f, 1.0f, 0.0f, 0.0f
     };
     
     glGenVertexArrays(1, &mVAO);

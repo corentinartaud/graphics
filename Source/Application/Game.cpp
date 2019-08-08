@@ -30,7 +30,7 @@ void Game::Initialize() {
     // Load shaders
     ResourceManager::LoadShader("Shaders/texture.vertexshader", "Shaders/texture.fragmentshader", "texture");
     // Configure shaders
-    glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->mWidth), static_cast<GLfloat>(this->mHeight), 0.0f, -1.0f, 1.0f);
+    glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->mWidth), 0.0f, static_cast<GLfloat>(this->mHeight), -1.0f, 1.0f);
     ResourceManager::GetShader("texture").Use().SetInteger("image", 0);
     ResourceManager::GetShader("texture").SetMatrix4("projection", projection);
     // Load textures
@@ -44,7 +44,7 @@ void Game::Initialize() {
     this->Levels.push_back(one);
     this->Level = 0;
     // Configure game objects
-    glm::vec2 playerPos = glm::vec2(this->mWidth / 2 - PLAYER_SIZE.x / 2, this->mHeight - PLAYER_SIZE.y - 50);
+    glm::vec2 playerPos = glm::vec2(this->mWidth / 2 - PLAYER_SIZE.x / 2, 100);
     player = new GameObject(playerPos, PLAYER_SIZE, ResourceManager::GetTexture("player"));
 }
 

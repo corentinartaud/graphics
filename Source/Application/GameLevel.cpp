@@ -48,12 +48,12 @@ void GameLevel::init(std::vector<std::vector<GLuint>> tileData, GLuint levelWidt
     // Calculate dimensions
     GLuint height = (GLuint) tileData.size();
     GLuint width = (GLuint) tileData[0].size(); // Note we can index vector at [0] since this function is only called if height > 0
-    GLfloat unit_width = levelWidth / static_cast<GLfloat>(width), unit_height = levelHeight / 7;
+    GLfloat unit_width = 100, unit_height = 100;
     // Initialize level tiles based on tileData
     for (GLuint y = 0; y < height; ++y) {
         for (GLuint x = 0; x < width; ++x) {
             // Check block type from level data (2D level array)
-            glm::vec2 pos(unit_width * x, levelHeight / 0.5 - unit_height);
+            glm::vec2 pos(unit_width * x, 0);
             glm::vec2 size(unit_width, unit_height);
             GameObject obj(pos, size, ResourceManager::GetTexture("grass"), glm::vec3(0.8f, 0.8f, 0.7f));
             this->Bricks.push_back(obj);
