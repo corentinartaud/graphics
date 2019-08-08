@@ -35,6 +35,14 @@
 *.DS_STORE
 *.DS_Store
 
+# Xcode
+#
+
+## User settings
+xcuserdata/
+
+## Gcc Patch
+/*.gcno
 
 
 
