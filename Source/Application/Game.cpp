@@ -32,19 +32,34 @@ Game::~Game() {
 
 void Game::Initialize() {
     // Load shaders
-    ResourceManager::LoadShader("Shaders/texture.vertexshader", "Shaders/texture.fragmentshader", "texture");
+#if defined(PLATFORM_OSX)	
+	ResourceManager::LoadShader("Shaders/texture.vertexshader", "../Assets/Shaders/texture.fragmentshader", "texture");
+#else
+	ResourceManager::LoadShader("../Assets/Shaders/texture.vertexshader", "../Assets/Shaders/texture.fragmentshader", "texture");
+#endif
     // Configure shaders
     glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->mWidth), 0.0f, static_cast<GLfloat>(this->mHeight), -1.0f, 1.0f);
     ResourceManager::GetShader("texture").Use().SetInteger("image", 0);
     ResourceManager::GetShader("texture").SetMatrix4("projection", projection);
     // Load textures
-    ResourceManager::LoadTexture("Textures/background.jpg", GL_TRUE, "background");
-    ResourceManager::LoadTexture("Textures/Player/stand/s1.png", GL_TRUE, "player");
-    ResourceManager::LoadTexture("Textures/Platform/Grass.png", GL_TRUE, "grass");
+#if defined(PLATFORM_OSX)	
+	ResourceManager::LoadTexture("Textures/background.jpg", GL_TRUE, "background");
+	ResourceManager::LoadTexture("Textures/Player/stand/s1.png", GL_TRUE, "player");
+	ResourceManager::LoadTexture("Textures/Platform/Grass.png", GL_TRUE, "grass");
+#else
+	ResourceManager::LoadTexture("../Assets/Textures/background.jpg", GL_TRUE, "background");
+	ResourceManager::LoadTexture("../Assets/Textures/Player/stand/s1.png", GL_TRUE, "player");
+	ResourceManager::LoadTexture("../Assets/Textures/Platform/Grass.png", GL_TRUE, "grass");
+#endif
     // Set render-specific controls
-    renderer = new Renderer(ResourceManager::GetShader("texture"));
+	renderer = new Renderer(ResourceManager::GetShader("texture"));
     // Load levels
-    GameLevel one; one.Load("levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+	GameLevel one;
+#if defined(PLATFORM_OSX)	
+	one.Load("levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+#else
+	one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+#endif
     this->Levels.push_back(one);
     this->Level = 0;
     // Configure game objects
@@ -93,7 +108,69 @@ void Game::Render() {
         // Draw level
         this->Levels[this->Level].Draw(*renderer);
         // Draw player
+		ResourceManager::LoadTexture(getAnimationTexture(player->mPosition.x).c_str(), GL_TRUE, "player");	//update texture
+		player->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
         player->Draw(*renderer);
     }
     EventManager::EndFrame();
 }
+
+float floatModulo(float top, float bottom)
+{
+	uint8_t division = top / bottom;
+	return top - (bottom * (float)division);
+}
+
+std::string Game::getAnimationTexture(float positionX) {
+#define still 0
+#define forward 1
+#define backward 2
+	static uint8_t pastDirection = 0;	//stores past direction of movement, everytime the movement direction changes, restart the animation timer
+	static float pastPositionX = 0;	//stores past position, knowign past position and new position give direction, basically velocity beign positive or negative
+	static bool mirroredStatus = false;	//stores whether player texture should be mirrored
+	uint8_t direction = 0;	//direction of movement
+		//checking current movement direction
+	if (positionX > pastPositionX) {
+		direction = forward;
+		mirroredStatus = true;
+	}
+	else if (positionX < pastPositionX) {
+		direction = backward;
+		mirroredStatus = false;
+	}
+	else {
+		direction = still;
+	}
+	pastPositionX = positionX;
+	//calculating time since animation began
+	static float timeElapsed = 0;
+	if (pastDirection != direction) {
+		timeElapsed = 0;
+	}
+	else {
+		timeElapsed += EventManager::GetFrameTime();
+	}
+	pastDirection = direction;
+	//calculate which animation frame to be in
+#define totalCycleTime 0.5f //in seconds
+	float cycleTime = floatModulo(timeElapsed, totalCycleTime);
+	uint8_t frameNumber = cycleTime / (totalCycleTime / 6) + 1;	//calculate frame number from 1-6
+		//Build animation frame location string
+	std::string standOrWalk = "walk/";
+	std::string standOrWalkSingleLetterPrefix = "w";
+	std::string mirrored = "";
+	if (direction == 0) {
+		standOrWalk = "stand/";
+		standOrWalkSingleLetterPrefix = "s";
+	}
+	if (mirroredStatus == true) {
+		mirrored = "Mirrored/";
+	}
+	std::string windowsPrefix = "";
+#if !defined(PLATFORM_OSX)ad
+	windowsPrefix = "../Assets/";
+#endif
+	std::string location = windowsPrefix + "Textures/Player/" + standOrWalk + mirrored + standOrWalkSingleLetterPrefix + std::to_string(frameNumber) + ".png";
+	return location;
+}
+

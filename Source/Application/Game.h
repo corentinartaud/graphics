@@ -39,6 +39,7 @@ public:
     Game(GLuint width, GLuint height);
     ~Game();
     
+	std::string getAnimationTexture(float positionX);
     void Initialize();
     // Game Loop
     void ProcessInput(GLfloat dt);

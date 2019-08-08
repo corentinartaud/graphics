@@ -9,6 +9,10 @@
 #ifndef GUIGameMenu_h
 #define GUIGameMenu_h
 
+#if !defined(PLATFORM_OSX)
+#include <memory>
+#endif
+
 class TextureLoader;
 class GUIButton;
 
