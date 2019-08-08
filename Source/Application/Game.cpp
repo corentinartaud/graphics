@@ -33,7 +33,7 @@ Game::~Game() {
 void Game::Initialize() {
     // Load shaders
 #if defined(PLATFORM_OSX)	
-	ResourceManager::LoadShader("Shaders/texture.vertexshader", "../Assets/Shaders/texture.fragmentshader", "texture");
+	ResourceManager::LoadShader("Shaders/texture.vertexshader", "Shaders/texture.fragmentshader", "texture");
 #else
 	ResourceManager::LoadShader("../Assets/Shaders/texture.vertexshader", "../Assets/Shaders/texture.fragmentshader", "texture");
 #endif
@@ -167,7 +167,7 @@ std::string Game::getAnimationTexture(float positionX) {
 		mirrored = "Mirrored/";
 	}
 	std::string windowsPrefix = "";
-#if !defined(PLATFORM_OSX)ad
+#if !defined(PLATFORM_OSX)
 	windowsPrefix = "../Assets/";
 #endif
 	std::string location = windowsPrefix + "Textures/Player/" + standOrWalk + mirrored + standOrWalkSingleLetterPrefix + std::to_string(frameNumber) + ".png";
