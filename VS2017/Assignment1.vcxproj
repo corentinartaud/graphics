@@ -52,7 +52,7 @@
     <ProjectGuid>{277EAE68-9EED-4EFF-BAD3-2A70787A3E8D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Assignment1</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -102,7 +102,7 @@
     <OutDir>$(SolutionDir)/../Bin/</OutDir>
     <IntDir>$(SolutionDir)/../Build/$(Configuration)/</IntDir>
     <TargetName>$(ProjectName)-$(Configuration)</TargetName>
-    <IncludePath>C:\Users\Mike Yabz\Documents\graphics\Assets\Shaders;C:\Users\Mike Yabz\Documents\graphics\Source\Resources;C:\Users\Mike Yabz\Documents\graphics\Source\GUI;C:\Users\Mike Yabz\Documents\graphics\Source\EventManager;C:\Users\Mike Yabz\Documents\graphics\Source\Application;$(IncludePath)</IncludePath>
+    <IncludePath>..\Assets\Shaders;..\Source\Resources;..\Source\GUI;..\Source\EventManager;..\Source\Application;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)-$(Configuration)</TargetName>
