@@ -71,15 +71,15 @@ void Game::ProcessInput(GLfloat dt) {
         //jumping 
         if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP])) {
 
-            if(player->mPosition.y > 300){
+            if(player->mPosition.y < 300){
                 player->mVelocity.y = 675.0f;
-                player->mPosition.y -= player->mVelocity.y * dt;
+                player->mPosition.y += player->mVelocity.y * dt;
                 std::cout << "UP: " << player->mPosition.y << std::endl;
             }
         }
         else {
-            if(player->mPosition.y < 616.0){
-                player->mPosition.y += player->mVelocity.y * dt;
+            if(player->mPosition.y > 100.0){
+                player->mPosition.y -= player->mVelocity.y * dt;
             }
         }
     }
