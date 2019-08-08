@@ -14,20 +14,24 @@ class GUIButton;
 
 class GUIMainMenu {
 public:
+    int currentSelection;
     GUIMainMenu();
     
     // initializes the in-game menu and its all its relevant controls
-    bool Initiailize();
+    bool Initialize();
     // updates the game menu plus all its controls
     void Update(float dt);
     // render the background texture and color
     void RenderBackground();
     
-    void ButtonPressed(GUIButton button);
+    void changeMenuState();
+    void selectionUp();
+    void selectionDown();
+    void select();
     
 private:
     // texture used for rendering the background
-    TextureLoader* mBackgroundTexture;
+    TextureLoader* mBackgroundTexture; 
     
 };
 

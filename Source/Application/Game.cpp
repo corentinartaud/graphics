@@ -11,6 +11,10 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 #include "GameObject.h"
+#include <string>
+#include <iostream>
+
+using namespace std;
 
 Game* Game::instance;
 
@@ -50,7 +54,9 @@ void Game::Initialize() {
 
 void Game::Update(float dt) { }
 
+// process input for every frame during game state
 void Game::ProcessInput(GLfloat dt) {
+
     if (this->mState == GAME_ACTIVE) {
         GLfloat velocity = PLAYER_VELOCITY * dt;
         // Move player
@@ -62,12 +68,20 @@ void Game::ProcessInput(GLfloat dt) {
             if (player->mPosition.x <= this->mWidth - player->mSize.x)
                 player->mPosition.x += velocity;
         }
-        if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && player->mVelocity.y == 0) {
-            // @TODO MUST IMPLEMENT GRAVITY AND ALL THAT SHIT
-            player->mVelocity.y = 0.0035f;
+        //jumping 
+        if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP])) {
+
+            if(player->mPosition.y > 300){
+                player->mVelocity.y = 675.0f;
+                player->mPosition.y -= player->mVelocity.y * dt;
+                std::cout << "UP: " << player->mPosition.y << std::endl;
+            }
         }
-        if (player->mVelocity.y > 0)
-            player->mPosition.y -= 0.00001f;
+        else {
+            if(player->mPosition.y < 616.0){
+                player->mPosition.y += player->mVelocity.y * dt;
+            }
+        }
     }
 }
 
