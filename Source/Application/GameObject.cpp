@@ -15,6 +15,6 @@ GameObject::GameObject(glm::vec2 pos, glm::vec2 size, TextureLoader texture, glm
 : mPosition(pos), mSize(size), mVelocity(velocity), mColor(color), mRotation(180.0f), mTexture(texture) { }
 
 void GameObject::Draw(Renderer &renderer) {
-    renderer.Render(this->mTexture, this->mPosition, this->mSize, this->mRotation, this->mColor);
+    renderer.Render(this->mTexture, this->mPosition, this->mSize, this->mRotation, this->mColor, this->mTextureScaling);
 }
 
