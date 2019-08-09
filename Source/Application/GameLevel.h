@@ -33,9 +33,6 @@ public:
     void Draw(Renderer &renderer);
     // Check if the level is completed (all non-solid tiles are destroyed)
     GLboolean IsCompleted();
-private:
-    // Initialize level from tile data
-//    void init(std::vector<std::vector<GLuint>> tileData, GLuint levelWidth, GLuint levelHeight);
 };
 
 #endif /* GameLevel_h */

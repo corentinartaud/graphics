@@ -49,9 +49,6 @@ void Game::Initialize() {
     player = one.Load("levels/one.lvl", this->mWidth, this->mHeight * 0.5);
     this->Levels.push_back(one);
     this->Level = 0;
-//    // Configure game objects
-//    glm::vec2 playerPos = glm::vec2(this->mWidth / 2 - PLAYER_SIZE.x / 2, 100);
-//    player = new GameObject(playerPos, PLAYER_SIZE, ResourceManager::GetTexture("player"));
 }
 
 void Game::Update(float dt) { }
