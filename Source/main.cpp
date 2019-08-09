@@ -18,16 +18,16 @@ using namespace std;
 int main(int argv, char* argc[]) {
     EventManager::Initialize();
     
+    // following 3 lines can be put in the game menu cpp. we can manage it there, same with the do-while. 
+    Game goldenSphere(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
+    goldenSphere.Initialize();
+    goldenSphere.mState = GAME_ACTIVE;
+    
     GUIMainMenu mainMenu;
     if(mainMenu.Initialize()){
         
         std::cout << "works" << std::endl;
     }
-    
-    // following 3 lines can be put in the game menu cpp. we can manage it there, same with the do-while. 
-    Game goldenSphere(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
-    goldenSphere.Initialize();
-    goldenSphere.mState = GAME_ACTIVE;
     
     do {
         EventManager::Update();

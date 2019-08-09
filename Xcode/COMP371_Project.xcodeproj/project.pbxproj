@@ -13,6 +13,10 @@
 		038B791E1A6FF3EB00111E36 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 038B791D1A6FF3EB00111E36 /* IOKit.framework */; };
 		03FE4ED41B2FA1210020F06F /* Scenes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03FE4ED21B2FA1010020F06F /* Scenes */; };
 		03FE4ED51B2FA1210020F06F /* Shaders in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03FE4ED31B2FA1010020F06F /* Shaders */; };
+		307697A122FDDAAD00355205 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307697A022FDDAAD00355205 /* CoreAudio.framework */; };
+		307697A322FDDC2B00355205 /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307697A222FDDC2B00355205 /* AudioEngine.cpp */; };
+		307697A522FDDC6300355205 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307697A422FDDC6300355205 /* CoreServices.framework */; };
+		307697A722FDDC6B00355205 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307697A622FDDC6B00355205 /* OpenAL.framework */; };
 		308A22C922EFC5D3007B1BC9 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 038B791B1A6FF3D100111E36 /* CoreFoundation.framework */; };
 		308A22CA22EFC5DB007B1BC9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 038B79151A6FF2E900111E36 /* Cocoa.framework */; };
 		308A22CC22EFC5E9007B1BC9 /* libGLEW.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 308A22CB22EFC5E9007B1BC9 /* libGLEW.a */; };
@@ -60,6 +64,11 @@
 		038B791D1A6FF3EB00111E36 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		03FE4ED21B2FA1010020F06F /* Scenes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scenes; path = ../Assets/Scenes; sourceTree = "<group>"; };
 		03FE4ED31B2FA1010020F06F /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = ../Assets/Shaders; sourceTree = "<group>"; };
+		3076979922FDC63700355205 /* AudioEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioEngine.h; sourceTree = "<group>"; };
+		307697A022FDDAAD00355205 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		307697A222FDDC2B00355205 /* AudioEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AudioEngine.cpp; sourceTree = "<group>"; };
+		307697A422FDDC6300355205 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		307697A622FDDC6B00355205 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		308A22CB22EFC5E9007B1BC9 /* libGLEW.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGLEW.a; path = "../ThirdParty/glew-2.1.0/lib/osx/libGLEW.a"; sourceTree = "<group>"; };
 		308A22CD22EFC5F7007B1BC9 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../ThirdParty/glfw-3.3/lib/osx/libglfw3.a"; sourceTree = "<group>"; };
 		308A22CF22EFC604007B1BC9 /* libfreeimage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreeimage.a; path = "../ThirdParty/FreeImage-3170/lib/osx/libfreeimage.a"; sourceTree = "<group>"; };
@@ -98,6 +107,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				307697A722FDDC6B00355205 /* OpenAL.framework in Frameworks */,
+				307697A522FDDC6300355205 /* CoreServices.framework in Frameworks */,
 				308A22D022EFC604007B1BC9 /* libfreeimage.a in Frameworks */,
 				308A22CE22EFC5F7007B1BC9 /* libglfw3.a in Frameworks */,
 				308A22CC22EFC5E9007B1BC9 /* libGLEW.a in Frameworks */,
@@ -105,6 +116,7 @@
 				308A22C922EFC5D3007B1BC9 /* CoreFoundation.framework in Frameworks */,
 				038B791E1A6FF3EB00111E36 /* IOKit.framework in Frameworks */,
 				038B791A1A6FF39000111E36 /* CoreVideo.framework in Frameworks */,
+				307697A122FDDAAD00355205 /* CoreAudio.framework in Frameworks */,
 				038B78851A6EBBCE00111E36 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -160,6 +172,7 @@
 		038B785E1A6EB3F500111E36 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				3076979822FDC62900355205 /* Audio */,
 				30A10FA822FA56650022E952 /* GUI */,
 				30A10F8522FA1E440022E952 /* Application */,
 				30A10F8622FA1E4A0022E952 /* EventManager */,
@@ -168,6 +181,15 @@
 			);
 			name = Source;
 			path = ../Source;
+			sourceTree = "<group>";
+		};
+		3076979822FDC62900355205 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				3076979922FDC63700355205 /* AudioEngine.h */,
+				307697A222FDDC2B00355205 /* AudioEngine.cpp */,
+			);
+			path = Audio;
 			sourceTree = "<group>";
 		};
 		30A10F8522FA1E440022E952 /* Application */ = {
@@ -235,6 +257,9 @@
 		A5E099F122F9BF87009A45FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				307697A622FDDC6B00355205 /* OpenAL.framework */,
+				307697A422FDDC6300355205 /* CoreServices.framework */,
+				307697A022FDDAAD00355205 /* CoreAudio.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -308,6 +333,7 @@
 				30A10F9D22FA1EA70022E952 /* Game.cpp in Sources */,
 				30A10F9022FA1E920022E952 /* Renderer.cpp in Sources */,
 				30A10F9322FA1E920022E952 /* ResourceManager.cpp in Sources */,
+				307697A322FDDC2B00355205 /* AudioEngine.cpp in Sources */,
 				30A10F9E22FA1EA70022E952 /* GameObject.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -431,6 +457,7 @@
 					"../ThirdParty/FreeImage-3170/Source",
 					../ThirdParty/Box2D,
 				);
+				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"../ThirdParty/glew-2.1.0/lib/osx",
@@ -438,6 +465,7 @@
 					"../ThirdParty/FreeImage-3170/lib/osx",
 					"$(PROJECT_DIR)",
 				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -455,6 +483,7 @@
 					"../ThirdParty/FreeImage-3170/Source",
 					../ThirdParty/Box2D,
 				);
+				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"../ThirdParty/glew-2.1.0/lib/osx",
@@ -462,6 +491,7 @@
 					"../ThirdParty/FreeImage-3170/lib/osx",
 					"$(PROJECT_DIR)",
 				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

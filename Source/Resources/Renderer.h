@@ -34,6 +34,7 @@ private:
     
     unsigned int mVAO;
     unsigned int mVBO;
+    unsigned int mEBO;
 };
 
 #endif /* Renderer_h */
