@@ -132,7 +132,7 @@ void Game::Render() {
         //text->RenderText("Press ENTER to start", 250.0f, EventManager::GetScreenWidth() / 2, 1.0f);
         //text->RenderText("Press W or S to select level", 245.0f, EventManager::GetScreenHeight() / 2 + 20.0f, 0.75f);
         for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it) {
-            it->second->RenderBackground(renderer, text);
+            it->second->Render(renderer, text);
         }
     }
     EventManager::EndFrame();

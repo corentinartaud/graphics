@@ -34,9 +34,9 @@ public:
     // initializes the GUI container;
     virtual bool Initialize() = 0;
     
-    //virtual void Update(float dt) = 0;
+    virtual void Update(float dt) = 0;
     
-    //virtual void Render(Renderer *renderer, TextRenderer *textRenderer);
+    virtual void Render(Renderer *renderer, TextRenderer *textRenderer);
     
     virtual void RenderBackground(Renderer *renderer, TextRenderer *textRenderer);
     

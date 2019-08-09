@@ -13,6 +13,10 @@
 
 #include <string>
 
+class Renderer;
+class TextRenderer;
+class Shader;
+
 /*
  Provides the base of any GUI Element. Defines the relevant states shared by
  each GUI element and defines the template functions. GUI element should
@@ -40,7 +44,7 @@ public:
     virtual void CalculateModel() = 0;
     
     // renders the GUIElement, should be overriden in subclasses (TO BE UPDATED)
-    virtual void Render() = 0;
+    virtual void Render(Renderer *renderer, TextRenderer *text, Shader shader) = 0;
     
     // @TODO Should take care of fired events when element is pressed
     // TBD

@@ -44,6 +44,12 @@ void GUIContainer::OnActivate() { }
 
 void GUIContainer::OnDeactivate() { }
 
+void GUIContainer::Render(Renderer *renderer, TextRenderer *textRenderer) {
+    RenderBackground(renderer, textRenderer);
+    Shader shader = ResourceManager::LoadShader("Shaders/gui.vertexshader", "Shaders/gui.fragmentshader", "gui");
+    for(auto it = mElements.begin(); it != mElements.end(); ++it)
+        (*it)->Render(renderer, textRenderer, shader);
+}
 
 void GUIContainer::RenderBackground(Renderer *renderer, TextRenderer *textRenderer) {
     // by default there is no background, initialize in derived classes if necessary
