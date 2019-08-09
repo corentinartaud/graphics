@@ -11,6 +11,8 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 #include "GameObject.h"
+#include "TextRenderer.h"
+#include "GUIMainMenu.h"
 #include <string>
 #include <iostream>
 
@@ -21,13 +23,19 @@ Game* Game::instance;
 Renderer *renderer;
 GameObject *player;
 
+TextRenderer *text;
+
+GUIMainMenu mainMenu;
+
 Game::Game(GLuint width, GLuint height)
 : mState(GAME_ACTIVE), mKeys(), mWidth(width), mHeight(height) {
     instance = this;
 }
 
 Game::~Game() {
-    
+    delete renderer;
+    delete player;
+    delete text;
 }
 
 void Game::Initialize() {
@@ -55,6 +63,13 @@ void Game::Initialize() {
 #endif
     // Set render-specific controls
     renderer = new Renderer(ResourceManager::GetShader("texture"));
+    // Set text
+    text = new TextRenderer(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
+#if defined(PLATFORM_OSX)
+    text->Load("Fonts/OCRAEXT.TTF", 24);
+#else
+    text->Load("../Assets/Fonts/OCRAEXT.TTF", 24);
+#endif
     // Load levels
     GameLevel one;
 #if defined(PLATFORM_OSX)
@@ -64,6 +79,11 @@ void Game::Initialize() {
 #endif
     this->Levels.push_back(one);
     this->Level = 0;
+    
+    if(mainMenu.Initialize()){
+        
+        std::cout << "works" << std::endl;
+    }
 }
 
 void Game::Update(float dt) { }
@@ -103,13 +123,20 @@ void Game::Render() {
     EventManager::BeginFrame();
     if (this->mState == GAME_ACTIVE) {
         // Draw background
-        renderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->mWidth, this->mHeight), 360.0f);
+        renderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->mWidth, this->mHeight), 0.0f);
         // Draw level
         this->Levels[this->Level].Draw(*renderer);
         // Draw player
 		ResourceManager::LoadTexture(getAnimationTexture(player->mPosition.x).c_str(), GL_TRUE, "player");	//update texture
 		player->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
         player->Draw(*renderer);
+    }
+    else if (this->mState == GAME_MENU) {
+        //text->RenderText("Press ENTER to start", 250.0f, EventManager::GetScreenWidth() / 2, 1.0f);
+        //text->RenderText("Press W or S to select level", 245.0f, EventManager::GetScreenHeight() / 2 + 20.0f, 0.75f);
+        for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
+            it->second->RenderBackground(renderer, text);
+        
     }
     EventManager::EndFrame();
 }

@@ -10,11 +10,13 @@
 #define Game_h
 
 #include <array>
-
+#include <map>
+#include <memory>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 #include "GameLevel.h"
+#include "GUIContainer.h"
 
 enum GameState {
     GAME_ACTIVE,
@@ -51,6 +53,7 @@ public:
 
 private:
     static Game* instance;
+    std::map<std::string, std::shared_ptr<GUIContainer>> mGUIContainers; // contains all the game's GUI items
 };
 
 #endif /* Game_h */

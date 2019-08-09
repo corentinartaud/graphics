@@ -12,10 +12,13 @@
 	#include <memory>
 #endif
 
+#include "GUIContainer.h"
+
 class TextureLoader;
+class TextRenderer;
 class GUIButton;
 
-class GUIMainMenu {
+class GUIMainMenu : public GUIContainer {
 public:
     int currentSelection;
     GUIMainMenu();
@@ -25,7 +28,7 @@ public:
     // updates the game menu plus all its controls
     void Update(float dt);
     // render the background texture and color
-    void RenderBackground();
+    void RenderBackground(Renderer *renderer, TextRenderer *text);
     
     void changeMenuState();
     void selectionUp();
