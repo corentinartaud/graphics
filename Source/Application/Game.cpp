@@ -41,15 +41,17 @@ void Game::Initialize() {
     ResourceManager::LoadTexture("Textures/background.jpg", GL_TRUE, "background");
     ResourceManager::LoadTexture("Textures/Player/stand/s1.png", GL_TRUE, "player");
     ResourceManager::LoadTexture("Textures/Platform/Grass.png", GL_TRUE, "grass");
+    ResourceManager::LoadTexture("Textures/Platform/Ground.png", GL_TRUE, "ground");
     // Set render-specific controls
     renderer = new Renderer(ResourceManager::GetShader("texture"));
     // Load levels
-    GameLevel one; one.Load("levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+    GameLevel one;
+    player = one.Load("levels/one.lvl", this->mWidth, this->mHeight * 0.5);
     this->Levels.push_back(one);
     this->Level = 0;
-    // Configure game objects
-    glm::vec2 playerPos = glm::vec2(this->mWidth / 2 - PLAYER_SIZE.x / 2, 100);
-    player = new GameObject(playerPos, PLAYER_SIZE, ResourceManager::GetTexture("player"));
+//    // Configure game objects
+//    glm::vec2 playerPos = glm::vec2(this->mWidth / 2 - PLAYER_SIZE.x / 2, 100);
+//    player = new GameObject(playerPos, PLAYER_SIZE, ResourceManager::GetTexture("player"));
 }
 
 void Game::Update(float dt) { }
