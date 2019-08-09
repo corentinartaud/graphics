@@ -44,6 +44,8 @@ public:
     void ProcessInput(GLfloat dt);
     void Update(GLfloat dt);
     void Render();
+	float floatModulo(float top, float bottom);
+	std::string getAnimationTexture(float positionX);
     
     static Game* GetInstance() { return instance; };
 
