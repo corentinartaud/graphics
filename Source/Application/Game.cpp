@@ -25,8 +25,6 @@ GameObject *player;
 
 TextRenderer *text;
 
-GUIMainMenu mainMenu;
-
 Game::Game(GLuint width, GLuint height)
 : mState(GAME_ACTIVE), mKeys(), mWidth(width), mHeight(height) {
     instance = this;
@@ -80,10 +78,9 @@ void Game::Initialize() {
     this->Levels.push_back(one);
     this->Level = 0;
     
-    if(mainMenu.Initialize()){
-        
-        std::cout << "works" << std::endl;
-    }
+    mGUIContainers["main_menu"] = std::shared_ptr<GUIContainer>(new GUIMainMenu);
+    for(auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
+        it->second->Initialize();
 }
 
 void Game::Update(float dt) { }
@@ -134,9 +131,9 @@ void Game::Render() {
     else if (this->mState == GAME_MENU) {
         //text->RenderText("Press ENTER to start", 250.0f, EventManager::GetScreenWidth() / 2, 1.0f);
         //text->RenderText("Press W or S to select level", 245.0f, EventManager::GetScreenHeight() / 2 + 20.0f, 0.75f);
-        for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
+        for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it) {
             it->second->RenderBackground(renderer, text);
-        
+        }
     }
     EventManager::EndFrame();
 }
