@@ -17,7 +17,7 @@ Renderer::~Renderer() {
     glDeleteVertexArrays(1, &mVAO);
 }
 
-void Renderer::Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color) {
+void Renderer::Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color, glm::vec2 textureScaling) {
     // Prepare transformations
     this->shader.Use();
     glm::mat4 model;
@@ -37,6 +37,10 @@ void Renderer::Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size
     // Render textured quad
     this->shader.SetVector3f("v_color", color);
     
+    // Set texture scaling
+    glm::mat4 scale = glm::scale(glm::mat4(1.f), glm::vec3(textureScaling.x, textureScaling.y, 1.0f));
+    this->shader.SetMatrix4("textureMatrix", scale);
+    
     glActiveTexture(GL_TEXTURE0);
     texture.Bind();
     
@@ -46,13 +50,13 @@ void Renderer::Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size
 void Renderer::configureQuad() {
     GLfloat vertices[] = {
         // Pos      // Tex
-        0.0f, 0.0f, 1.0f, 1.0f,
-        1.0f, 0.0f, 0.0f, 1.0f,
-        0.0f, 1.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 1.0f,
         
-        0.0f, 1.0f, 1.0f, 0.0f,
-        1.0f, 0.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, 0.0f, 0.0f
+        0.0f, 1.0f, 0.0f, 1.0f,
+        1.0f, 0.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 1.0f, 1.0f
     };
     
     glGenVertexArrays(1, &mVAO);

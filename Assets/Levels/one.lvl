@@ -1,1 +1,18 @@
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+[Player]
+position : 300.0 100.0
+textureSize : 100.0 100.0
+[End]
+
+[Ground]
+textureSize : 100.0 100.0
+scale : 10.0 1.0
+[End]
+
+[Platform]
+textureSize : 50 50
+scale : 6.0 1.0
+position : {
+    400.0 400.0
+    600.0 200.0
+}
+[End]
