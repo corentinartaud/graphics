@@ -37,6 +37,10 @@ void Renderer::Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size
     // Render textured quad
     this->shader.SetVector3f("v_color", color);
     
+    // Set texture scaling
+    glm::mat4 scale = glm::scale(glm::mat4(1.f), glm::vec3(1.f, 1.f, 1.0f));
+    this->shader.SetMatrix4("textureMatrix", scale);
+    
     glActiveTexture(GL_TEXTURE0);
     texture.Bind();
     
