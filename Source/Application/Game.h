@@ -15,6 +15,7 @@
 #include <GLFW/glfw3.h>
 
 #include "GameLevel.h"
+#include "GameEngine.h"
 
 enum GameState {
     GAME_ACTIVE,
@@ -25,7 +26,11 @@ enum GameState {
 // Initial size of the player paddle
 const glm::vec2 PLAYER_SIZE(100, 100);
 // Initial velocity of the player paddle
-const GLfloat PLAYER_VELOCITY(500.0f);
+const GLfloat PLAYER_VELOCITY(150.0f);
+// Gravity acceleration towards the ground
+const GLfloat GRAVITY(-400.f);
+// Player initial jump velocity
+const GLfloat JUMP_VELOCITY(300.f);
 
 class Game {
 public:
@@ -34,6 +39,7 @@ public:
     GLuint mWidth, mHeight;
     std::vector<GameLevel> Levels;
     GLuint Level;
+    GameEngine* engine;
     
     // Constructor / Destructor
     Game(GLuint width, GLuint height);
