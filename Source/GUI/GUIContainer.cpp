@@ -11,6 +11,8 @@
 #include "ResourceManager.h"
 #include "TextRenderer.h"
 
+#include <iostream>
+
 GUIContainer::GUIContainer() { }
 
 void GUIContainer::AddElement(std::shared_ptr<GUIElement> element) {

@@ -24,28 +24,31 @@ using namespace std;
 GUIMainMenu::GUIMainMenu() { }
 
 bool GUIMainMenu::Initialize() {
+    // set scale
+    SetScale(glm::vec2(EventManager::GetScreenWidth(), EventManager::GetScreenHeight()));
+    
     currentSelection = 0;
     // start game
     std::shared_ptr<GUIButton> startGame(new GUIButton); // selection 0
     startGame->SetName("startGame");
-    startGame->SetPosition(glm::vec2(380.0f, EventManager::GetScreenHeight() / 2 - 100));
-    startGame->SetScale(glm::vec2(mScale.x * 0.4f, 50.0f));
+    startGame->SetPosition(glm::vec2(mScale.x * 0.35f, mScale.y / 2 - 100.0f));
+    startGame->SetScale(glm::vec2(mScale.x * 0.4f, 10.0f));
     startGame->SetForeColor(glm::vec3(1.0f));
     startGame->SetHoverColor(glm::vec4(0.0f));
     startGame->SetText("Start Game");
     // continue (?) will need to cache if we do
     std::shared_ptr<GUIButton> continueGame(new GUIButton); // selection 1
     continueGame->SetName("continueGame");
-    continueGame->SetPosition(glm::vec2(380.0f, EventManager::GetScreenHeight() / 2));
-    continueGame->SetScale(glm::vec2(mScale.x * 0.4f, 50.0f));
+    continueGame->SetPosition(glm::vec2(mScale.x * 0.35f, mScale.y / 2));
+    continueGame->SetScale(glm::vec2(mScale.x * 0.4f, 10.0f));
     continueGame->SetForeColor(glm::vec3(1.0f));
     continueGame->SetHoverColor(glm::vec4(0.0f));
     continueGame->SetText("Continue");
     // start game
     std::shared_ptr<GUIButton> quitGame(new GUIButton); // selection 2
     quitGame->SetName("quitGame");
-    quitGame->SetPosition(glm::vec2(380.0f, EventManager::GetScreenHeight() / 2 + 100.0f));
-    quitGame->SetScale(glm::vec2(mScale.x * 0.4f, 50.0f));
+    quitGame->SetPosition(glm::vec2(mScale.x * 0.35f, mScale.y / 2 + 100.0f));
+    quitGame->SetScale(glm::vec2(mScale.x * 0.4f, 10.0f));
     quitGame->SetForeColor(glm::vec3(1.0f));
     quitGame->SetHoverColor(glm::vec4(0.0f));
     quitGame->SetText("Quit Game");
@@ -83,8 +86,7 @@ void GUIMainMenu::ButtonPressed(std::shared_ptr<GUIButton> button) {
     if (buttonName == "startGame") {
         Game::GetInstance()->SwitchStates(GAME_ACTIVE);
     } else if (buttonName == "continueGame") {
-        Game::GetInstance()->SwitchStates(GAME_ACTIVE);
-        
+        fprintf(stderr, "Continue Button Not Yet Set!\n");
     } else if (buttonName == "quitGame") {
         Game::GetInstance()->SwitchStates(GAME_NULL);
     } else {

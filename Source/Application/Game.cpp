@@ -125,6 +125,7 @@ void Game::SwitchStates(GameState state) {
         case GameState::GAME_WIN:
             break;
         case GameState::GAME_NULL:
+            EventManager::SetWindowShouldClose();
             break;
         default:
             break;
@@ -182,6 +183,16 @@ void Game::Render() {
         }
     }
     EventManager::EndFrame();
+}
+
+void Game::ProcessMouseMove(float x, float y) {
+    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
+        it->second->OnMouseMove(x, y);
+}
+
+void Game::ProcessMouseClick(bool leftButton) {
+    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
+        it->second->OnMouseClick(leftButton);
 }
 
 float Game::floatModulo(float top, float bottom)
