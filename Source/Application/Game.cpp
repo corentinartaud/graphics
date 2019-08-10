@@ -15,6 +15,7 @@
 #include "GUIMainMenu.h"
 #include "GUIContainer.h"
 #include "AudioEngine.h"
+#include "GUIPauseMenu.hpp"
 #include <string>
 #include <iostream>
 
@@ -104,6 +105,8 @@ void Game::Initialize(float width, float height) {
     this->Level = 0;
     
     mGUIContainers["MainMenu"] = std::shared_ptr<GUIContainer>(new GUIMainMenu);
+    mGUIContainers["PauseMenu"] = std::shared_ptr<GUIContainer>(new GUIPauseMenu);
+
     for(auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
         it->second->Initialize();
     
@@ -125,6 +128,8 @@ void Game::SwitchStates(GameState state) {
         case GameState::GAME_WIN:
             break;
         case GameState::GAME_NULL:
+            break;
+        case GameState::GAME_INGAME_MENU:
             break;
         default:
             break;
@@ -162,6 +167,17 @@ void Game::ProcessInput(GLfloat dt) {
             }
         }
     }
+    
+    
+    // check for pause
+    if((this->mKeys[GLFW_KEY_P])){
+        Game::GetInstance()->SwitchStates(GAME_INGAME_MENU);
+
+    }
+    
+    
+    
+    
 }
 
 void Game::Render() {
