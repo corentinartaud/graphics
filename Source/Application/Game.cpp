@@ -86,7 +86,7 @@ void Game::Initialize(GLuint width, GLuint height) {
 #else
 	ResourceManager::LoadTexture("../Assets/Textures/background.jpg", GL_TRUE, "background");
 	ResourceManager::LoadTexture("../Assets/Textures/Player/stand/s1.png", GL_TRUE, "player");
-	ResourceManager::LoadTexture("../Assets/Textures/Platform/Grass.png", GL_TRUE, "grass");
+	ResourceManager::LoadTexture("../Assets/Textures/Spikes/setB/spike.png", GL_TRUE, "grass");
 	ResourceManager::LoadTexture("../Assets/Textures/Platform/Ground.png", GL_TRUE, "ground");
     ResourceManager::LoadTexture("../Assets/Textures/Spikes/setB/spike.png", GL_TRUE, "spike");
 #endif

@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Application\Game.cpp" />
+    <ClCompile Include="..\Source\Application\GameEngine.cpp" />
     <ClCompile Include="..\Source\Application\GameLevel.cpp" />
     <ClCompile Include="..\Source\Application\GameObject.cpp" />
     <ClCompile Include="..\Source\Application\LevelReader.cpp" />
@@ -35,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Game.h" />
+    <ClInclude Include="..\Source\Application\GameEngine.h" />
     <ClInclude Include="..\Source\Application\GameLevel.h" />
     <ClInclude Include="..\Source\Application\GameObject.h" />
     <ClInclude Include="..\Source\Application\LevelReader.h" />
