@@ -24,7 +24,7 @@ public:
     // Destructor
     ~Renderer();
     // Renders a defined quad textured with given sprite
-    void Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size = glm::vec2(10, 10), GLfloat rotate = 0.0f, glm::vec3 color = glm::vec3(1.0f), glm::vec2 textureScaling = glm::vec2(1.f, 1.f));
+    void Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size = glm::vec2(10, 10), GLfloat rotate = 0.0f, glm::vec3 color = glm::vec3(1.0f), glm::vec2 textureScaling = glm::vec2(1.f, 1.f), glm::mat4 viewMatrix = glm::mat4(1.f));
 private:
     // Render state
     Shader shader;
