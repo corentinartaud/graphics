@@ -74,8 +74,6 @@ Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLch
     
     // 2. Now create shader object from source code
     Shader shader;
-    printf("Compiling shader : %s\n", vShaderFile);
-    printf("Compiling shader : %s\n", fShaderFile);
     shader.Compile(vShaderCode, fShaderCode);
     return shader;
 }

@@ -23,9 +23,9 @@ GameObject* GameLevel::Load(const GLchar *file, GLuint levelWidth, GLuint levelH
     return data.player;
 }
 
-void GameLevel::Draw(Renderer &renderer) {
+void GameLevel::Draw(Renderer &renderer, glm::mat4 viewMatrix) {
     for (GameObject &tile : this->Bricks)
-        tile.Draw(renderer);
+        tile.Draw(renderer, viewMatrix);
 }
 
 GLboolean GameLevel::IsCompleted() {

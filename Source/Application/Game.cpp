@@ -11,67 +11,36 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 #include "GameObject.h"
-#include "TextRenderer.h"
-#include "GUIMainMenu.h"
-#include "GUIContainer.h"
-#include "AudioEngine.h"
 #include <string>
 #include <iostream>
 
 using namespace std;
 
-Game* Game::mInstance;
+Game* Game::instance;
 
-Game::Game() {
-    mInstance = this;
-    
-    mRenderer = new Renderer();
-    mText = new TextRenderer();
-    mAudio = new AudioEngine();
-    
-    this->Initialize(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
-}
+Renderer *renderer;
+GameObject *player;
 
-void Game::GameLoop() {
-    do {
-        EventManager::Update();
-        float dt = EventManager::GetFrameTime();
-        this->ProcessInput(dt);
-        this->Update(dt);
-        this->Render();
-    } while(!EventManager::ExitRequested());
+Game::Game(GLuint width, GLuint height)
+: mState(GAME_ACTIVE), mKeys(), mWidth(width), mHeight(height) {
+    instance = this;
 }
 
 Game::~Game() {
-    delete mRenderer;
-    delete mPlayer;
-    delete mText;
-    delete mAudio;
+    delete engine;
 }
 
-void Game::Initialize(float width, float height) {
-    mWidth = width;
-    mHeight = height;
-    
-    mAudio->Load();
-   
+void Game::Initialize() {
     // Load shaders
 #if defined(PLATFORM_OSX)	
 	ResourceManager::LoadShader("Shaders/texture.vertexshader", "Shaders/texture.fragmentshader", "texture");
-    ResourceManager::LoadShader("Shaders/text.vertexshader", "Shaders/text.fragmentshader", "text");
-    ResourceManager::LoadShader("Shaders/gui.vertexshader", "Shaders/gui.fragmentshader", "gui");
 #else
 	ResourceManager::LoadShader("../Assets/Shaders/texture.vertexshader", "../Assets/Shaders/texture.fragmentshader", "texture");
-    ResourceManager::LoadShader("../Assets/Shaders/text.vertexshader", "../Assets/Shaders/text.fragmentshader", "text");
-    ResourceManager::LoadShader("../Assets/Shaders/gui.vertexshader", "../Assets/Shaders/gui.fragmentshader", "gui");
 #endif
     // Configure shaders
-    glm::mat4 projection = glm::ortho(0.0f, mWidth, 0.0f, mHeight, -1.0f, 1.0f);
+    glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->mWidth), 0.0f, static_cast<GLfloat>(this->mHeight), -1.0f, 1.0f);
     ResourceManager::GetShader("texture").Use().SetInteger("image", 0);
     ResourceManager::GetShader("texture").SetMatrix4("projection", projection);
-    // Set render-specific controls
-    mRenderer->Initialize(ResourceManager::GetShader("texture"));
-    
     // Load textures
 #if defined(PLATFORM_OSX)	
 	ResourceManager::LoadTexture("Textures/background.jpg", GL_TRUE, "background");
@@ -84,55 +53,24 @@ void Game::Initialize(float width, float height) {
 	ResourceManager::LoadTexture("../Assets/Textures/Platform/Grass.png", GL_TRUE, "grass");
 	ResourceManager::LoadTexture("../Assets/Textures/Platform/Ground.png", GL_TRUE, "ground");
 #endif
-    // Set text-specific control
-    mText->Initialize(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
-    // Load Fonts
-#if defined(PLATFORM_OSX)
-    mText->LoadFont("Fonts/CUTIVEMONO-REGULAR.TTF", 50);
-#else
-    mText->LoadFont("../Assets/Fonts/CUTIVEMONO-REGULAR.TTF", 50);
-#endif
-    
+    // Set render-specific controls
+    renderer = new Renderer(ResourceManager::GetShader("texture"));
     // Load levels
     GameLevel one;
 #if defined(PLATFORM_OSX)
-    mPlayer = one.Load("levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+    player = one.Load("levels/one.lvl", this->mWidth, this->mHeight * 0.5);
 #else
 	player = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
 #endif
     this->Levels.push_back(one);
     this->Level = 0;
     
-    mGUIContainers["MainMenu"] = std::shared_ptr<GUIContainer>(new GUIMainMenu);
-    for(auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
-        it->second->Initialize();
-    
-    SwitchStates(GameState::GAME_MAIN_MENU);
+    engine = new GameEngine(player, one.Bricks, GRAVITY, PLAYER_VELOCITY);
 }
 
-void Game::SwitchStates(GameState state) {
-    mState = (state == GameState::GAME_NULL ? mState : state);
-    // de-activate all GUI containers in order to avoid irrelevant sounds
-    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
-        it->second->SetActive(false);
-    
-    switch(state) {
-        case GameState::GAME_MAIN_MENU:
-            mGUIContainers["MainMenu"]->SetActive(true);
-            break;
-        case GameState::GAME_ACTIVE:
-            break;
-        case GameState::GAME_WIN:
-            break;
-        case GameState::GAME_NULL:
-            EventManager::SetWindowShouldClose();
-            break;
-        default:
-            break;
-    }
+void Game::Update(float dt) {
+    engine->Update(dt);
 }
-
-void Game::Update(float dt) { }
 
 // process input for every frame during game state
 void Game::ProcessInput(GLfloat dt) {
@@ -141,26 +79,17 @@ void Game::ProcessInput(GLfloat dt) {
         GLfloat velocity = PLAYER_VELOCITY * dt;
         // Move player
         if (this->mKeys[GLFW_KEY_A] || this->mKeys[GLFW_KEY_LEFT]) {
-            if (mPlayer->mPosition.x >= 0)
-                mPlayer->mPosition.x -= velocity;
+            if (player->mPosition.x >= 0)
+                player->mPosition.x -= velocity;
         }
         if (this->mKeys[GLFW_KEY_D] || this->mKeys[GLFW_KEY_RIGHT] ) {
-            if (mPlayer->mPosition.x <= this->mWidth - mPlayer->mSize.x)
-                mPlayer->mPosition.x += velocity;
+            if (player->mPosition.x <= this->mWidth - player->mSize.x)
+                player->mPosition.x += velocity;
         }
-        //jumping 
-        if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP])) {
-
-            if(mPlayer->mPosition.y < 300){
-                mPlayer->mVelocity.y = 675.0f;
-                mPlayer->mPosition.y += mPlayer->mVelocity.y * dt;
-                std::cout << "UP: " << mPlayer->mPosition.y << std::endl;
-            }
-        }
-        else {
-            if(mPlayer->mPosition.y > 100.0){
-                mPlayer->mPosition.y -= mPlayer->mVelocity.y * dt;
-            }
+        // Jumping
+        // Only allow to jump when player is on a platform
+        if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && player->mVelocity.y == 0.f) {
+            player->mVelocity.y = JUMP_VELOCITY;
         }
     }
 }
@@ -169,30 +98,17 @@ void Game::Render() {
     EventManager::BeginFrame();
     if (this->mState == GAME_ACTIVE) {
         // Draw background
-        mRenderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->mWidth, this->mHeight), 0.0f);
+        renderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->mWidth, this->mHeight), 360.0f);
+        // Get the view matrix
+        glm::mat4 viewMatrix = glm::translate(glm::mat4(1.f), glm::vec3(player->mInitialPosition.x - player->mPosition.x, 0.f, 0.f));
         // Draw level
-        this->Levels[this->Level].Draw(*mRenderer);
+        this->Levels[this->Level].Draw(*renderer, viewMatrix);
         // Draw player
-		ResourceManager::LoadTexture(getAnimationTexture(mPlayer->mPosition.x).c_str(), GL_TRUE, "player");	//update texture
-		mPlayer->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
-        mPlayer->Draw(*mRenderer);
-    }
-    else if (this->mState == GAME_MAIN_MENU) {
-        for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it) {
-            it->second->Render(mRenderer, mText);
-        }
+		ResourceManager::LoadTexture(getAnimationTexture(player->mPosition.x).c_str(), GL_TRUE, "player");	//update texture
+		player->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
+        player->Draw(*renderer, viewMatrix);
     }
     EventManager::EndFrame();
-}
-
-void Game::ProcessMouseMove(float x, float y) {
-    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
-        it->second->OnMouseMove(x, y);
-}
-
-void Game::ProcessMouseClick(bool leftButton) {
-    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
-        it->second->OnMouseClick(leftButton);
 }
 
 float Game::floatModulo(float top, float bottom)

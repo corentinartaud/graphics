@@ -7,9 +7,8 @@
 //
 
 #include "GUIElement.h"
-#include <iostream>
 
-GUIElement::GUIElement() : mForeColor(1.0f) { }
+GUIElement::GUIElement() : mForeColor(1.0f), mBackColor(1.0f) { }
 
 void GUIElement::SetName(std::string name) {
     mName = name;
@@ -25,32 +24,11 @@ void GUIElement::SetScale(glm::vec2 scale) {
     CalculateModel();
 }
 
-void GUIElement::SetForeColor(glm::vec3 foreColor) {
+void GUIElement::SetForeColor(glm::vec4 foreColor) {
     mForeColor = foreColor;
 }
 
-void GUIElement::SetMouseEntered(bool entered) {
-    mMouseEntered = entered;
+void GUIElement::SetBackColor(glm::vec4 backColor) {
+    mBackColor = backColor;
 }
 
-bool GUIElement::IsMouseInside(float x, float y) {
-    bool inside = true;
-    glm::vec2 AABBCenter = mPosition;
-    std::cout << AABBCenter.x << " " << AABBCenter.y << std::endl;
-    glm::vec2 AABBHalfWidths = glm::vec2(mScale);
-    std::cout << AABBHalfWidths.x << " " << AABBHalfWidths.y << std::endl;
-    // - check if target is outside AABB and if so change center accordingly
-    if (x > AABBCenter.x + AABBHalfWidths.x)      // target at right side of box
-        inside = false;
-    else if (x < AABBCenter.x - AABBHalfWidths.x) // target at left side of box
-        inside = false;
-    if (y > AABBCenter.y + AABBHalfWidths.y)      // target at bottom side of box
-        inside = false;
-    else if (y < AABBCenter.y - AABBHalfWidths.y) // target at top side of box
-        inside = false;
-    return inside;
-}
-
-void GUIElement::OnMouseEnter() { }
-void GUIElement::OnMouseLeave() { }
-void GUIElement::OnMouseClick() { }
