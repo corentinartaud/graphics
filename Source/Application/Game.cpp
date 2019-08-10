@@ -27,7 +27,7 @@ Game::Game(GLuint width, GLuint height)
 }
 
 Game::~Game() {
-    
+    delete engine;
 }
 
 void Game::Initialize() {
@@ -64,9 +64,13 @@ void Game::Initialize() {
 #endif
     this->Levels.push_back(one);
     this->Level = 0;
+    
+    engine = new GameEngine(player, one.Bricks, GRAVITY, PLAYER_VELOCITY);
 }
 
-void Game::Update(float dt) { }
+void Game::Update(float dt) {
+    engine->Update(dt);
+}
 
 // process input for every frame during game state
 void Game::ProcessInput(GLfloat dt) {
@@ -82,19 +86,10 @@ void Game::ProcessInput(GLfloat dt) {
             if (player->mPosition.x <= this->mWidth - player->mSize.x)
                 player->mPosition.x += velocity;
         }
-        //jumping 
-        if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP])) {
-
-            if(player->mPosition.y < 300){
-                player->mVelocity.y = 675.0f;
-                player->mPosition.y += player->mVelocity.y * dt;
-                std::cout << "UP: " << player->mPosition.y << std::endl;
-            }
-        }
-        else {
-            if(player->mPosition.y > 100.0){
-                player->mPosition.y -= player->mVelocity.y * dt;
-            }
+        // Jumping
+        // Only allow to jump when player is on a platform
+        if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && player->mVelocity.y == 0.f) {
+            player->mVelocity.y = JUMP_VELOCITY;
         }
     }
 }
