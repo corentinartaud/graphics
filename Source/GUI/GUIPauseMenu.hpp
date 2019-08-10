@@ -37,6 +37,8 @@ public:
     // deactives the main menu
     void Deactivate();
     
+    //void checkForPause(int key, int action); 
+    
     // occurs when a button is pressed
     void ButtonPressed(std::shared_ptr<GUIButton> pButton);
 };

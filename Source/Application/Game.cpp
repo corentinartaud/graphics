@@ -11,6 +11,14 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 #include "GameObject.h"
+<<<<<<< HEAD
+=======
+#include "TextRenderer.h"
+#include "GUIMainMenu.h"
+#include "GUIContainer.h"
+#include "AudioEngine.h"
+#include "GUIPauseMenu.hpp"
+>>>>>>> added pause menu
 #include <string>
 #include <iostream>
 
@@ -65,11 +73,44 @@ void Game::Initialize() {
     this->Levels.push_back(one);
     this->Level = 0;
     
+<<<<<<< HEAD
     engine = new GameEngine(player, one.Bricks, GRAVITY, PLAYER_VELOCITY);
 }
 
 void Game::Update(float dt) {
     engine->Update(dt);
+=======
+    mGUIContainers["MainMenu"] = std::shared_ptr<GUIContainer>(new GUIMainMenu);
+    mGUIContainers["PauseMenu"] = std::shared_ptr<GUIContainer>(new GUIPauseMenu);
+
+    for(auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
+        it->second->Initialize();
+    
+    SwitchStates(GameState::GAME_MAIN_MENU);
+}
+
+void Game::SwitchStates(GameState state) {
+    mState = (state == GameState::GAME_NULL ? mState : state);
+    // de-activate all GUI containers in order to avoid irrelevant sounds
+    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
+        it->second->SetActive(false);
+    
+    switch(state) {
+        case GameState::GAME_MAIN_MENU:
+            mGUIContainers["MainMenu"]->SetActive(true);
+            break;
+        case GameState::GAME_ACTIVE:
+            break;
+        case GameState::GAME_WIN:
+            break;
+        case GameState::GAME_NULL:
+            break;
+        case GameState::GAME_INGAME_MENU:
+            break;
+        default:
+            break;
+    }
+>>>>>>> added pause menu
 }
 
 // process input for every frame during game state
@@ -92,6 +133,17 @@ void Game::ProcessInput(GLfloat dt) {
             player->mVelocity.y = JUMP_VELOCITY;
         }
     }
+    
+    
+    // check for pause
+    if((this->mKeys[GLFW_KEY_P])){
+        Game::GetInstance()->SwitchStates(GAME_INGAME_MENU);
+
+    }
+    
+    
+    
+    
 }
 
 void Game::Render() {
