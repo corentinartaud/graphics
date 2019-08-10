@@ -42,6 +42,7 @@
 		30A10FAE22FA5A890022E952 /* GUIMainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A10FAD22FA5A890022E952 /* GUIMainMenu.cpp */; };
 		30A10FB122FA61520022E952 /* GUIElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A10FB022FA61520022E952 /* GUIElement.cpp */; };
 		A5A0F1F822FCF8C800F04F74 /* LevelReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5A0F1F622FCF8C800F04F74 /* LevelReader.cpp */; };
+		B0B20F1322FF2E5400A42828 /* GUIPauseMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B20F1122FF2E5400A42828 /* GUIPauseMenu.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -117,6 +118,8 @@
 		A5A0F1F622FCF8C800F04F74 /* LevelReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelReader.cpp; sourceTree = "<group>"; };
 		A5A0F1F722FCF8C800F04F74 /* LevelReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LevelReader.h; sourceTree = "<group>"; };
 		A5E099F022F9BEDB009A45FD /* Box2D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Box2D; path = ../ThirdParty/Box2D; sourceTree = "<group>"; };
+		B0B20F1122FF2E5400A42828 /* GUIPauseMenu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GUIPauseMenu.cpp; sourceTree = "<group>"; };
+		B0B20F1222FF2E5400A42828 /* GUIPauseMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GUIPauseMenu.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,6 +269,8 @@
 				30A10FAF22FA5FB80022E952 /* GUIElement.h */,
 				30A10FAD22FA5A890022E952 /* GUIMainMenu.cpp */,
 				30A10FAC22FA596C0022E952 /* GUIMainMenu.h */,
+				B0B20F1122FF2E5400A42828 /* GUIPauseMenu.cpp */,
+				B0B20F1222FF2E5400A42828 /* GUIPauseMenu.h */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -365,6 +370,7 @@
 				30A10F9322FA1E920022E952 /* ResourceManager.cpp in Sources */,
 				307697A322FDDC2B00355205 /* AudioEngine.cpp in Sources */,
 				30A10F9E22FA1EA70022E952 /* GameObject.cpp in Sources */,
+				B0B20F1322FF2E5400A42828 /* GUIPauseMenu.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

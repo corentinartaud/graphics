@@ -15,6 +15,7 @@
 #include "GUIMainMenu.h"
 #include "GUIContainer.h"
 #include "AudioEngine.h"
+#include "GUIPauseMenu.h"
 #include <string>
 #include <iostream>
 
@@ -104,6 +105,8 @@ void Game::Initialize(float width, float height) {
     this->Level = 0;
     
     mGUIContainers["MainMenu"] = std::shared_ptr<GUIContainer>(new GUIMainMenu);
+    mGUIContainers["PauseMenu"] = std::shared_ptr<GUIPauseMenu>(new GUIPauseMenu);
+
     for(auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
         it->second->Initialize();
     
@@ -126,6 +129,9 @@ void Game::SwitchStates(GameState state) {
             break;
         case GameState::GAME_NULL:
             EventManager::SetWindowShouldClose();
+            break;
+        case GameState::GAME_INGAME_MENU:
+            mGUIContainers["PauseMenu"]->SetActive(true);
             break;
         default:
             break;
@@ -162,6 +168,10 @@ void Game::ProcessInput(GLfloat dt) {
                 mPlayer->mPosition.y -= mPlayer->mVelocity.y * dt;
             }
         }
+        // check for pause
+        if (this->mKeys[GLFW_KEY_P]){
+            Game::GetInstance()->SwitchStates(GAME_INGAME_MENU);
+        }
     }
 }
 
@@ -177,10 +187,8 @@ void Game::Render() {
 		mPlayer->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
         mPlayer->Draw(*mRenderer);
     }
-    else if (this->mState == GAME_MAIN_MENU) {
-        for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it) {
-            it->second->Render(mRenderer, mText);
-        }
+    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it) {
+        it->second->Render(mRenderer, mText);
     }
     EventManager::EndFrame();
 }

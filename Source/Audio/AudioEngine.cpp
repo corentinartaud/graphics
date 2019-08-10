@@ -58,4 +58,6 @@ void AudioEngine::SetPlayerPosition(glm::vec2 position) {
 
 void AudioEngine::Load() {
     mAudioEngine->addSoundSourceFromFile("Sounds/caketown.wav", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+    mAudioEngine->addSoundSourceFromFile("Sounds/scratch.wav", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+
 }
