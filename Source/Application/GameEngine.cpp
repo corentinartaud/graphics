@@ -8,6 +8,8 @@
 #include <iostream>
 using namespace std;
 
+GameEngine::GameEngine() { }
+
 GameEngine::GameEngine(GameObject* p, std::vector<GameObject> v, float g, float fv)
 : player(p), platforms(v), gravity(g), forwardVelocity(fv) {}
 

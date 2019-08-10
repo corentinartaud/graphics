@@ -14,6 +14,7 @@
 
 class GameEngine {
 public:
+    GameEngine();
     GameEngine(GameObject*, std::vector<GameObject>, float, float);
     
     void Update(float dt);
