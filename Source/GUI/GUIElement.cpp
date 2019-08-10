@@ -8,6 +8,8 @@
 
 #include "GUIElement.h"
 
+#include <iostream>
+
 GUIElement::GUIElement() : mForeColor(1.0f) { }
 
 void GUIElement::SetName(std::string name) {

@@ -11,6 +11,8 @@
 #include "ResourceManager.h"
 #include "TextRenderer.h"
 
+#include <iostream>
+
 GUIContainer::GUIContainer() { }
 
 void GUIContainer::AddElement(std::shared_ptr<GUIElement> element) {
@@ -45,9 +47,11 @@ void GUIContainer::Activate() { }
 void GUIContainer::Deactivate() { }
 
 void GUIContainer::Render(Renderer *renderer, TextRenderer *textRenderer) {
-    RenderBackground(renderer, textRenderer);
-    for(auto it = mElements.begin(); it != mElements.end(); ++it)
-        (*it)->Render(renderer, textRenderer, ResourceManager::GetShader("gui"));
+    if (mIsActive) {
+        RenderBackground(renderer, textRenderer);
+        for(auto it = mElements.begin(); it != mElements.end(); ++it)
+            (*it)->Render(renderer, textRenderer, ResourceManager::GetShader("gui"));
+    }
 }
 
 void GUIContainer::RenderBackground(Renderer *renderer, TextRenderer *textRenderer) {
@@ -55,14 +59,18 @@ void GUIContainer::RenderBackground(Renderer *renderer, TextRenderer *textRender
 }
 
 void GUIContainer::OnMouseMove(float x, float y) {
-    for (auto it = mElements.begin(); it != mElements.end(); ++it) {
-        (*it)->SetMouseEntered(false);
-        if ((*it)->IsMouseInside(x, y))
-            (*it)->SetMouseEntered(true);
+    std::cout << mIsActive << std::endl;
+    if (mIsActive) {
+        for (auto it = mElements.begin(); it != mElements.end(); ++it) {
+            (*it)->SetMouseEntered(false);
+            if ((*it)->IsMouseInside(x, y))
+                (*it)->SetMouseEntered(true);
+        }
     }
 }
 
 void GUIContainer::OnMouseClick(bool leftButton) {
+    if (mIsActive) {
         std::shared_ptr<GUIButton> pButton;
         for (auto it = mElements.begin(); it != mElements.end(); ++it) {
             if((*it)->GetMouseEntered())
@@ -70,6 +78,7 @@ void GUIContainer::OnMouseClick(bool leftButton) {
         }
         if (pButton) // button has been pressed; call generic button pressed function and let class derivations manage logic based on button properties
             ButtonPressed(pButton);
+    }
 }
 
 void GUIContainer::ButtonPressed(std::shared_ptr<GUIButton> pButton) { }

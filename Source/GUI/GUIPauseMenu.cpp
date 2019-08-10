@@ -6,7 +6,7 @@
 //  Copyright © 2019 Concordia. All rights reserved.
 //
 
-#include "GUIPauseMenu.hpp"
+#include "GUIPauseMenu.h"
 #include "GUIButton.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
@@ -74,18 +74,20 @@ void GUIPauseMenu::Activate() {
 }
 
 void GUIPauseMenu::Deactivate() {
-    Game::GetInstance()->GetAudio()->PlaySound("Sounds/caketown.wav");
+    Game::GetInstance()->GetAudio()->PlaySound("Sounds/scratch.wav");
 }
 
 void GUIPauseMenu::ButtonPressed(std::shared_ptr<GUIButton> button){
     std::string buttonName = button->GetName();
-    
     if(buttonName == "resumeGame"){
         Game::GetInstance()->SwitchStates(GAME_ACTIVE);
     } else if (buttonName == "quitGame"){
         Game::GetInstance()->SwitchStates(GAME_NULL);
+    } else if (buttonName == "saveGame") {
+        
+    } else {
+        // do nothing
     }
-    // save game
 }
 
 void GUIPauseMenu::Update(float dt){
