@@ -6,8 +6,8 @@
 //  Copyright © 2019 Concordia. All rights reserved.
 //
 
-#ifndef GUIPauseMenu_hpp
-#define GUIPauseMenu_hpp
+#ifndef GUIPauseMenu_h
+#define GUIPauseMenu_h
 #if !defined(PLATFORM_OSX)
 #include <memory>
 
@@ -26,21 +26,19 @@ public:
     GUIPauseMenu();
     
     // initializes the in-game menu and its all its relevant controls
-    bool Initialize();
+    bool Initialize() override;
     // updates the game menu plus all its controls
-    void Update(float dt);
+    void Update(float dt) override;
     // render the background texture and color
-    void RenderBackground(Renderer *renderer, TextRenderer *text);
+    void RenderBackground(Renderer *renderer, TextRenderer *text) override;
     
     // activates the main menu
-    void Activate();
+    void Activate() override;
     // deactives the main menu
-    void Deactivate();
-    
-    //void checkForPause(int key, int action); 
+    void Deactivate() override;
     
     // occurs when a button is pressed
-    void ButtonPressed(std::shared_ptr<GUIButton> pButton);
+    void ButtonPressed(std::shared_ptr<GUIButton> pButton) override;
 };
 
-#endif /* GUIPauseMenu_hpp */
+#endif /* GUIPauseMenu_h */

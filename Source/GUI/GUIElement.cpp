@@ -8,7 +8,13 @@
 
 #include "GUIElement.h"
 
+<<<<<<< HEAD
 GUIElement::GUIElement() : mForeColor(1.0f), mBackColor(1.0f) { }
+=======
+#include <iostream>
+
+GUIElement::GUIElement() : mForeColor(1.0f) { }
+>>>>>>> Fixed StartUp on Pause Menu to Main Menu
 
 void GUIElement::SetName(std::string name) {
     mName = name;

@@ -17,8 +17,12 @@
 #include "GUIMainMenu.h"
 #include "GUIContainer.h"
 #include "AudioEngine.h"
+<<<<<<< HEAD
 #include "GUIPauseMenu.hpp"
 >>>>>>> added pause menu
+=======
+#include "GUIPauseMenu.h"
+>>>>>>> Fixed StartUp on Pause Menu to Main Menu
 #include <string>
 #include <iostream>
 
@@ -81,7 +85,7 @@ void Game::Update(float dt) {
     engine->Update(dt);
 =======
     mGUIContainers["MainMenu"] = std::shared_ptr<GUIContainer>(new GUIMainMenu);
-    mGUIContainers["PauseMenu"] = std::shared_ptr<GUIContainer>(new GUIPauseMenu);
+    mGUIContainers["PauseMenu"] = std::shared_ptr<GUIPauseMenu>(new GUIPauseMenu);
 
     for(auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
         it->second->Initialize();
@@ -133,17 +137,11 @@ void Game::ProcessInput(GLfloat dt) {
         if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && player->mVelocity.y == 0.f) {
             player->mVelocity.y = JUMP_VELOCITY;
         }
+        // check for pause
+        if (this->mKeys[GLFW_KEY_P]){
+            Game::GetInstance()->SwitchStates(GAME_INGAME_MENU);
+        }
     }
-    
-    
-    // check for pause
-    if((this->mKeys[GLFW_KEY_P])){
-        Game::GetInstance()->SwitchStates(GAME_INGAME_MENU);
-    }
-    
-    
-    
-    
 }
 
 void Game::Render() {
@@ -156,9 +154,18 @@ void Game::Render() {
         // Draw level
         this->Levels[this->Level].Draw(*renderer, viewMatrix);
         // Draw player
+<<<<<<< HEAD
 		ResourceManager::LoadTexture(getAnimationTexture(player->mPosition.x).c_str(), GL_TRUE, "player");	//update texture
 		player->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
         player->Draw(*renderer, viewMatrix);
+=======
+		ResourceManager::LoadTexture(getAnimationTexture(mPlayer->mPosition.x).c_str(), GL_TRUE, "player");	//update texture
+		mPlayer->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
+        mPlayer->Draw(*mRenderer);
+    }
+    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it) {
+        it->second->Render(mRenderer, mText);
+>>>>>>> Fixed StartUp on Pause Menu to Main Menu
     }
     EventManager::EndFrame();
 }

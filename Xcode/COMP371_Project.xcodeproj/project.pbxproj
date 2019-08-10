@@ -115,7 +115,7 @@
 		A5C6B9E722FE3A7D00680F82 /* GameEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameEngine.h; sourceTree = "<group>"; };
 		A5E099F022F9BEDB009A45FD /* Box2D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Box2D; path = ../ThirdParty/Box2D; sourceTree = "<group>"; };
 		B0B20F1122FF2E5400A42828 /* GUIPauseMenu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GUIPauseMenu.cpp; sourceTree = "<group>"; };
-		B0B20F1222FF2E5400A42828 /* GUIPauseMenu.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GUIPauseMenu.hpp; sourceTree = "<group>"; };
+		B0B20F1222FF2E5400A42828 /* GUIPauseMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GUIPauseMenu.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,7 +253,7 @@
 				30A10FAD22FA5A890022E952 /* GUIMainMenu.cpp */,
 				30A10FAC22FA596C0022E952 /* GUIMainMenu.h */,
 				B0B20F1122FF2E5400A42828 /* GUIPauseMenu.cpp */,
-				B0B20F1222FF2E5400A42828 /* GUIPauseMenu.hpp */,
+				B0B20F1222FF2E5400A42828 /* GUIPauseMenu.h */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
