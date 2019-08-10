@@ -113,7 +113,7 @@ void Game::Initialize(float width, float height) {
     for(auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
         it->second->Initialize();
     
-    SwitchStates(GameState::GAME_ACTIVE);
+    SwitchStates(GameState::GAME_MAIN_MENU);
 }
 
 void Game::SwitchStates(GameState state) {
