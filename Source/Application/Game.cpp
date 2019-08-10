@@ -48,6 +48,7 @@ Game::~Game() {
     delete mPlayer;
     delete mText;
     delete mAudio;
+    delete engine;
 }
 
 void Game::Initialize(float width, float height) {
@@ -99,10 +100,12 @@ void Game::Initialize(float width, float height) {
 #if defined(PLATFORM_OSX)
     mPlayer = one.Load("levels/one.lvl", this->mWidth, this->mHeight * 0.5);
 #else
-	player = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+	mPlayer = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
 #endif
     this->Levels.push_back(one);
     this->Level = 0;
+    
+    engine = new GameEngine(mPlayer, one.Bricks, GRAVITY, PLAYER_VELOCITY);
     
     mGUIContainers["MainMenu"] = std::shared_ptr<GUIContainer>(new GUIMainMenu);
     mGUIContainers["PauseMenu"] = std::shared_ptr<GUIPauseMenu>(new GUIPauseMenu);
@@ -138,7 +141,9 @@ void Game::SwitchStates(GameState state) {
     }
 }
 
-void Game::Update(float dt) { }
+void Game::Update(float dt) {
+    engine->Update(dt);
+}
 
 // process input for every frame during game state
 void Game::ProcessInput(GLfloat dt) {
@@ -154,19 +159,10 @@ void Game::ProcessInput(GLfloat dt) {
             if (mPlayer->mPosition.x <= this->mWidth - mPlayer->mSize.x)
                 mPlayer->mPosition.x += velocity;
         }
-        //jumping 
-        if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP])) {
-
-            if(mPlayer->mPosition.y < 300){
-                mPlayer->mVelocity.y = 675.0f;
-                mPlayer->mPosition.y += mPlayer->mVelocity.y * dt;
-                std::cout << "UP: " << mPlayer->mPosition.y << std::endl;
-            }
-        }
-        else {
-            if(mPlayer->mPosition.y > 100.0){
-                mPlayer->mPosition.y -= mPlayer->mVelocity.y * dt;
-            }
+        // Jumping
+        // Only allow to jump when player is on a platform
+        if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && mPlayer->mVelocity.y == 0.0f) {
+            mPlayer->mVelocity.y = JUMP_VELOCITY;
         }
         // check for pause
         if (this->mKeys[GLFW_KEY_P]){
@@ -180,12 +176,14 @@ void Game::Render() {
     if (this->mState == GAME_ACTIVE) {
         // Draw background
         mRenderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->mWidth, this->mHeight), 0.0f);
+        // Get the view matrix
+        glm::mat4 viewMatrix = glm::translate(glm::mat4(1.f), glm::vec3(mPlayer->mInitialPosition.x - mPlayer->mPosition.x, 0.f, 0.f));
         // Draw level
-        this->Levels[this->Level].Draw(*mRenderer);
+        this->Levels[this->Level].Draw(*mRenderer, viewMatrix);
         // Draw player
 		ResourceManager::LoadTexture(getAnimationTexture(mPlayer->mPosition.x).c_str(), GL_TRUE, "player");	//update texture
 		mPlayer->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
-        mPlayer->Draw(*mRenderer);
+        mPlayer->Draw(*mRenderer, viewMatrix);
     }
     for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it) {
         it->second->Render(mRenderer, mText);

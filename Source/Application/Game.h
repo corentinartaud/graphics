@@ -11,6 +11,7 @@
 
 #include "GameState.h"
 #include "GameLevel.h"
+#include "GameEngine.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -27,6 +28,10 @@ class TextRenderer;
 const glm::vec2 PLAYER_SIZE(100, 100);
 // Initial velocity of the player paddle
 const GLfloat PLAYER_VELOCITY(500.0f);
+// Gravity acceleration towards the ground
+const GLfloat GRAVITY(-400.f);
+// Player initial jump velocity
+const GLfloat JUMP_VELOCITY(300.f);
 
 class Game {
 public:
@@ -69,6 +74,7 @@ private:
     Renderer *mRenderer;
     GameObject *mPlayer;
     TextRenderer *mText;
+    GameEngine* engine;
     
     std::map<std::string, std::shared_ptr<GUIContainer>> mGUIContainers; // contains all the game's GUI items
     static Game *mInstance;

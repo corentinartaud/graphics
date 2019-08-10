@@ -28,7 +28,7 @@ public:
     // Loads level from file, returns player
     GameObject* Load(const GLchar *file, GLuint levelWidth, GLuint levelHeight);
     // Render level
-    void Draw(Renderer &renderer);
+    void Draw(Renderer &renderer, glm::mat4 viewMatrix);
     // Check if the level is completed (all non-solid tiles are destroyed)
     GLboolean IsCompleted();
 };

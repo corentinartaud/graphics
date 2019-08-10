@@ -26,12 +26,12 @@ void Renderer::Initialize(Shader &shader) {
     this->configureQuad();
 }
 
-void Renderer::Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color, glm::vec2 textureScaling) {
+void Renderer::Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color, glm::vec2 textureScaling, glm::mat4 viewMatrix) {
     // Prepare transformations
     this->shader.Use();
     glm::mat4 model;
     // First translate
-    model = glm::translate(glm::mat4(1.0f), glm::vec3(position, 0.0f));
+    model = glm::translate(viewMatrix, glm::vec3(position, 0.0f));
     // Move origin of rotation to center of quad
     model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
     // Then rotate
