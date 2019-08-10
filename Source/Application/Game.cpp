@@ -106,6 +106,7 @@ void Game::SwitchStates(GameState state) {
         case GameState::GAME_NULL:
             break;
         case GameState::GAME_INGAME_MENU:
+            mGUIContainers["PauseMenu"]->SetActive(true);
             break;
         default:
             break;
@@ -138,7 +139,6 @@ void Game::ProcessInput(GLfloat dt) {
     // check for pause
     if((this->mKeys[GLFW_KEY_P])){
         Game::GetInstance()->SwitchStates(GAME_INGAME_MENU);
-
     }
     
     
