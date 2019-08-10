@@ -245,10 +245,10 @@
 				30A10F8922FA1E920022E952 /* ResourceManager.h */,
 				30A10F8C22FA1E920022E952 /* Shader.cpp */,
 				30A10F8D22FA1E920022E952 /* Shader.h */,
+				307697AB22FDEAFE00355205 /* TextRenderer.cpp */,
+				307697AA22FDEA9700355205 /* TextRenderer.h */,
 				30A10F8A22FA1E920022E952 /* TextureLoader.cpp */,
 				30A10F8B22FA1E920022E952 /* TextureLoader.h */,
-				307697AA22FDEA9700355205 /* TextRenderer.h */,
-				307697AB22FDEAFE00355205 /* TextRenderer.cpp */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
