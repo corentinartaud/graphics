@@ -1,17 +1,28 @@
 [Player]
-position : 100.0 100.0
+position : 300.0 100.0
 textureSize : 100.0 100.0
 [End]
 
 [Ground]
 textureSize : 100.0 100.0
-scale : 8.0 1.0
+scale : 100.0 1.0
 [End]
 
 [Platform]
 textureSize : 50 50
-scale : 6.0 1.0
+scale : 5.0 1.0
 position : {
-    400.0 150.0
+    600.0 150.0
+    1000.0 150.0
+    1300.0 250.0
+    2000.0 200.0
+}
+[End]
+
+[Platform]
+textureSize : 50 50
+scale : 2.0 1.0
+position : {
+    1800.0 150.0
 }
 [End]

@@ -99,12 +99,14 @@ void Game::Render() {
     if (this->mState == GAME_ACTIVE) {
         // Draw background
         renderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->mWidth, this->mHeight), 360.0f);
+        // Get the view matrix
+        glm::mat4 viewMatrix = glm::translate(glm::mat4(1.f), glm::vec3(player->mInitialPosition.x - player->mPosition.x, 0.f, 0.f));
         // Draw level
-        this->Levels[this->Level].Draw(*renderer);
+        this->Levels[this->Level].Draw(*renderer, viewMatrix);
         // Draw player
 		ResourceManager::LoadTexture(getAnimationTexture(player->mPosition.x).c_str(), GL_TRUE, "player");	//update texture
 		player->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
-        player->Draw(*renderer);
+        player->Draw(*renderer, viewMatrix);
     }
     EventManager::EndFrame();
 }

@@ -45,6 +45,7 @@ GameObject* LevelReader::ReadPlayer(std::ifstream& fstream) {
             sstream >> token1 >> token2;
             sstream >> token1 >> token2;
             player->mPosition = glm::vec2(std::stof(token1), std::stof(token2));
+            player->mInitialPosition = player->mPosition;
         } else if (line.find("textureSize") != std::string::npos) {
             // read "textureSize :"
             sstream >> token1 >> token2;
