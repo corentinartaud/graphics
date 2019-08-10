@@ -9,23 +9,19 @@
 #ifndef Game_h
 #define Game_h
 
-#include <array>
-#include <map>
-#include <memory>
+#include "GameState.h"
+#include "GameLevel.h"
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "GameLevel.h"
+#include <array>
+#include <map>
+#include <memory>
 
 class GUIContainer;
 class AudioEngine;
-
-enum GameState {
-    GAME_ACTIVE,
-    GAME_MENU,
-    GAME_WIN,
-    GAME_NULL
-};
+class TextRenderer;
 
 // Initial size of the player paddle
 const glm::vec2 PLAYER_SIZE(100, 100);
@@ -35,16 +31,18 @@ const GLfloat PLAYER_VELOCITY(500.0f);
 class Game {
 public:
     GameState mState;
-    GLboolean mKeys[1024];
-    GLuint mWidth, mHeight;
+    bool mKeys[1024];
+    float mWidth, mHeight;
     std::vector<GameLevel> Levels;
     GLuint Level;
     
     // Constructor / Destructor
-    Game(GLuint width, GLuint height);
+    Game();
     ~Game();
     
-    void Initialize();
+    void GameLoop();
+    
+    void Initialize(float width, float height);
     // Game Loop
     void ProcessInput(GLfloat dt);
     void Update(GLfloat dt);
@@ -52,7 +50,7 @@ public:
 	float floatModulo(float top, float bottom);
 	std::string getAnimationTexture(float positionX);
     
-    static Game* GetInstance() { return instance; };
+    static Game* GetInstance() { return mInstance; };
     
     // returns the game's audio sub-system
     AudioEngine* const GetAudio() { return mAudio; };
@@ -61,10 +59,14 @@ public:
     void SwitchStates(GameState state = GameState::GAME_NULL);
 
 private:
-    static Game* instance;
-    std::map<std::string, std::shared_ptr<GUIContainer>> mGUIContainers; // contains all the game's GUI items
     
     AudioEngine *mAudio;
+    Renderer *mRenderer;
+    GameObject *mPlayer;
+    TextRenderer *mText;
+    
+    std::map<std::string, std::shared_ptr<GUIContainer>> mGUIContainers; // contains all the game's GUI items
+    static Game *mInstance;
 };
 
 #endif /* Game_h */

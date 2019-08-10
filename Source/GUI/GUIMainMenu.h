@@ -35,15 +35,13 @@ public:
     // deactives the main menu
     void Deactivate();
     
+    // occurs when a button is pressed
+    void ButtonPressed(std::shared_ptr<GUIButton> pButton);
+    
     void changeMenuState();
     void selectionUp();
     void selectionDown();
     void select();
-    
-private:
-    // texture used for rendering the background
-    TextureLoader* mBackgroundTexture; 
-    
 };
 
 #endif /* GUIGameMenu_h */

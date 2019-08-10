@@ -9,6 +9,7 @@
 #ifndef EventManager_h
 #define EventManager_h
 
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 struct GLFWwindow;
@@ -28,24 +29,20 @@ public:
     
     static GLuint GetScreenWidth() { return SCREEN_WIDTH; };
     static GLuint GetScreenHeight() { return SCREEN_HEIGHT; };
-    
-    static GLFWwindow* GetWindow() { return spWindow; };
+    static GLFWwindow* GetWindow() { return mWindow; };
     
 private:
-    // GLFW function declerations
-    static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
-    
-    // Time
-    static double sLastFrameTime;
-    static float sFrameTime;
-    
-    // Window
-    static GLFWwindow* spWindow;
-    
     // The Width of the screen
     static const GLuint SCREEN_WIDTH = 1024;
     // The height of the screen
     static const GLuint SCREEN_HEIGHT = 768;
+    // Window
+    static GLFWwindow* mWindow;
+    // Time
+    static double mLastFrameTime;
+    static float mFrameTime;
+    // GLFW function declerations
+    static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 };
 
 #endif /* EventManager_h */

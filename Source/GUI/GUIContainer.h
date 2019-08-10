@@ -45,6 +45,14 @@ public:
     // deactivates the GUI container
     virtual void Deactivate();
     
+    // occurs when the mouse has changed position
+    void OnMouseMove(float x, float y);
+    // occurs when the mouse button is clicked
+    void OnMouseClick(bool leftButton);
+    
+    // is called whenever any of its GUIButton elements are pressed.
+    virtual void ButtonPressed(std::shared_ptr<GUIButton> button);
+    
 protected:
     // add a GUI element to the conainer
     void AddElement(std::shared_ptr<GUIElement> element);

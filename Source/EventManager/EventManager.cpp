@@ -6,9 +6,9 @@
 //  Copyright © 2019 Concordia. All rights reserved.
 //
 
-#include "Game.h"
-#include "Renderer.h"
 #include "EventManager.h"
+#include "Renderer.h"
+#include "Game.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -20,11 +20,11 @@
 
 
 // Time
-double EventManager::sLastFrameTime = glfwGetTime();
-float  EventManager::sFrameTime = 0.0f;
+double EventManager::mLastFrameTime = glfwGetTime();
+float  EventManager::mFrameTime = 0.0f;
 
 // Window
-GLFWwindow* EventManager::spWindow = nullptr;
+GLFWwindow* EventManager::mWindow = nullptr;
 
 void EventManager::Initialize() {
     // Initialise GLFW
@@ -52,15 +52,18 @@ void EventManager::Initialize() {
 #endif
     
     // Open a window and create its OpenGL context
-    spWindow = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Golden Sphere", nullptr, nullptr);
-    if (spWindow == nullptr) {
+    mWindow = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Golden Sphere", nullptr, nullptr);
+    if (mWindow == nullptr) {
         fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
         glfwTerminate();
         exit(-1);
     }
-    glfwMakeContextCurrent(spWindow);
+    glfwMakeContextCurrent(mWindow);
     // Enables VSYNC on MacOSX
     glfwSwapInterval(1);
+    
+    // Ensure we can capture the escape key being pressed below
+    glfwSetKeyCallback(mWindow, key_callback);
     
     // Initialize GLEW
     glewExperimental = true; // Needed for core profile
@@ -71,27 +74,24 @@ void EventManager::Initialize() {
     }
     // Somehow, glewInit triggers a glInvalidEnum... Let's ignore it
     glGetError();
-    
-    // Ensure we can capture the escape key being pressed below
-    glfwSetKeyCallback(spWindow, key_callback);
 
     // Black background
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     
     // OpenGL configuration
-    glViewport(0, 0, EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
+    glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     // Initial time
-    sLastFrameTime = glfwGetTime();
+    mLastFrameTime = glfwGetTime();
 }
 
 void EventManager::Shutdown() {
     // Close OpenGL window and terminate GLFW
     glfwTerminate();
-    spWindow = nullptr;
+    mWindow = nullptr;
 }
 
 void EventManager::BeginFrame() {
@@ -101,7 +101,7 @@ void EventManager::BeginFrame() {
 
 void EventManager::EndFrame() {
     // Swap buffers
-    glfwSwapBuffers(spWindow);
+    glfwSwapBuffers(mWindow);
 }
 
 void EventManager::Update() {
@@ -110,16 +110,16 @@ void EventManager::Update() {
     
     // Update frame time
     double currentTime = glfwGetTime();
-    sFrameTime = static_cast<float>(currentTime - sLastFrameTime);
-    sLastFrameTime = currentTime;
+    mFrameTime = static_cast<float>(currentTime - mLastFrameTime);
+    mLastFrameTime = currentTime;
 }
 
 float EventManager::GetFrameTime() {
-    return sFrameTime;
+    return mFrameTime;
 }
 
 bool EventManager::ExitRequested() {
-    return glfwGetKey(spWindow, GLFW_KEY_ESCAPE ) == GLFW_PRESS || glfwWindowShouldClose(spWindow);
+    return glfwWindowShouldClose(mWindow);
 }
 
 void EventManager::key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {

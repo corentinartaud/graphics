@@ -20,38 +20,58 @@
 
 using namespace std;
 
-Game* Game::instance;
+Game* Game::mInstance;
 
-Renderer *renderer;
-GameObject *player;
-
-TextRenderer *text;
-
-Game::Game(GLuint width, GLuint height)
-: mState(GAME_ACTIVE), mKeys(), mWidth(width), mHeight(height) {
-    instance = this;
+Game::Game() {
+    mInstance = this;
+    
+    mRenderer = new Renderer();
+    mText = new TextRenderer();
     mAudio = new AudioEngine();
+    
+    this->Initialize(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
+}
+
+void Game::GameLoop() {
+    do {
+        EventManager::Update();
+        float dt = EventManager::GetFrameTime();
+        this->ProcessInput(dt);
+        this->Update(dt);
+        this->Render();
+    } while(!EventManager::ExitRequested());
 }
 
 Game::~Game() {
-    delete renderer;
-    delete player;
-    delete text;
+    delete mRenderer;
+    delete mPlayer;
+    delete mText;
     delete mAudio;
 }
 
-void Game::Initialize() {
+void Game::Initialize(float width, float height) {
+    mWidth = width;
+    mHeight = height;
+    
     mAudio->Load();
+   
     // Load shaders
 #if defined(PLATFORM_OSX)	
 	ResourceManager::LoadShader("Shaders/texture.vertexshader", "Shaders/texture.fragmentshader", "texture");
+    ResourceManager::LoadShader("Shaders/text.vertexshader", "Shaders/text.fragmentshader", "text");
+    ResourceManager::LoadShader("Shaders/gui.vertexshader", "Shaders/gui.fragmentshader", "gui");
 #else
 	ResourceManager::LoadShader("../Assets/Shaders/texture.vertexshader", "../Assets/Shaders/texture.fragmentshader", "texture");
+    ResourceManager::LoadShader("../Assets/Shaders/text.vertexshader", "../Assets/Shaders/text.fragmentshader", "text");
+    ResourceManager::LoadShader("../Assets/Shaders/gui.vertexshader", "../Assets/Shaders/gui.fragmentshader", "gui");
 #endif
     // Configure shaders
-    glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->mWidth), 0.0f, static_cast<GLfloat>(this->mHeight), -1.0f, 1.0f);
+    glm::mat4 projection = glm::ortho(0.0f, mWidth, 0.0f, mHeight, -1.0f, 1.0f);
     ResourceManager::GetShader("texture").Use().SetInteger("image", 0);
     ResourceManager::GetShader("texture").SetMatrix4("projection", projection);
+    // Set render-specific controls
+    mRenderer->Initialize(ResourceManager::GetShader("texture"));
+    
     // Load textures
 #if defined(PLATFORM_OSX)	
 	ResourceManager::LoadTexture("Textures/background.jpg", GL_TRUE, "background");
@@ -64,19 +84,19 @@ void Game::Initialize() {
 	ResourceManager::LoadTexture("../Assets/Textures/Platform/Grass.png", GL_TRUE, "grass");
 	ResourceManager::LoadTexture("../Assets/Textures/Platform/Ground.png", GL_TRUE, "ground");
 #endif
-    // Set render-specific controls
-    renderer = new Renderer(ResourceManager::GetShader("texture"));
-    // Set text
-    text = new TextRenderer(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
+    // Set text-specific control
+    mText->Initialize(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
+    // Load Fonts
 #if defined(PLATFORM_OSX)
-    text->Load("Fonts/OCRAEXT.TTF", 24);
+    mText->LoadFont("Fonts/CUTIVEMONO-REGULAR.TTF", 50);
 #else
-    text->Load("../Assets/Fonts/OCRAEXT.TTF", 24);
+    mText->LoadFont("../Assets/Fonts/CUTIVEMONO-REGULAR.TTF", 50);
 #endif
+    
     // Load levels
     GameLevel one;
 #if defined(PLATFORM_OSX)
-    player = one.Load("levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+    mPlayer = one.Load("levels/one.lvl", this->mWidth, this->mHeight * 0.5);
 #else
 	player = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
 #endif
@@ -87,7 +107,7 @@ void Game::Initialize() {
     for(auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
         it->second->Initialize();
     
-    SwitchStates(GameState::GAME_MENU);
+    SwitchStates(GameState::GAME_MAIN_MENU);
 }
 
 void Game::SwitchStates(GameState state) {
@@ -97,7 +117,7 @@ void Game::SwitchStates(GameState state) {
         it->second->SetActive(false);
     
     switch(state) {
-        case GameState::GAME_MENU:
+        case GameState::GAME_MAIN_MENU:
             mGUIContainers["MainMenu"]->SetActive(true);
             break;
         case GameState::GAME_ACTIVE:
@@ -120,25 +140,25 @@ void Game::ProcessInput(GLfloat dt) {
         GLfloat velocity = PLAYER_VELOCITY * dt;
         // Move player
         if (this->mKeys[GLFW_KEY_A] || this->mKeys[GLFW_KEY_LEFT]) {
-            if (player->mPosition.x >= 0)
-                player->mPosition.x -= velocity;
+            if (mPlayer->mPosition.x >= 0)
+                mPlayer->mPosition.x -= velocity;
         }
         if (this->mKeys[GLFW_KEY_D] || this->mKeys[GLFW_KEY_RIGHT] ) {
-            if (player->mPosition.x <= this->mWidth - player->mSize.x)
-                player->mPosition.x += velocity;
+            if (mPlayer->mPosition.x <= this->mWidth - mPlayer->mSize.x)
+                mPlayer->mPosition.x += velocity;
         }
         //jumping 
         if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP])) {
 
-            if(player->mPosition.y < 300){
-                player->mVelocity.y = 675.0f;
-                player->mPosition.y += player->mVelocity.y * dt;
-                std::cout << "UP: " << player->mPosition.y << std::endl;
+            if(mPlayer->mPosition.y < 300){
+                mPlayer->mVelocity.y = 675.0f;
+                mPlayer->mPosition.y += mPlayer->mVelocity.y * dt;
+                std::cout << "UP: " << mPlayer->mPosition.y << std::endl;
             }
         }
         else {
-            if(player->mPosition.y > 100.0){
-                player->mPosition.y -= player->mVelocity.y * dt;
+            if(mPlayer->mPosition.y > 100.0){
+                mPlayer->mPosition.y -= mPlayer->mVelocity.y * dt;
             }
         }
     }
@@ -148,17 +168,17 @@ void Game::Render() {
     EventManager::BeginFrame();
     if (this->mState == GAME_ACTIVE) {
         // Draw background
-        renderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->mWidth, this->mHeight), 0.0f);
+        mRenderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->mWidth, this->mHeight), 0.0f);
         // Draw level
-        this->Levels[this->Level].Draw(*renderer);
+        this->Levels[this->Level].Draw(*mRenderer);
         // Draw player
-		ResourceManager::LoadTexture(getAnimationTexture(player->mPosition.x).c_str(), GL_TRUE, "player");	//update texture
-		player->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
-        player->Draw(*renderer);
+		ResourceManager::LoadTexture(getAnimationTexture(mPlayer->mPosition.x).c_str(), GL_TRUE, "player");	//update texture
+		mPlayer->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
+        mPlayer->Draw(*mRenderer);
     }
-    else if (this->mState == GAME_MENU) {
+    else if (this->mState == GAME_MAIN_MENU) {
         for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it) {
-            it->second->Render(renderer, text);
+            it->second->Render(mRenderer, mText);
         }
     }
     EventManager::EndFrame();

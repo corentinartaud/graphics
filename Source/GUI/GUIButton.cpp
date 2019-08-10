@@ -31,6 +31,7 @@ void GUIButton::CalculateModel() {
 }
 
 void GUIButton::Render(Renderer *renderer, TextRenderer *text, Shader shader) {
-    
-    text->RenderText(mText, mPosition.x, mPosition.y, 1.0f);
+    shader.SetMatrix4("model", mModel);
+    renderer->renderQuad();
+    text->RenderText(mText, mPosition.x, mPosition.y, 1.0f, mMouseEntered ? mHoverColor : mForeColor);
 }

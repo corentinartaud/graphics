@@ -46,11 +46,30 @@ void GUIContainer::Deactivate() { }
 
 void GUIContainer::Render(Renderer *renderer, TextRenderer *textRenderer) {
     RenderBackground(renderer, textRenderer);
-    Shader shader = ResourceManager::LoadShader("Shaders/gui.vertexshader", "Shaders/gui.fragmentshader", "gui");
     for(auto it = mElements.begin(); it != mElements.end(); ++it)
-        (*it)->Render(renderer, textRenderer, shader);
+        (*it)->Render(renderer, textRenderer, ResourceManager::GetShader("gui"));
 }
 
 void GUIContainer::RenderBackground(Renderer *renderer, TextRenderer *textRenderer) {
     // by default there is no background, initialize in derived classes if necessary
 }
+
+void GUIContainer::OnMouseMove(float x, float y) {
+    for (auto it = mElements.begin(); it != mElements.end(); ++it) {
+        (*it)->SetMouseEntered(false);
+        if ((*it)->IsMouseInside(x, y))
+            (*it)->SetMouseEntered(true);
+    }
+}
+
+void GUIContainer::OnMouseClick(bool leftButton) {
+        std::shared_ptr<GUIButton> pButton;
+        for (auto it = mElements.begin(); it != mElements.end(); ++it) {
+            if((*it)->GetMouseEntered())
+                pButton = std::dynamic_pointer_cast<GUIButton>((*it));
+        }
+        if (pButton) // button has been pressed; call generic button pressed function and let class derivations manage logic based on button properties
+            ButtonPressed(pButton);
+}
+
+void GUIContainer::ButtonPressed(std::shared_ptr<GUIButton> pButton) { }

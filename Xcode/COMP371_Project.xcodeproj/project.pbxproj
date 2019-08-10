@@ -88,6 +88,7 @@
 		308A22CB22EFC5E9007B1BC9 /* libGLEW.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGLEW.a; path = "../ThirdParty/glew-2.1.0/lib/osx/libGLEW.a"; sourceTree = "<group>"; };
 		308A22CD22EFC5F7007B1BC9 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../ThirdParty/glfw-3.3/lib/osx/libglfw3.a"; sourceTree = "<group>"; };
 		308A22CF22EFC604007B1BC9 /* libfreeimage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreeimage.a; path = "../ThirdParty/FreeImage-3170/lib/osx/libfreeimage.a"; sourceTree = "<group>"; };
+		3098B0EC22FE79B0001509FF /* GameState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameState.h; sourceTree = "<group>"; };
 		30A10F8822FA1E920022E952 /* Renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
 		30A10F8922FA1E920022E952 /* ResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManager.h; sourceTree = "<group>"; };
 		30A10F8A22FA1E920022E952 /* TextureLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureLoader.cpp; sourceTree = "<group>"; };
@@ -221,6 +222,7 @@
 				30A10F9822FA1EA70022E952 /* GameLevel.h */,
 				30A10F9B22FA1EA70022E952 /* GameObject.cpp */,
 				30A10F9A22FA1EA70022E952 /* GameObject.h */,
+				3098B0EC22FE79B0001509FF /* GameState.h */,
 				A5A0F1F622FCF8C800F04F74 /* LevelReader.cpp */,
 				A5A0F1F722FCF8C800F04F74 /* LevelReader.h */,
 			);

@@ -8,15 +8,22 @@
 
 #include "Renderer.h"
 
-Renderer::Renderer(Shader &shader) {
-    this->shader = shader;
-    this->configureQuad();
+Renderer::Renderer() {
+    glGenVertexArrays(1, &mVAO);
+    glBindVertexArray(mVAO);
+    glGenBuffers(1, &mVBO);
+    glGenBuffers(1, &mEBO);
 }
 
 Renderer::~Renderer() {
     glDeleteVertexArrays(1, &mVAO);
     glDeleteBuffers(1, &mVBO);
     glDeleteBuffers(1, &mEBO);
+}
+
+void Renderer::Initialize(Shader &shader) {
+    this->shader = shader;
+    this->configureQuad();
 }
 
 void Renderer::Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color, glm::vec2 textureScaling) {
@@ -63,15 +70,9 @@ void Renderer::configureQuad() {
         2, 1, 3 // Second Triangle
     };
     
-    
-    glGenVertexArrays(1, &mVAO);
-    glBindVertexArray(mVAO);
-    
-    glGenBuffers(1, &mVBO);
     glBindBuffer(GL_ARRAY_BUFFER, mVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     
-    glGenBuffers(1, &mEBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicesArray), indicesArray, GL_STATIC_DRAW);
     

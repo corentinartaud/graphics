@@ -28,33 +28,32 @@ bool GUIMainMenu::Initialize() {
     // start game
     std::shared_ptr<GUIButton> startGame(new GUIButton); // selection 0
     startGame->SetName("startGame");
-    startGame->SetPosition(glm::vec2(410.0f, EventManager::GetScreenHeight() / 2 - 300.0f));
+    startGame->SetPosition(glm::vec2(380.0f, EventManager::GetScreenHeight() / 2 - 100));
     startGame->SetScale(glm::vec2(mScale.x * 0.4f, 50.0f));
-    startGame->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
-    startGame->SetHoverColor(glm::vec4(1.0f));
+    startGame->SetForeColor(glm::vec3(1.0f));
+    startGame->SetHoverColor(glm::vec4(0.0f));
     startGame->SetText("Start Game");
     // continue (?) will need to cache if we do
     std::shared_ptr<GUIButton> continueGame(new GUIButton); // selection 1
     continueGame->SetName("continueGame");
-    continueGame->SetPosition(glm::vec2(410.0f, EventManager::GetScreenHeight() / 2 - 250.0f));
+    continueGame->SetPosition(glm::vec2(380.0f, EventManager::GetScreenHeight() / 2));
     continueGame->SetScale(glm::vec2(mScale.x * 0.4f, 50.0f));
-    continueGame->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
-    continueGame->SetHoverColor(glm::vec4(1.0f));
+    continueGame->SetForeColor(glm::vec3(1.0f));
+    continueGame->SetHoverColor(glm::vec4(0.0f));
     continueGame->SetText("Continue");
     // start game
     std::shared_ptr<GUIButton> quitGame(new GUIButton); // selection 2
     quitGame->SetName("quitGame");
-    quitGame->SetPosition(glm::vec2(410.0f, EventManager::GetScreenHeight() / 2 - 200.0f));
+    quitGame->SetPosition(glm::vec2(380.0f, EventManager::GetScreenHeight() / 2 + 100.0f));
     quitGame->SetScale(glm::vec2(mScale.x * 0.4f, 50.0f));
-    quitGame->SetForeColor(glm::vec4(glm::vec3(0.6f), 1.0f));
-    quitGame->SetHoverColor(glm::vec4(1.0f));
+    quitGame->SetForeColor(glm::vec3(1.0f));
+    quitGame->SetHoverColor(glm::vec4(0.0f));
     quitGame->SetText("Quit Game");
     
     AddElement(startGame);
     AddElement(continueGame);
     AddElement(quitGame);
     
-    mBackgroundTexture = &ResourceManager::GetTexture("background");
     return true;
 }
 
@@ -64,8 +63,10 @@ void GUIMainMenu::Update(float dt) {
 }
 
 void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *text) {
+    // render background
     renderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(EventManager::GetScreenWidth(), EventManager::GetScreenHeight()), 0.0f);
-    text->RenderText("GOLDEN SPHERE", 410.0f, EventManager::GetScreenHeight() / 2 - 350.0f, 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+    // render title
+    text->RenderText("GOLDEN SPHERE", 320.0f, EventManager::GetScreenHeight() / 2 - 300.0f, 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 }
 
 void GUIMainMenu::Activate() {
@@ -77,9 +78,22 @@ void GUIMainMenu::Deactivate() {
     Game::GetInstance()->GetAudio()->StopSound("Sounds/caketown.wav");
 }
 
+void GUIMainMenu::ButtonPressed(std::shared_ptr<GUIButton> button) {
+    std::string buttonName = button->GetName();
+    if (buttonName == "startGame") {
+        Game::GetInstance()->SwitchStates(GAME_ACTIVE);
+    } else if (buttonName == "continueGame") {
+        Game::GetInstance()->SwitchStates(GAME_ACTIVE);
+        
+    } else if (buttonName == "quitGame") {
+        Game::GetInstance()->SwitchStates(GAME_NULL);
+    } else {
+        // do nothing
+    }
+}
+
 void GUIMainMenu::select(){
     switch(currentSelection){
-        
         case 0: ; // start game
         case 1: ; // continue game
         case 2: ; // exit game
