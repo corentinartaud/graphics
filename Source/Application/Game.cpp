@@ -128,6 +128,7 @@ void Game::SwitchStates(GameState state) {
             mGUIContainers["MainMenu"]->SetActive(true);
             break;
         case GameState::GAME_ACTIVE:
+            GetAudio()->PlaySound("Sounds/awesomeness.wav", true);
             break;
         case GameState::GAME_WIN:
             break;

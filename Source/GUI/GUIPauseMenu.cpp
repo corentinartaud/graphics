@@ -70,11 +70,11 @@ void GUIPauseMenu::RenderBackground(Renderer *renderer, TextRenderer *text){
 
 void GUIPauseMenu::Activate() {
     Game::GetInstance()->GetAudio()->StopAll();
-    Game::GetInstance()->GetAudio()->PlaySound("Sounds/scratch.wav", true);
+    Game::GetInstance()->GetAudio()->PlaySound("Sounds/the_final_battle.wav", true);
 }
 
 void GUIPauseMenu::Deactivate() {
-    Game::GetInstance()->GetAudio()->PlaySound("Sounds/scratch.wav");
+    Game::GetInstance()->GetAudio()->PlaySound("Sounds/the_final_battle.wav");
 }
 
 void GUIPauseMenu::ButtonPressed(std::shared_ptr<GUIButton> button){
