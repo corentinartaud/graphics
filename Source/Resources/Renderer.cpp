@@ -19,7 +19,7 @@ Renderer::~Renderer() {
     glDeleteVertexArrays(1, &mTriangleVAO);
 }
 
-void Renderer::Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color, glm::vec2 textureScaling, glm::mat4 viewMatrix, bool quad) {
+void Renderer::Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec4 color, glm::vec2 textureScaling, glm::mat4 viewMatrix, bool quad) {
     // Prepare transformations
     this->shader.Use();
     glm::mat4 model;
@@ -37,7 +37,7 @@ void Renderer::Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size
     this->shader.SetMatrix4("model", model);
     
     // Render textured quad
-    this->shader.SetVector3f("v_color", color);
+    this->shader.SetVector4f("v_color", color);
     
     // Set texture scaling
     glm::mat4 scale = glm::scale(glm::mat4(1.f), glm::vec3(textureScaling.x, textureScaling.y, 1.0f));

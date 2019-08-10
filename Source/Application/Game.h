@@ -17,6 +17,7 @@
 #include "GameState.h"
 #include "GameLevel.h"
 #include "GameEngine.h"
+#include "Animation.h"
 
 class AudioEngine;
 class GUIContainer;
@@ -27,9 +28,9 @@ const glm::vec2 PLAYER_SIZE(100, 100);
 // Initial velocity of the player paddle
 const GLfloat PLAYER_VELOCITY(300.0f);
 // Gravity acceleration towards the ground
-const GLfloat GRAVITY(-400.f);
+const GLfloat GRAVITY(-800.f);
 // Player initial jump velocity
-const GLfloat JUMP_VELOCITY(300.f);
+const GLfloat JUMP_VELOCITY(500.f);
 
 class Game {
 public:
@@ -38,7 +39,7 @@ public:
     GLuint mWidth, mHeight;
     std::vector<GameLevel> Levels;
     GLuint Level;
-    
+	Animation* animations;
     // Constructor / Destructor
     Game();
     ~Game();
@@ -52,8 +53,8 @@ public:
     void ProcessInput(GLfloat dt);
     void Update(GLfloat dt);
     void Render();
-	float floatModulo(float top, float bottom);
-	std::string getAnimationTexture(float positionX);
+	//float floatModulo(float top, float bottom);
+	//std::string getAnimationTexture(float positionX);
     
     static Game* GetInstance() { return instance; };
     
