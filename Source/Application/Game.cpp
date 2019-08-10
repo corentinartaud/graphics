@@ -190,6 +190,7 @@ void Game::ProcessInput(GLfloat dt) {
         // Only allow to jump when player is on a platform
         if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && player->mVelocity.y == 0.f) {
             player->mVelocity.y = JUMP_VELOCITY;
+			animations->addSmoke(*player, Jump);
         }
         // check for pause
         if (this->mKeys[GLFW_KEY_P]){
@@ -207,19 +208,14 @@ void Game::Render() {
         glm::mat4 viewMatrix = glm::translate(glm::mat4(1.f), glm::vec3(player->mInitialPosition.x - player->mPosition.x, 0.f, 0.f));
         // Draw level
         this->Levels[this->Level].Draw(*renderer, viewMatrix);
-        // Draw player
-		//ResourceManager::LoadTexture(Animation::getAnimationTexture(player->mPosition.x).c_str(), GL_TRUE, "player");	//update texture
+        // Set Player Animation
 		animations->setPlayerAnimation(*player);
 		player->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
-
-		/*
-		std::list<GameObject*> PhantomList = Animation::phatomList;
-		for (GameObject* tile : PhantomList)
-			tile->Draw(*renderer, viewMatrix);
-		*/
-		animations->Draw(*renderer, viewMatrix);
-
-        player->Draw(*renderer, viewMatrix);
+		//Draw Phantoms
+		animations->DrawPhantom(*renderer, viewMatrix);
+		animations->DrawSmoke(*renderer, viewMatrix);
+		//Draw Player
+		player->Draw(*renderer, viewMatrix);
     }
     std::cout << (mState == GAME_LOSE) << std::endl;
     for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)

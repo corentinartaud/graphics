@@ -9,14 +9,13 @@ using namespace std;
 Animation::Animation() {
 
 }
-float Animation::floatModulo(float top, float bottom)
-{
+float Animation::floatModulo(float top, float bottom){
 	uint8_t division = top / bottom;
 	return top - (bottom * (float)division);
 }
 
 void Animation::setPlayerAnimation(GameObject player) {
-	addPhantom(player, glfwGetTime());
+	addPhantom(player);
 	const std::string standRight[6] = {
 		"Textures/Player/stand/s1.png",
 		"Textures/Player/stand/s2.png",
@@ -108,49 +107,93 @@ void Animation::setPlayerAnimation(GameObject player) {
 #endif
 }
 
-void Animation::Draw(Renderer& renderer, glm::mat4 viewMatrix)
-{
-#define MODE 1
+void Animation::DrawPhantom(Renderer& renderer, glm::mat4 viewMatrix){
+#define MODE 0
 #if MODE == 1
 		//Mode 1: Restrict list size
 #define NUMBER_OF_PHANTOMS_TO_KEEP 5
-	int size = phatomList.size();
+	int size = phantomList.size();
 	if (size > NUMBER_OF_PHANTOMS_TO_KEEP) {
 		for (int i=0;i<size- NUMBER_OF_PHANTOMS_TO_KEEP;i++)
-			phatomList.pop_front();
+			phantomList.pop_front();
 	}
 #else
 		//Mode 2: timeout
 #define TIMEOUT_TIME 0.3f	//in seconds
 
-	std::list<GameObjectWithTimestamp>::iterator it = phatomList.begin();
-	while (it != phatomList.end())
-	{
-		if (glfwGetTime() - phatomList.front().timestamp> TIMEOUT_TIME){
-			phatomList.pop_front();
+	std::list<GameObjectWithTimestamp>::iterator it = phantomList.begin();
+	while (it != phantomList.end()){
+		if (glfwGetTime() - phantomList.front().timestamp> TIMEOUT_TIME){
+			phantomList.pop_front();
 		}
 		else{
 			break;
 		}
+		if (phantomList.empty()) return; //if list is empty now then leave the loop or the next iteration will throw a null pointer exception
 	}
 #endif
 
 #ifndef TIMEOUT_TIME
-#define TIMEOUT_TIME 0.3f	//how texture color fades out
-#endif 
-	for (GameObjectWithTimestamp tile : phatomList)
-	{
+#define TIMEOUT_TIME 0.5f	//how texture color fades out
+#endif	
+		//Draw phantoms and interpolate color/opacity
+	for (GameObjectWithTimestamp tile : phantomList){
 		float mixVariable = (glfwGetTime() - tile.timestamp) / TIMEOUT_TIME*2;
-		mixVariable = min(mixVariable, 1.0f);
-		mixVariable = max(mixVariable, 0.0f);
-		tile.object.mColor = (glm::mix(tile.object.mColor, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),mixVariable));
+		mixVariable = min(mixVariable, 1.0f);  //clamp mix
+		mixVariable = max(mixVariable, 0.0f);  //clamp mix
+		tile.object.mColor = (glm::mix(tile.object.mColor * (glm::vec4(1.0f, 1.0f, 1.0f, 0.6f)), glm::vec4(0.0f, 0.0f, 0.0f, 0.0f),mixVariable));
 		tile.object.Draw(renderer, viewMatrix);
 	}
 }
 
-void Animation::addPhantom(GameObject object, float time)
-{
-	GameObjectWithTimestamp temp = { object, time };
-	this->phatomList.push_back(temp);
+void Animation::addPhantom(GameObject object){
+	GameObjectWithTimestamp temp = { object, glfwGetTime() };
+	this->phantomList.push_back(temp);
 }
 
+void Animation::DrawSmoke(Renderer& renderer, glm::mat4 viewMatrix) {
+
+#define SMOKE_FADE_TIME 0.8f
+		//check if smoke should be deleted
+	std::list<GameObjectWithTimestamp>::iterator it = smokeList.begin();
+	while (it != smokeList.end()){	//go through list
+		if (glfwGetTime() - smokeList.front().timestamp > SMOKE_FADE_TIME) {
+			smokeList.pop_front();	//delete the object if needed
+		}
+		else {
+			break;
+		}
+		if (smokeList.empty()) return;	//if list is empty now then leave the loop or the next iteration will throw a null pointer exception
+	}
+	//Draw smoke and interpolate color/opacity
+	for (GameObjectWithTimestamp tile : smokeList) {
+		float mixVariable = (glfwGetTime() - tile.timestamp) / SMOKE_FADE_TIME;
+		mixVariable = min(mixVariable, 1.0f);	//clamp mix
+		mixVariable = max(mixVariable, 0.0f);   //clamp mix
+		tile.object.mColor = (glm::mix(tile.object.mColor*(glm::vec4(1.0f,1.0f,1.0f,0.8f)), glm::vec4(1.0f, 1.0f, 1.0f, 0.0f), mixVariable));	//interpolate color
+		tile.object.Draw(renderer, viewMatrix);
+	}
+}
+
+void Animation::addSmoke(GameObject player, smokeTypes type) {
+	GameObject tempObj;
+	ResourceManager::LoadTexture("../Assets/Textures/smoke.png", GL_TRUE, "jumpSmoke");	//load jumpSmoke texture
+	tempObj.mTexture = ResourceManager::GetTexture("jumpSmoke");	//set texture
+	tempObj.mPosition = player.mPosition;	//place at position of input object
+	tempObj.mSize = glm::vec2(80.0f, 20.0f);	//set size
+
+	GameObjectWithTimestamp temp = { tempObj, glfwGetTime()};	//make object with timestamp
+	smokeList.push_back(temp);	//add to list
+
+	/*
+	switch (type) {
+	case Run:
+		break;
+	case Jump:
+
+		break;
+	default:
+		return;
+	}
+	*/
+}

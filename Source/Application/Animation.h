@@ -13,17 +13,33 @@ struct GameObjectWithTimestamp{
 	GameObject object;
 	float timestamp;
 };
+struct AnimationObject {
+	GameObject object;
+	float timestamp;
+	int id;
+};
+enum smokeTypes {
+	Run,
+	Jump
+};
 class Animation {
 public:
 		//Constr
 	Animation();
+
 		//Player Animation
 	float floatModulo(float top, float bottom);
 	void setPlayerAnimation(GameObject player);
+
 		//Phantoms
-	void Draw(Renderer& renderer, glm::mat4 viewMatrix);
-	std::list<GameObjectWithTimestamp> phatomList;
-	void addPhantom(GameObject object, float time);
+	void DrawPhantom(Renderer& renderer, glm::mat4 viewMatrix);
+	std::list<GameObjectWithTimestamp> phantomList;
+	void addPhantom(GameObject object);
+
+		//Smoke List
+	std::list<GameObjectWithTimestamp> smokeList;
+	void DrawSmoke(Renderer& renderer, glm::mat4 viewMatrix);
+	void addSmoke(GameObject player, smokeTypes type);
 };
 
 #endif
