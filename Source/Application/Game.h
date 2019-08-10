@@ -9,40 +9,43 @@
 #ifndef Game_h
 #define Game_h
 
-#include "GameState.h"
-#include "GameLevel.h"
+#include <array>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include <array>
-#include <map>
-#include <memory>
+#include "GameLevel.h"
+#include "GameEngine.h"
 
-class GUIContainer;
-class AudioEngine;
-class TextRenderer;
+enum GameState {
+    GAME_ACTIVE,
+    GAME_MENU,
+    GAME_WIN
+};
 
 // Initial size of the player paddle
 const glm::vec2 PLAYER_SIZE(100, 100);
 // Initial velocity of the player paddle
-const GLfloat PLAYER_VELOCITY(500.0f);
+const GLfloat PLAYER_VELOCITY(150.0f);
+// Gravity acceleration towards the ground
+const GLfloat GRAVITY(-400.f);
+// Player initial jump velocity
+const GLfloat JUMP_VELOCITY(300.f);
 
 class Game {
 public:
     GameState mState;
-    bool mKeys[1024];
-    float mWidth, mHeight;
+    GLboolean mKeys[1024];
+    GLuint mWidth, mHeight;
     std::vector<GameLevel> Levels;
     GLuint Level;
+    GameEngine* engine;
     
     // Constructor / Destructor
-    Game();
+    Game(GLuint width, GLuint height);
     ~Game();
     
-    void GameLoop();
-    
-    void Initialize(float width, float height);
+    void Initialize();
     // Game Loop
     void ProcessInput(GLfloat dt);
     void Update(GLfloat dt);
@@ -50,28 +53,10 @@ public:
 	float floatModulo(float top, float bottom);
 	std::string getAnimationTexture(float positionX);
     
-    static Game* GetInstance() { return mInstance; };
-    
-    // returns the game's audio sub-system
-    AudioEngine* const GetAudio() { return mAudio; };
-    
-    // process mouse mouvement in OS-independent manner
-    void ProcessMouseMove(float x, float y);
-    // processes mouse button clicks in OS-independent manner
-    void ProcessMouseClick(bool leftButton);
-    
-    // switches the game states
-    void SwitchStates(GameState state = GameState::GAME_NULL);
+    static Game* GetInstance() { return instance; };
 
 private:
-    
-    AudioEngine *mAudio;
-    Renderer *mRenderer;
-    GameObject *mPlayer;
-    TextRenderer *mText;
-    
-    std::map<std::string, std::shared_ptr<GUIContainer>> mGUIContainers; // contains all the game's GUI items
-    static Game *mInstance;
+    static Game* instance;
 };
 
 #endif /* Game_h */

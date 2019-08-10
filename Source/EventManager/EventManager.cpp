@@ -6,9 +6,9 @@
 //  Copyright © 2019 Concordia. All rights reserved.
 //
 
-#include "EventManager.h"
-#include "Renderer.h"
 #include "Game.h"
+#include "Renderer.h"
+#include "EventManager.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -20,11 +20,11 @@
 
 
 // Time
-double EventManager::mLastFrameTime = glfwGetTime();
-float  EventManager::mFrameTime = 0.0f;
+double EventManager::sLastFrameTime = glfwGetTime();
+float  EventManager::sFrameTime = 0.0f;
 
 // Window
-GLFWwindow* EventManager::mWindow = nullptr;
+GLFWwindow* EventManager::spWindow = nullptr;
 
 void EventManager::Initialize() {
     // Initialise GLFW
@@ -52,20 +52,15 @@ void EventManager::Initialize() {
 #endif
     
     // Open a window and create its OpenGL context
-    mWindow = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Golden Sphere", nullptr, nullptr);
-    if (mWindow == nullptr) {
+    spWindow = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Golden Sphere", nullptr, nullptr);
+    if (spWindow == nullptr) {
         fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
         glfwTerminate();
         exit(-1);
     }
-    glfwMakeContextCurrent(mWindow);
+    glfwMakeContextCurrent(spWindow);
     // Enables VSYNC on MacOSX
     glfwSwapInterval(1);
-    
-    // Ensure we can capture the escape key being pressed below
-    glfwSetKeyCallback(mWindow, key_callback);
-    glfwSetCursorPosCallback(mWindow, mouse_move_callback);
-    glfwSetMouseButtonCallback(mWindow, mouse_button_callback);
     
     // Initialize GLEW
     glewExperimental = true; // Needed for core profile
@@ -76,24 +71,27 @@ void EventManager::Initialize() {
     }
     // Somehow, glewInit triggers a glInvalidEnum... Let's ignore it
     glGetError();
+    
+    // Ensure we can capture the escape key being pressed below
+    glfwSetKeyCallback(spWindow, key_callback);
 
     // Black background
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     
     // OpenGL configuration
-    glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    glViewport(0, 0, EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
     glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     // Initial time
-    mLastFrameTime = glfwGetTime();
+    sLastFrameTime = glfwGetTime();
 }
 
 void EventManager::Shutdown() {
     // Close OpenGL window and terminate GLFW
     glfwTerminate();
-    mWindow = nullptr;
+    spWindow = nullptr;
 }
 
 void EventManager::BeginFrame() {
@@ -103,7 +101,7 @@ void EventManager::BeginFrame() {
 
 void EventManager::EndFrame() {
     // Swap buffers
-    glfwSwapBuffers(mWindow);
+    glfwSwapBuffers(spWindow);
 }
 
 void EventManager::Update() {
@@ -112,20 +110,16 @@ void EventManager::Update() {
     
     // Update frame time
     double currentTime = glfwGetTime();
-    mFrameTime = static_cast<float>(currentTime - mLastFrameTime);
-    mLastFrameTime = currentTime;
+    sFrameTime = static_cast<float>(currentTime - sLastFrameTime);
+    sLastFrameTime = currentTime;
 }
 
 float EventManager::GetFrameTime() {
-    return mFrameTime;
-}
-
-void EventManager::SetWindowShouldClose() {
-    glfwSetWindowShouldClose(mWindow, GL_TRUE);
+    return sFrameTime;
 }
 
 bool EventManager::ExitRequested() {
-    return glfwWindowShouldClose(mWindow);
+    return glfwGetKey(spWindow, GLFW_KEY_ESCAPE ) == GLFW_PRESS || glfwWindowShouldClose(spWindow);
 }
 
 void EventManager::key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
@@ -138,13 +132,4 @@ void EventManager::key_callback(GLFWwindow* window, int key, int scancode, int a
         else if (action == GLFW_RELEASE)
              Game::GetInstance()->mKeys[key] = GL_FALSE;
     }
-}
-
-void EventManager::mouse_move_callback(GLFWwindow *window, double x, double y) {
-    Game::GetInstance()->ProcessMouseMove(x, y);
-}
-
-void EventManager::mouse_button_callback(GLFWwindow *window, int button, int action, int mods) {
-    if (action == GLFW_PRESS)
-        Game::GetInstance()->ProcessMouseClick(button = GLFW_MOUSE_BUTTON_LEFT);
 }

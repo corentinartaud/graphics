@@ -22,7 +22,7 @@ Each object in the game likely needs the minimal of state as described within Ga
 class GameObject {
 public:
     // Object state
-    glm::vec2 mPosition, mSize, mVelocity, mTextureScaling;
+    glm::vec2 mInitialPosition, mPosition, mSize, mVelocity, mTextureScaling;
     glm::vec3 mColor;
     GLfloat mRotation;
     // Render state
@@ -31,7 +31,7 @@ public:
     GameObject();
     GameObject(glm::vec2 pos, glm::vec2 size, TextureLoader texture, glm::vec3 color = glm::vec3(1.0f), glm::vec2 velocity = glm::vec2(0.0f, 0.0f));
     // Draw sprite
-    virtual void Draw(Renderer &renderer);
+    virtual void Draw(Renderer &renderer, glm::mat4 viewMatrix = glm::mat4(1.f));
 };
 
 #endif /* GameObject_h */

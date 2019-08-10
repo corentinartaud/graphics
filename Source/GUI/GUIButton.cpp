@@ -8,11 +8,6 @@
 
 #include "GUIButton.h"
 #include "Renderer.h"
-#include "TextRenderer.h"
-#include "EventManager.h"
-#include "ResourceManager.h"
-
-#include <iostream>
 
 GUIButton::GUIButton() { }
 
@@ -30,6 +25,8 @@ void GUIButton::CalculateModel() {
     mModel *= glm::scale(glm::vec3(mScale, 1.0f));
 }
 
-void GUIButton::Render(Renderer *renderer, TextRenderer *text, Shader shader) {
-    text->RenderText(mText, mPosition.x, mPosition.y, 1.0f, mMouseEntered ? mHoverColor : mForeColor);
+void GUIButton::Render() {
+    if (mBackColor != glm::vec4(1.0f)) {
+        
+    }
 }

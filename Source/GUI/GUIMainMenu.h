@@ -12,13 +12,10 @@
 	#include <memory>
 #endif
 
-#include "GUIContainer.h"
-
 class TextureLoader;
-class TextRenderer;
 class GUIButton;
 
-class GUIMainMenu : public GUIContainer {
+class GUIMainMenu {
 public:
     int currentSelection;
     GUIMainMenu();
@@ -28,20 +25,17 @@ public:
     // updates the game menu plus all its controls
     void Update(float dt);
     // render the background texture and color
-    void RenderBackground(Renderer *renderer, TextRenderer *text);
-    
-    // activates the main menu
-    void Activate();
-    // deactives the main menu
-    void Deactivate();
-    
-    // occurs when a button is pressed
-    void ButtonPressed(std::shared_ptr<GUIButton> pButton);
+    void RenderBackground();
     
     void changeMenuState();
     void selectionUp();
     void selectionDown();
     void select();
+    
+private:
+    // texture used for rendering the background
+    TextureLoader* mBackgroundTexture; 
+    
 };
 
 #endif /* GUIGameMenu_h */
