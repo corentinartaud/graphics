@@ -16,12 +16,15 @@
 #include <GLFW/glfw3.h>
 
 #include "GameLevel.h"
-#include "GUIContainer.h"
+
+class GUIContainer;
+class AudioEngine;
 
 enum GameState {
     GAME_ACTIVE,
     GAME_MENU,
-    GAME_WIN
+    GAME_WIN,
+    GAME_NULL
 };
 
 // Initial size of the player paddle
@@ -50,10 +53,18 @@ public:
 	std::string getAnimationTexture(float positionX);
     
     static Game* GetInstance() { return instance; };
+    
+    // returns the game's audio sub-system
+    AudioEngine* const GetAudio() { return mAudio; };
+    
+    // switches the game states
+    void SwitchStates(GameState state = GameState::GAME_NULL);
 
 private:
     static Game* instance;
     std::map<std::string, std::shared_ptr<GUIContainer>> mGUIContainers; // contains all the game's GUI items
+    
+    AudioEngine *mAudio;
 };
 
 #endif /* Game_h */

@@ -21,6 +21,8 @@
 		307697AC22FDEAFE00355205 /* TextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307697AB22FDEAFE00355205 /* TextRenderer.cpp */; };
 		307697AE22FDED8A00355205 /* Fonts in CopyFiles */ = {isa = PBXBuildFile; fileRef = 307697AD22FDED8300355205 /* Fonts */; };
 		307697B122FDF5D600355205 /* GUIContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307697B022FDF5D600355205 /* GUIContainer.cpp */; };
+		307697B322FE2A3200355205 /* Sounds in CopyFiles */ = {isa = PBXBuildFile; fileRef = 307697B222FE2A2A00355205 /* Sounds */; };
+		307697B522FE3B4400355205 /* libirrklang.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 307697B422FE3B4300355205 /* libirrklang.dylib */; };
 		308A22C922EFC5D3007B1BC9 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 038B791B1A6FF3D100111E36 /* CoreFoundation.framework */; };
 		308A22CA22EFC5DB007B1BC9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 038B79151A6FF2E900111E36 /* Cocoa.framework */; };
 		308A22CC22EFC5E9007B1BC9 /* libGLEW.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 308A22CB22EFC5E9007B1BC9 /* libGLEW.a */; };
@@ -49,6 +51,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				307697B322FE2A3200355205 /* Sounds in CopyFiles */,
 				30A10FA322FA1F1D0022E952 /* Levels in CopyFiles */,
 				0345E23222D7018A0054C158 /* Textures in CopyFiles */,
 				03FE4ED41B2FA1210020F06F /* Scenes in CopyFiles */,
@@ -80,6 +83,8 @@
 		307697AD22FDED8300355205 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = ../Assets/Fonts; sourceTree = "<group>"; };
 		307697AF22FDF3CD00355205 /* GUIContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GUIContainer.h; sourceTree = "<group>"; };
 		307697B022FDF5D600355205 /* GUIContainer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GUIContainer.cpp; sourceTree = "<group>"; };
+		307697B222FE2A2A00355205 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = ../Assets/Sounds; sourceTree = "<group>"; };
+		307697B422FE3B4300355205 /* libirrklang.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libirrklang.dylib; path = "../ThirdParty/irrKlang-1.6.0/lib/osx/libirrklang.dylib"; sourceTree = "<group>"; };
 		308A22CB22EFC5E9007B1BC9 /* libGLEW.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGLEW.a; path = "../ThirdParty/glew-2.1.0/lib/osx/libGLEW.a"; sourceTree = "<group>"; };
 		308A22CD22EFC5F7007B1BC9 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../ThirdParty/glfw-3.3/lib/osx/libglfw3.a"; sourceTree = "<group>"; };
 		308A22CF22EFC604007B1BC9 /* libfreeimage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreeimage.a; path = "../ThirdParty/FreeImage-3170/lib/osx/libfreeimage.a"; sourceTree = "<group>"; };
@@ -118,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				307697B522FE3B4400355205 /* libirrklang.dylib in Frameworks */,
 				307697A922FDE84B00355205 /* libfreetype.6.dylib in Frameworks */,
 				307697A722FDDC6B00355205 /* OpenAL.framework in Frameworks */,
 				307697A522FDDC6300355205 /* CoreServices.framework in Frameworks */,
@@ -152,6 +158,7 @@
 		034F0BB31A7010160028E1BA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				307697B222FE2A2A00355205 /* Sounds */,
 				307697AD22FDED8300355205 /* Fonts */,
 				30A10FA222FA1F0C0022E952 /* Levels */,
 				0345E23122D700D10054C158 /* Textures */,
@@ -199,8 +206,8 @@
 		3076979822FDC62900355205 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
-				3076979922FDC63700355205 /* AudioEngine.h */,
 				307697A222FDDC2B00355205 /* AudioEngine.cpp */,
+				3076979922FDC63700355205 /* AudioEngine.h */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -274,6 +281,7 @@
 		A5E099F122F9BF87009A45FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				307697B422FE3B4300355205 /* libirrklang.dylib */,
 				307697A822FDE84B00355205 /* libfreetype.6.dylib */,
 				307697A622FDDC6B00355205 /* OpenAL.framework */,
 				307697A422FDDC6300355205 /* CoreServices.framework */,
@@ -477,6 +485,7 @@
 					"../ThirdParty/FreeImage-3170/Source",
 					../ThirdParty/Box2D,
 					"../ThirdParty/freetype-2.9/include",
+					"../ThirdParty/irrKlang-1.6.0/include",
 				);
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
@@ -486,6 +495,7 @@
 					"../ThirdParty/FreeImage-3170/lib/osx",
 					"$(PROJECT_DIR)",
 					/opt/X11/lib,
+					"../ThirdParty/irrKlang-1.6.0/lib/osx",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -505,6 +515,7 @@
 					"../ThirdParty/FreeImage-3170/Source",
 					../ThirdParty/Box2D,
 					"../ThirdParty/freetype-2.9/include",
+					"../ThirdParty/irrKlang-1.6.0/include",
 				);
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
@@ -514,6 +525,7 @@
 					"../ThirdParty/FreeImage-3170/lib/osx",
 					"$(PROJECT_DIR)",
 					/opt/X11/lib,
+					"../ThirdParty/irrKlang-1.6.0/lib/osx",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";

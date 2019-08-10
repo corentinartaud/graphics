@@ -30,6 +30,11 @@ public:
     // render the background texture and color
     void RenderBackground(Renderer *renderer, TextRenderer *text);
     
+    // activates the main menu
+    void Activate();
+    // deactives the main menu
+    void Deactivate();
+    
     void changeMenuState();
     void selectionUp();
     void selectionDown();

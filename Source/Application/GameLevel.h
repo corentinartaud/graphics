@@ -19,8 +19,6 @@
 #include "ResourceManager.h"
 
 
-/// GameLevel holds all Tiles as part of a Breakout level and
-/// hosts functionality to Load/render levels from the harddisk.
 class GameLevel {
 public:
     // Level state

@@ -13,6 +13,8 @@
 #include "Renderer.h"
 #include "EventManager.h"
 #include "TextRenderer.h"
+#include "AudioEngine.h"
+#include "Game.h"
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
@@ -64,6 +66,15 @@ void GUIMainMenu::Update(float dt) {
 void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *text) {
     renderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(EventManager::GetScreenWidth(), EventManager::GetScreenHeight()), 0.0f);
     text->RenderText("GOLDEN SPHERE", 410.0f, EventManager::GetScreenHeight() / 2 - 350.0f, 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+}
+
+void GUIMainMenu::Activate() {
+    Game::GetInstance()->GetAudio()->StopAll();
+    Game::GetInstance()->GetAudio()->PlaySound("Sounds/caketown.wav", true);
+}
+
+void GUIMainMenu::Deactivate() {
+    Game::GetInstance()->GetAudio()->StopSound("Sounds/caketown.wav");
 }
 
 void GUIMainMenu::select(){

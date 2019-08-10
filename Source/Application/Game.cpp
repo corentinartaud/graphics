@@ -13,6 +13,8 @@
 #include "GameObject.h"
 #include "TextRenderer.h"
 #include "GUIMainMenu.h"
+#include "GUIContainer.h"
+#include "AudioEngine.h"
 #include <string>
 #include <iostream>
 
@@ -28,15 +30,18 @@ TextRenderer *text;
 Game::Game(GLuint width, GLuint height)
 : mState(GAME_ACTIVE), mKeys(), mWidth(width), mHeight(height) {
     instance = this;
+    mAudio = new AudioEngine();
 }
 
 Game::~Game() {
     delete renderer;
     delete player;
     delete text;
+    delete mAudio;
 }
 
 void Game::Initialize() {
+    mAudio->Load();
     // Load shaders
 #if defined(PLATFORM_OSX)	
 	ResourceManager::LoadShader("Shaders/texture.vertexshader", "Shaders/texture.fragmentshader", "texture");
@@ -78,9 +83,32 @@ void Game::Initialize() {
     this->Levels.push_back(one);
     this->Level = 0;
     
-    mGUIContainers["main_menu"] = std::shared_ptr<GUIContainer>(new GUIMainMenu);
+    mGUIContainers["MainMenu"] = std::shared_ptr<GUIContainer>(new GUIMainMenu);
     for(auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
         it->second->Initialize();
+    
+    SwitchStates(GameState::GAME_MENU);
+}
+
+void Game::SwitchStates(GameState state) {
+    mState = (state == GameState::GAME_NULL ? mState : state);
+    // de-activate all GUI containers in order to avoid irrelevant sounds
+    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
+        it->second->SetActive(false);
+    
+    switch(state) {
+        case GameState::GAME_MENU:
+            mGUIContainers["MainMenu"]->SetActive(true);
+            break;
+        case GameState::GAME_ACTIVE:
+            break;
+        case GameState::GAME_WIN:
+            break;
+        case GameState::GAME_NULL:
+            break;
+        default:
+            break;
+    }
 }
 
 void Game::Update(float dt) { }
@@ -129,8 +157,6 @@ void Game::Render() {
         player->Draw(*renderer);
     }
     else if (this->mState == GAME_MENU) {
-        //text->RenderText("Press ENTER to start", 250.0f, EventManager::GetScreenWidth() / 2, 1.0f);
-        //text->RenderText("Press W or S to select level", 245.0f, EventManager::GetScreenHeight() / 2 + 20.0f, 0.75f);
         for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it) {
             it->second->Render(renderer, text);
         }

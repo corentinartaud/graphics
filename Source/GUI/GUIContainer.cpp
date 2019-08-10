@@ -29,9 +29,9 @@ void GUIContainer::SetActive(bool active) {
     bool changed = mIsActive != active;
     mIsActive = active;
     if(mIsActive)
-        OnActivate();
+        Activate();
     else if(changed)
-        OnDeactivate();
+        Deactivate();
 }
 void GUIContainer::SetPosition(glm::vec2 position) {
     mPosition = position;
@@ -40,9 +40,9 @@ void GUIContainer::SetScale(glm::vec2 scale) {
     mScale = scale;
 }
 
-void GUIContainer::OnActivate() { }
+void GUIContainer::Activate() { }
 
-void GUIContainer::OnDeactivate() { }
+void GUIContainer::Deactivate() { }
 
 void GUIContainer::Render(Renderer *renderer, TextRenderer *textRenderer) {
     RenderBackground(renderer, textRenderer);

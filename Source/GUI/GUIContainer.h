@@ -41,9 +41,9 @@ public:
     virtual void RenderBackground(Renderer *renderer, TextRenderer *textRenderer);
     
     // sets the current GUI container as the active GUI container
-    virtual void OnActivate();
+    virtual void Activate();
     // deactivates the GUI container
-    virtual void OnDeactivate();
+    virtual void Deactivate();
     
 protected:
     // add a GUI element to the conainer
