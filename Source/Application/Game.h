@@ -27,7 +27,7 @@ class TextRenderer;
 // Initial size of the player paddle
 const glm::vec2 PLAYER_SIZE(100, 100);
 // Initial velocity of the player paddle
-const GLfloat PLAYER_VELOCITY(500.0f);
+const GLfloat PLAYER_VELOCITY(150.0f);
 // Gravity acceleration towards the ground
 const GLfloat GRAVITY(-400.f);
 // Player initial jump velocity
