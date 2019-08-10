@@ -48,7 +48,7 @@ Game::~Game() {
     delete mPlayer;
     delete mText;
     delete mAudio;
-    delete engine;
+    delete mEngine;
 }
 
 void Game::Initialize(float width, float height) {
@@ -105,7 +105,7 @@ void Game::Initialize(float width, float height) {
     this->Levels.push_back(one);
     this->Level = 0;
     
-    engine = new GameEngine(mPlayer, one.Bricks, GRAVITY, PLAYER_VELOCITY);
+    mEngine = new GameEngine(mPlayer, one.Bricks, GRAVITY, PLAYER_VELOCITY);
     
     mGUIContainers["MainMenu"] = std::shared_ptr<GUIContainer>(new GUIMainMenu);
     mGUIContainers["PauseMenu"] = std::shared_ptr<GUIPauseMenu>(new GUIPauseMenu);
@@ -113,7 +113,7 @@ void Game::Initialize(float width, float height) {
     for(auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
         it->second->Initialize();
     
-    SwitchStates(GameState::GAME_MAIN_MENU);
+    SwitchStates(GameState::GAME_ACTIVE);
 }
 
 void Game::SwitchStates(GameState state) {
@@ -142,7 +142,7 @@ void Game::SwitchStates(GameState state) {
 }
 
 void Game::Update(float dt) {
-    engine->Update(dt);
+    mEngine->Update(dt);
 }
 
 // process input for every frame during game state
