@@ -7,6 +7,7 @@
 //
 
 #include "GUIElement.h"
+#include <iostream>
 
 #include <iostream>
 
@@ -36,8 +37,10 @@ void GUIElement::SetMouseEntered(bool entered) {
 
 bool GUIElement::IsMouseInside(float x, float y) {
     bool inside = true;
-    glm::vec2 AABBCenter = mPosition + mScale * 0.5f;
-    glm::vec2 AABBHalfWidths = mScale * 0.3f;
+    glm::vec2 AABBCenter = mPosition;
+    std::cout << AABBCenter.x << " " << AABBCenter.y << std::endl;
+    glm::vec2 AABBHalfWidths = glm::vec2(mScale);
+    std::cout << AABBHalfWidths.x << " " << AABBHalfWidths.y << std::endl;
     // - check if target is outside AABB and if so change center accordingly
     if (x > AABBCenter.x + AABBHalfWidths.x)      // target at right side of box
         inside = false;

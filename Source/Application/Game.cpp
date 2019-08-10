@@ -128,6 +128,7 @@ void Game::SwitchStates(GameState state) {
         case GameState::GAME_WIN:
             break;
         case GameState::GAME_NULL:
+            EventManager::SetWindowShouldClose();
             break;
         case GameState::GAME_INGAME_MENU:
             mGUIContainers["PauseMenu"]->SetActive(true);
@@ -190,6 +191,16 @@ void Game::Render() {
         it->second->Render(mRenderer, mText);
     }
     EventManager::EndFrame();
+}
+
+void Game::ProcessMouseMove(float x, float y) {
+    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
+        it->second->OnMouseMove(x, y);
+}
+
+void Game::ProcessMouseClick(bool leftButton) {
+    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
+        it->second->OnMouseClick(leftButton);
 }
 
 float Game::floatModulo(float top, float bottom)

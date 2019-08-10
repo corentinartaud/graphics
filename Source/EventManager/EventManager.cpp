@@ -64,6 +64,8 @@ void EventManager::Initialize() {
     
     // Ensure we can capture the escape key being pressed below
     glfwSetKeyCallback(mWindow, key_callback);
+    glfwSetCursorPosCallback(mWindow, mouse_move_callback);
+    glfwSetMouseButtonCallback(mWindow, mouse_button_callback);
     
     // Initialize GLEW
     glewExperimental = true; // Needed for core profile
@@ -118,6 +120,10 @@ float EventManager::GetFrameTime() {
     return mFrameTime;
 }
 
+void EventManager::SetWindowShouldClose() {
+    glfwSetWindowShouldClose(mWindow, GL_TRUE);
+}
+
 bool EventManager::ExitRequested() {
     return glfwWindowShouldClose(mWindow);
 }
@@ -132,4 +138,13 @@ void EventManager::key_callback(GLFWwindow* window, int key, int scancode, int a
         else if (action == GLFW_RELEASE)
              Game::GetInstance()->mKeys[key] = GL_FALSE;
     }
+}
+
+void EventManager::mouse_move_callback(GLFWwindow *window, double x, double y) {
+    Game::GetInstance()->ProcessMouseMove(x, y);
+}
+
+void EventManager::mouse_button_callback(GLFWwindow *window, int button, int action, int mods) {
+    if (action == GLFW_PRESS)
+        Game::GetInstance()->ProcessMouseClick(button = GLFW_MOUSE_BUTTON_LEFT);
 }

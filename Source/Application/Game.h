@@ -55,6 +55,11 @@ public:
     // returns the game's audio sub-system
     AudioEngine* const GetAudio() { return mAudio; };
     
+    // process mouse mouvement in OS-independent manner
+    void ProcessMouseMove(float x, float y);
+    // processes mouse button clicks in OS-independent manner
+    void ProcessMouseClick(bool leftButton);
+    
     // switches the game states
     void SwitchStates(GameState state = GameState::GAME_NULL);
 
