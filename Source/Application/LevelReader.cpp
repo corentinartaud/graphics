@@ -30,6 +30,7 @@ LevelData LevelReader::Load(const GLchar* file) {
             }
         }
     }
+    PopulateSpikes(level.spikes);
     return level;
 }
 
@@ -136,5 +137,18 @@ void LevelReader::ReadObjects(std::ifstream& fstream, std::vector<GameObject>& o
         newObjects[i].mTexture = texture;
         newObjects[i].mTextureScaling = scale;
         objects.push_back(newObjects[i]);
+    }
+}
+
+void LevelReader::PopulateSpikes(std::vector<GameObject>& spikes) {
+    int size = (int)spikes.size();
+    for (int i = 0; i < size; i++) {
+        glm::vec2 textureSize = spikes[i].mSize / spikes[i].mTextureScaling;
+        for (float j = 1; j < spikes[i].mTextureScaling.x - 0.1f; j++)
+            spikes.push_back(GameObject(spikes[i].mPosition + j * glm::vec2(textureSize.x, 0.f),
+                                        textureSize,
+                                        spikes[i].mTexture));
+        spikes[i].mSize = textureSize;
+        spikes[i].mTextureScaling = glm::vec2(1.f, 1.f);
     }
 }
