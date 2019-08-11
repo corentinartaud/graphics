@@ -51,6 +51,9 @@ private:
     // GLFW function declerations
     static void mouse_move_callback(GLFWwindow* window, double x, double y);
     static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+    
+    static float time;
+    static int fps;
 };
 
 #endif /* EventManager_h */
