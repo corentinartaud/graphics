@@ -22,20 +22,35 @@ using namespace std;
 
 Game* Game::instance;
 
-Renderer *renderer;
-GameObject *player;
-
-Game::Game(GLuint width, GLuint height)
-: mState(GAME_ACTIVE), mKeys(), mWidth(width), mHeight(height) {
+Game::Game() {
     instance = this;
+    
     mAudio = new AudioEngine();
+    
+    this->Initialize(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
+}
+
+void Game::GameLoop() {
+    do {
+        EventManager::Update();
+        float dt = EventManager::GetFrameTime();
+        this->ProcessInput(dt);
+        this->Update(dt);
+        this->Render();
+    } while(!EventManager::ExitRequested());
 }
 
 Game::~Game() {
     delete engine;
+    delete mAudio;
 }
 
-void Game::Initialize() {
+void Game::Initialize(GLuint width, GLuint height) {
+    mWidth = width;
+    mHeight = height;
+    
+    mAudio->Load();
+    
     // Load shaders
 #if defined(PLATFORM_OSX)	
 	ResourceManager::LoadShader("Shaders/texture.vertexshader", "Shaders/texture.fragmentshader", "texture");
