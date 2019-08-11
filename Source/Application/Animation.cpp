@@ -99,8 +99,7 @@ void Animation::setPlayerAnimation(GameObject player) {
 		else framePath = walkRight[frameNumber];
 	}
 #if defined(PLATFORM_OSX)	
-	ResourceManager::LoadTexture(Animation::getAnimationTexture(player->mPosition.x).c_str(), GL_TRUE, "player");	//update texture
-	return framePath;
+	ResourceManager::LoadTexture(framePath.c_str(), GL_TRUE, "player");	//update texture
 #else 
 	ResourceManager::LoadTexture(("../Assets/" + framePath).c_str(), GL_TRUE, "player");	//update texture
 	//return "../Assets/" + framePath;

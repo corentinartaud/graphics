@@ -11,11 +11,11 @@
 
 struct GameObjectWithTimestamp{
 	GameObject object;
-	float timestamp;
+	double timestamp;
 };
 struct AnimationObject {
 	GameObject object;
-	float timestamp;
+	double timestamp;
 	int id;
 };
 enum smokeTypes {
