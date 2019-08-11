@@ -32,7 +32,7 @@ bool GUIMainMenu::Initialize() {
     std::shared_ptr<GUIButton> startGame(new GUIButton); // selection 0
     startGame->SetName("startGame");
     startGame->SetPosition(glm::vec2(mScale.x * 0.35f, mScale.y / 2 - 100.0f));
-    startGame->SetScale(glm::vec2(mScale.x * 0.4f, 10.0f));
+    startGame->SetScale(glm::vec2(mScale.x * 0.4f, 20.0f));
     startGame->SetForeColor(glm::vec3(1.0f));
     startGame->SetHoverColor(glm::vec4(0.0f));
     startGame->SetText("Start Game");
@@ -40,7 +40,7 @@ bool GUIMainMenu::Initialize() {
     std::shared_ptr<GUIButton> continueGame(new GUIButton); // selection 1
     continueGame->SetName("continueGame");
     continueGame->SetPosition(glm::vec2(mScale.x * 0.35f, mScale.y / 2));
-    continueGame->SetScale(glm::vec2(mScale.x * 0.4f, 10.0f));
+    continueGame->SetScale(glm::vec2(mScale.x * 0.4f, 20.0f));
     continueGame->SetForeColor(glm::vec3(1.0f));
     continueGame->SetHoverColor(glm::vec4(0.0f));
     continueGame->SetText("Continue");
@@ -48,7 +48,7 @@ bool GUIMainMenu::Initialize() {
     std::shared_ptr<GUIButton> quitGame(new GUIButton); // selection 2
     quitGame->SetName("quitGame");
     quitGame->SetPosition(glm::vec2(mScale.x * 0.35f, mScale.y / 2 + 100.0f));
-    quitGame->SetScale(glm::vec2(mScale.x * 0.4f, 10.0f));
+    quitGame->SetScale(glm::vec2(mScale.x * 0.4f, 20.0f));
     quitGame->SetForeColor(glm::vec3(1.0f));
     quitGame->SetHoverColor(glm::vec4(0.0f));
     quitGame->SetText("Quit Game");
