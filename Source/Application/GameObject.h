@@ -31,7 +31,7 @@ public:
     GameObject();
     GameObject(glm::vec2 pos, glm::vec2 size, TextureLoader texture, glm::vec3 color = glm::vec3(1.0f), glm::vec2 velocity = glm::vec2(0.0f, 0.0f));
     // Draw sprite
-    virtual void Draw(Renderer &renderer, glm::mat4 viewMatrix = glm::mat4(1.f));
+    virtual void Draw(Renderer &renderer, glm::mat4 viewMatrix = glm::mat4(1.f), bool quad = true);
 };
 
 #endif /* GameObject_h */

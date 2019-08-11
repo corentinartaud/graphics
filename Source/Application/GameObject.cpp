@@ -14,7 +14,7 @@ GameObject::GameObject()
 GameObject::GameObject(glm::vec2 pos, glm::vec2 size, TextureLoader texture, glm::vec3 color, glm::vec2 velocity)
 : mPosition(pos), mSize(size), mVelocity(velocity), mColor(color), mRotation(180.0f), mTexture(texture) { }
 
-void GameObject::Draw(Renderer &renderer, glm::mat4 viewMatrix) {
-    renderer.Render(this->mTexture, this->mPosition, this->mSize, this->mRotation, this->mColor, this->mTextureScaling, viewMatrix);
+void GameObject::Draw(Renderer &renderer, glm::mat4 viewMatrix, bool quad) {
+    renderer.Render(this->mTexture, this->mPosition, this->mSize, this->mRotation, this->mColor, this->mTextureScaling, viewMatrix, quad);
 }
 

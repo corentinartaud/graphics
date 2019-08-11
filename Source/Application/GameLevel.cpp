@@ -16,16 +16,20 @@
 
 GameObject* GameLevel::Load(const GLchar *file, GLuint levelWidth, GLuint levelHeight) {
     // Clear old data
-    this->Bricks.clear();
+    Platforms.clear();
+    Spikes.clear();
     
     LevelData data = LevelReader::Load(file);
-    Bricks = data.objects;
+    Platforms = data.platforms;
+    Spikes = data.spikes;
     return data.player;
 }
 
 void GameLevel::Draw(Renderer &renderer, glm::mat4 viewMatrix) {
-    for (GameObject &tile : this->Bricks)
-        tile.Draw(renderer, viewMatrix);
+    for (GameObject &platform : Platforms)
+        platform.Draw(renderer, viewMatrix, true);
+    for (GameObject &spike : Spikes)
+        spike.Draw(renderer, viewMatrix, false);
 }
 
 GLboolean GameLevel::IsCompleted() {

@@ -14,7 +14,8 @@
 
 struct LevelData {
     GameObject* player;
-    std::vector<GameObject> objects;
+    std::vector<GameObject> platforms;
+    std::vector<GameObject> spikes;
 };
 
 class LevelReader {
@@ -24,7 +25,7 @@ public:
 private:
     static GameObject* ReadPlayer(std::ifstream&);
     static GameObject ReadGround(std::ifstream&);
-    static void ReadPlatforms(std::ifstream&, std::vector<GameObject>&);
+    static void ReadObjects(std::ifstream&, std::vector<GameObject>&, TextureLoader texture);
 };
 
 #endif /* LevelReader_h */

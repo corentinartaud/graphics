@@ -47,11 +47,13 @@ void Game::Initialize() {
 	ResourceManager::LoadTexture("Textures/Player/stand/s1.png", GL_TRUE, "player");
 	ResourceManager::LoadTexture("Textures/Platform/Grass.png", GL_TRUE, "grass");
 	ResourceManager::LoadTexture("Textures/Platform/Ground.png", GL_TRUE, "ground");
+    ResourceManager::LoadTexture("Textures/Spikes/setB/spike.png", GL_TRUE, "spike");
 #else
 	ResourceManager::LoadTexture("../Assets/Textures/background.jpg", GL_TRUE, "background");
 	ResourceManager::LoadTexture("../Assets/Textures/Player/stand/s1.png", GL_TRUE, "player");
 	ResourceManager::LoadTexture("../Assets/Textures/Platform/Grass.png", GL_TRUE, "grass");
 	ResourceManager::LoadTexture("../Assets/Textures/Platform/Ground.png", GL_TRUE, "ground");
+    ResourceManager::LoadTexture("../Assets/Textures/Spikes/setB/spike.png", GL_TRUE, "spike");
 #endif
     // Set render-specific controls
     renderer = new Renderer(ResourceManager::GetShader("texture"));
@@ -65,7 +67,7 @@ void Game::Initialize() {
     this->Levels.push_back(one);
     this->Level = 0;
     
-    engine = new GameEngine(player, one.Bricks, GRAVITY, PLAYER_VELOCITY);
+    engine = new GameEngine(player, one.Platforms, GRAVITY, PLAYER_VELOCITY);
 }
 
 void Game::Update(float dt) {
