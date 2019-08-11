@@ -75,6 +75,7 @@ private:
     GameEngine* engine;
     Renderer *renderer;
     GameObject *player;
+    TextRenderer *mText;
     
     std::map<std::string, std::shared_ptr<GUIContainer>> mGUIContainers; // contains all the game's GUI items
 

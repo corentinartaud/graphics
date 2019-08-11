@@ -15,6 +15,7 @@
 #include "GUIMainMenu.h"
 #include "GUIPauseMenu.h"
 #include "AudioEngine.h"
+#include "TextRenderer.h"
 #include <string>
 #include <iostream>
 
@@ -26,6 +27,7 @@ Game::Game() {
     instance = this;
     
     mAudio = new AudioEngine();
+    mText = new TextRenderer();
     
     this->Initialize(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
 }
@@ -52,15 +54,27 @@ void Game::Initialize(GLuint width, GLuint height) {
     mAudio->Load();
     
     // Load shaders
-#if defined(PLATFORM_OSX)	
-	ResourceManager::LoadShader("Shaders/texture.vertexshader", "Shaders/texture.fragmentshader", "texture");
+#if defined(PLATFORM_OSX)
+    ResourceManager::LoadShader("Shaders/texture.vertexshader", "Shaders/texture.fragmentshader", "texture");
+    ResourceManager::LoadShader("Shaders/text.vertexshader", "Shaders/text.fragmentshader", "text");
+    ResourceManager::LoadShader("Shaders/gui.vertexshader", "Shaders/gui.fragmentshader", "gui");
 #else
-	ResourceManager::LoadShader("../Assets/Shaders/texture.vertexshader", "../Assets/Shaders/texture.fragmentshader", "texture");
+    ResourceManager::LoadShader("../Assets/Shaders/texture.vertexshader", "../Assets/Shaders/texture.fragmentshader", "texture");
+    ResourceManager::LoadShader("../Assets/Shaders/text.vertexshader", "../Assets/Shaders/text.fragmentshader", "text");
+    ResourceManager::LoadShader("../Assets/Shaders/gui.vertexshader", "../Assets/Shaders/gui.fragmentshader", "gui");
 #endif
     // Configure shaders
     glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->mWidth), 0.0f, static_cast<GLfloat>(this->mHeight), -1.0f, 1.0f);
     ResourceManager::GetShader("texture").Use().SetInteger("image", 0);
     ResourceManager::GetShader("texture").SetMatrix4("projection", projection);
+    // Set text-specific control
+    mText->Initialize(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
+    // Load Fonts
+#if defined(PLATFORM_OSX)
+    mText->LoadFont("Fonts/CUTIVEMONO-REGULAR.TTF", 50);
+#else
+    mText->LoadFont("../Assets/Fonts/CUTIVEMONO-REGULAR.TTF", 50);
+#endif
     // Load textures
 #if defined(PLATFORM_OSX)	
 	ResourceManager::LoadTexture("Textures/background.jpg", GL_TRUE, "background");
@@ -95,7 +109,7 @@ void Game::Initialize(GLuint width, GLuint height) {
     for(auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
         it->second->Initialize();
     
-    SwitchStates(GameState::GAME_ACTIVE);
+    SwitchStates(GameState::GAME_MAIN_MENU);
 }
 
 void Game::SwitchStates(GameState state) {
@@ -127,11 +141,13 @@ void Game::SwitchStates(GameState state) {
 }
 
 void Game::Update(float dt) {
-    engine->Update(dt);
-    if (engine->HitSpikes())
-        cout << "HITTTTT" << endl;
-    else
-        cout << "NOT HIT" << endl;
+    if (mState == GAME_ACTIVE) {
+        engine->Update(dt);
+        if (engine->HitSpikes())
+            cout << "HITTTTT" << endl;
+        else
+            cout << "NOT HIT" << endl;
+    }
 }
 
 // process input for every frame during game state
@@ -153,6 +169,10 @@ void Game::ProcessInput(GLfloat dt) {
         if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && player->mVelocity.y == 0.f) {
             player->mVelocity.y = JUMP_VELOCITY;
         }
+        // check for pause
+        if (this->mKeys[GLFW_KEY_P]){
+            Game::GetInstance()->SwitchStates(GAME_INGAME_MENU);
+        }
     }
 }
 
@@ -170,7 +190,19 @@ void Game::Render() {
 		player->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
         player->Draw(*renderer, viewMatrix);
     }
+    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
+        it->second->Render(renderer, mText);
     EventManager::EndFrame();
+}
+
+void Game::ProcessMouseMove(float x, float y) {
+    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
+        it->second->OnMouseMove(x, y);
+}
+
+void Game::ProcessMouseClick(bool leftButton) {
+    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
+        it->second->OnMouseClick(leftButton);
 }
 
 float Game::floatModulo(float top, float bottom)

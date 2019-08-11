@@ -74,6 +74,8 @@ void EventManager::Initialize() {
     
     // Ensure we can capture the escape key being pressed below
     glfwSetKeyCallback(spWindow, key_callback);
+    glfwSetCursorPosCallback(spWindow, mouse_move_callback);
+    glfwSetMouseButtonCallback(spWindow, mouse_button_callback);
 
     // Black background
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -136,4 +138,13 @@ void EventManager::key_callback(GLFWwindow* window, int key, int scancode, int a
         else if (action == GLFW_RELEASE)
              Game::GetInstance()->mKeys[key] = GL_FALSE;
     }
+}
+
+void EventManager::mouse_move_callback(GLFWwindow *window, double x, double y) {
+    Game::GetInstance()->ProcessMouseMove(x, y);
+}
+
+void EventManager::mouse_button_callback(GLFWwindow *window, int button, int action, int mods) {
+    if (action == GLFW_PRESS)
+        Game::GetInstance()->ProcessMouseClick(button = GLFW_MOUSE_BUTTON_LEFT);
 }
