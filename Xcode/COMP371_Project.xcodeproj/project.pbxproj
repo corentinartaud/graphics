@@ -11,7 +11,6 @@
 		038B78851A6EBBCE00111E36 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 038B78841A6EBBCE00111E36 /* OpenGL.framework */; };
 		038B791A1A6FF39000111E36 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 038B79191A6FF39000111E36 /* CoreVideo.framework */; };
 		038B791E1A6FF3EB00111E36 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 038B791D1A6FF3EB00111E36 /* IOKit.framework */; };
-		03FE4ED41B2FA1210020F06F /* Scenes in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03FE4ED21B2FA1010020F06F /* Scenes */; };
 		03FE4ED51B2FA1210020F06F /* Shaders in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03FE4ED31B2FA1010020F06F /* Shaders */; };
 		307697A122FDDAAD00355205 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307697A022FDDAAD00355205 /* CoreAudio.framework */; };
 		307697A522FDDC6300355205 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307697A422FDDC6300355205 /* CoreServices.framework */; };
@@ -56,7 +55,6 @@
 				307697B322FE2A3200355205 /* Sounds in CopyFiles */,
 				30A10FA322FA1F1D0022E952 /* Levels in CopyFiles */,
 				0345E23222D7018A0054C158 /* Textures in CopyFiles */,
-				03FE4ED41B2FA1210020F06F /* Scenes in CopyFiles */,
 				307697AE22FDED8A00355205 /* Fonts in CopyFiles */,
 				03FE4ED51B2FA1210020F06F /* Shaders in CopyFiles */,
 			);
@@ -72,7 +70,6 @@
 		038B79191A6FF39000111E36 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		038B791B1A6FF3D100111E36 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		038B791D1A6FF3EB00111E36 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		03FE4ED21B2FA1010020F06F /* Scenes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scenes; path = ../Assets/Scenes; sourceTree = "<group>"; };
 		03FE4ED31B2FA1010020F06F /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = ../Assets/Shaders; sourceTree = "<group>"; };
 		307697A022FDDAAD00355205 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		307697A422FDDC6300355205 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
@@ -165,12 +162,11 @@
 		034F0BB31A7010160028E1BA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				307697B222FE2A2A00355205 /* Sounds */,
 				307697AD22FDED8300355205 /* Fonts */,
 				30A10FA222FA1F0C0022E952 /* Levels */,
-				0345E23122D700D10054C158 /* Textures */,
-				03FE4ED21B2FA1010020F06F /* Scenes */,
 				03FE4ED31B2FA1010020F06F /* Shaders */,
+				307697B222FE2A2A00355205 /* Sounds */,
+				0345E23122D700D10054C158 /* Textures */,
 			);
 			name = Resources;
 			sourceTree = "<group>";

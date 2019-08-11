@@ -37,6 +37,7 @@ private:
     unsigned int mQuadVAO;
     unsigned int mTriangleVAO;
     unsigned int mVBO;
+    unsigned int mEBO;
 };
 
 #endif /* Renderer_h */
