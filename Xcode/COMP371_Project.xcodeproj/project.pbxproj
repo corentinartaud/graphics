@@ -16,7 +16,6 @@
 		307697A122FDDAAD00355205 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307697A022FDDAAD00355205 /* CoreAudio.framework */; };
 		307697A522FDDC6300355205 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307697A422FDDC6300355205 /* CoreServices.framework */; };
 		307697A722FDDC6B00355205 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 307697A622FDDC6B00355205 /* OpenAL.framework */; };
-		307697A922FDE84B00355205 /* libfreetype.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 307697A822FDE84B00355205 /* libfreetype.6.dylib */; };
 		307697AE22FDED8A00355205 /* Fonts in CopyFiles */ = {isa = PBXBuildFile; fileRef = 307697AD22FDED8300355205 /* Fonts */; };
 		307697B322FE2A3200355205 /* Sounds in CopyFiles */ = {isa = PBXBuildFile; fileRef = 307697B222FE2A2A00355205 /* Sounds */; };
 		307697B522FE3B4400355205 /* libirrklang.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 307697B422FE3B4300355205 /* libirrklang.dylib */; };
@@ -38,6 +37,7 @@
 		30A10FAB22FA56BD0022E952 /* GUIButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A10FAA22FA56BD0022E952 /* GUIButton.cpp */; };
 		30A10FAE22FA5A890022E952 /* GUIMainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A10FAD22FA5A890022E952 /* GUIMainMenu.cpp */; };
 		30A10FB122FA61520022E952 /* GUIElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A10FB022FA61520022E952 /* GUIElement.cpp */; };
+		A52EF06422FF9AAA00263CEC /* libfreetype.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A52EF06322FF9AAA00263CEC /* libfreetype.6.dylib */; };
 		A5A0F1F822FCF8C800F04F74 /* LevelReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5A0F1F622FCF8C800F04F74 /* LevelReader.cpp */; };
 		A5C6B9E822FE3A7D00680F82 /* GameEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5C6B9E622FE3A7D00680F82 /* GameEngine.cpp */; };
 /* End PBXBuildFile section */
@@ -105,6 +105,7 @@
 		30A10FAF22FA5FB80022E952 /* GUIElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GUIElement.h; sourceTree = "<group>"; };
 		30A10FB022FA61520022E952 /* GUIElement.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GUIElement.cpp; sourceTree = "<group>"; };
 		30B901B722EF83FC005246B4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		A52EF06322FF9AAA00263CEC /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfreetype.6.dylib; path = ../../../../../../../usr/local/Cellar/freetype/2.10.1/lib/libfreetype.6.dylib; sourceTree = "<group>"; };
 		A5A0F1F622FCF8C800F04F74 /* LevelReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelReader.cpp; sourceTree = "<group>"; };
 		A5A0F1F722FCF8C800F04F74 /* LevelReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LevelReader.h; sourceTree = "<group>"; };
 		A5C6B9E622FE3A7D00680F82 /* GameEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameEngine.cpp; sourceTree = "<group>"; };
@@ -117,8 +118,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A52EF06422FF9AAA00263CEC /* libfreetype.6.dylib in Frameworks */,
 				307697B522FE3B4400355205 /* libirrklang.dylib in Frameworks */,
-				307697A922FDE84B00355205 /* libfreetype.6.dylib in Frameworks */,
 				307697A722FDDC6B00355205 /* OpenAL.framework in Frameworks */,
 				307697A522FDDC6300355205 /* CoreServices.framework in Frameworks */,
 				308A22D022EFC604007B1BC9 /* libfreeimage.a in Frameworks */,
@@ -263,6 +264,7 @@
 		A5E099F122F9BF87009A45FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A52EF06322FF9AAA00263CEC /* libfreetype.6.dylib */,
 				307697B422FE3B4300355205 /* libirrklang.dylib */,
 				307697A822FDE84B00355205 /* libfreetype.6.dylib */,
 				307697A622FDDC6B00355205 /* OpenAL.framework */,
@@ -476,6 +478,7 @@
 					"$(PROJECT_DIR)",
 					/opt/X11/lib,
 					"../ThirdParty/irrKlang-1.6.0/lib/osx",
+					/usr/local/Cellar/freetype/2.10.1/lib,
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -506,6 +509,7 @@
 					"$(PROJECT_DIR)",
 					/opt/X11/lib,
 					"../ThirdParty/irrKlang-1.6.0/lib/osx",
+					/usr/local/Cellar/freetype/2.10.1/lib,
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -20,9 +20,11 @@ LevelData LevelReader::Load(const GLchar* file) {
             if (line.find("Player") != std::string::npos) {
                 level.player = ReadPlayer(fstream);
             } else if (line.find("Ground") != std::string::npos) {
-                level.objects.push_back(ReadGround(fstream));
+                level.platforms.push_back(ReadGround(fstream));
             } else if (line.find("Platform") != std::string::npos) {
-                ReadPlatforms(fstream, level.objects);
+                ReadObjects(fstream, level.platforms, ResourceManager::GetTexture("grass"));
+            } else if (line.find("Spike") != std::string::npos) {
+                ReadObjects(fstream, level.spikes, ResourceManager::GetTexture("spike"));
             } else {
                 // Empty line
             }
@@ -91,9 +93,8 @@ GameObject LevelReader::ReadGround(std::ifstream& fstream) {
     return object;
 }
 
-void LevelReader::ReadPlatforms(std::ifstream& fstream, std::vector<GameObject>& objects) {
+void LevelReader::ReadObjects(std::ifstream& fstream, std::vector<GameObject>& objects, TextureLoader texture) {
     glm::vec2 size(1.f, 1.f), scale;
-    TextureLoader texture = ResourceManager::GetTexture("grass");
     std::vector<GameObject> newObjects;
     
     std::string line;

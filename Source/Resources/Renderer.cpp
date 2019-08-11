@@ -11,13 +11,15 @@
 Renderer::Renderer(Shader &shader) {
     this->shader = shader;
     this->configureQuad();
+    this->configureTriangle();
 }
 
 Renderer::~Renderer() {
-    glDeleteVertexArrays(1, &mVAO);
+    glDeleteVertexArrays(1, &mQuadVAO);
+    glDeleteVertexArrays(1, &mTriangleVAO);
 }
 
-void Renderer::Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color, glm::vec2 textureScaling, glm::mat4 viewMatrix) {
+void Renderer::Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color, glm::vec2 textureScaling, glm::mat4 viewMatrix, bool quad) {
     // Prepare transformations
     this->shader.Use();
     glm::mat4 model;
@@ -44,7 +46,10 @@ void Renderer::Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size
     glActiveTexture(GL_TEXTURE0);
     texture.Bind();
     
-    this->renderQuad();
+    if (quad)
+        this->renderQuad();
+    else
+        this->renderTriangle();
 }
 
 void Renderer::configureQuad() {
@@ -59,9 +64,9 @@ void Renderer::configureQuad() {
         1.0f, 1.0f, 1.0f, 1.0f
     };
     
-    glGenVertexArrays(1, &mVAO);
+    glGenVertexArrays(1, &mQuadVAO);
     glGenBuffers(1, &mVBO);
-    glBindVertexArray(mVAO);
+    glBindVertexArray(mQuadVAO);
     
     glBindBuffer(GL_ARRAY_BUFFER, mVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -73,7 +78,34 @@ void Renderer::configureQuad() {
 }
 
 void Renderer::renderQuad() {
-    glBindVertexArray(mVAO);
+    glBindVertexArray(mQuadVAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);
+    glBindVertexArray(0);
+}
+
+void Renderer::configureTriangle() {
+    GLfloat vertices[] = {
+        // Pos      // Tex
+        0.0f, 0.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 1.0f, 0.0f,
+        0.5f, 1.0f, 0.5f, 1.0f,
+    };
+    
+    glGenVertexArrays(1, &mTriangleVAO);
+    glGenBuffers(1, &mVBO);
+    glBindVertexArray(mTriangleVAO);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}
+
+void Renderer::renderTriangle() {
+    glBindVertexArray(mTriangleVAO);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
     glBindVertexArray(0);
 }

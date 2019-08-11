@@ -26,3 +26,11 @@ position : {
     1800.0 150.0
 }
 [End]
+
+[Spike]
+textureSize : 50 50
+scale : 1.0 1.0
+position : {
+    700.0 200.0
+}
+[End]
