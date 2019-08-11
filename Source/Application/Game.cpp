@@ -128,6 +128,7 @@ void Game::SwitchStates(GameState state) {
             mGUIContainers["MainMenu"]->SetActive(true);
             break;
         case GameState::GAME_ACTIVE:
+            GetAudio()->StopAll();
             GetAudio()->PlaySound("Sounds/awesomeness.wav", true);
             break;
         case GameState::GAME_WIN:
@@ -136,6 +137,7 @@ void Game::SwitchStates(GameState state) {
             EventManager::SetWindowShouldClose();
             break;
         case GameState::GAME_INGAME_MENU:
+            GetAudio()->StopAll();
             mGUIContainers["PauseMenu"]->SetActive(true);
             break;
         default:
