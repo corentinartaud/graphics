@@ -52,7 +52,7 @@ void GUILost::RenderBackground(Renderer *renderer, TextRenderer *text) {
     // render background
     renderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(EventManager::GetScreenWidth(), EventManager::GetScreenHeight()), 0.0f);
     // render title
-    text->RenderText("YOU LOSE YOU SNOOSE", 230.0f, EventManager::GetScreenHeight() / 2 - 300.0f, 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+    text->RenderText("YOU SNOOZE YOU LOSE", 230.0f, EventManager::GetScreenHeight() / 2 - 300.0f, 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 }
 
 void GUILost::Activate() { }

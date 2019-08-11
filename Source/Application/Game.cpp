@@ -95,7 +95,7 @@ void Game::Initialize(GLuint width, GLuint height) {
     // Load levels
     //GameLevel one;
 #if defined(PLATFORM_OSX)
-    player = one.Load("levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+    player = one.Load("levels/two.lvl", this->mWidth, this->mHeight * 0.5);
 #else
 	player = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
 #endif
@@ -118,7 +118,7 @@ void Game::ReloadGame() {
     delete player; delete engine;
     player = new GameObject();
 #if defined(PLATFORM_OSX)
-    player = one.Load("levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+    player = one.Load("levels/two.lvl", this->mWidth, this->mHeight * 0.5);
 #else
     player = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
 #endif
