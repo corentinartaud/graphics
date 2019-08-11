@@ -17,6 +17,8 @@
 #include <string>
 
 class Renderer;
+class TextRenderer;
+class Shader;
 
 /*
  A button to be used for GUIs. GUIButton contains text and a background color
@@ -38,7 +40,7 @@ public:
     // calcualtes the world-space model matrix for rendering the button
     void CalculateModel();
     // renders the button's background contained and foreground text
-    void Render();
+    void Render(Renderer *renderer, TextRenderer *textRenderer, Shader Shader);
     
 private:
     std::string mText; // text to render at the center of the button
