@@ -67,11 +67,15 @@ void Game::Initialize() {
     this->Levels.push_back(one);
     this->Level = 0;
     
-    engine = new GameEngine(player, one.Platforms, GRAVITY, PLAYER_VELOCITY);
+    engine = new GameEngine(player, one.Platforms, one.Spikes, GRAVITY, PLAYER_VELOCITY);
 }
 
 void Game::Update(float dt) {
     engine->Update(dt);
+    if (engine->HitSpikes())
+        cout << "HITTTTT" << endl;
+    else
+        cout << "NOT HIT" << endl;
 }
 
 // process input for every frame during game state
