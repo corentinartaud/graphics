@@ -39,6 +39,8 @@ public:
     void StopSound(std::string name);
     // stops playing all sounds
     void StopAll();
+    // checks if sound is playing
+    bool IsPlaying(std::string name);
     
     // defines the position of the player for 2D/3D positional audio
     void SetPlayerPosition(glm::vec2 position);

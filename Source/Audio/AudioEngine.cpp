@@ -44,6 +44,10 @@ void AudioEngine::PlaySoundLocation(std::string name, glm::vec2 location, bool l
 
 }
 
+bool AudioEngine::IsPlaying(std::string name) {
+    return mAudioEngine->isCurrentlyPlaying(name.c_str());
+}
+
 void AudioEngine::StopSound(std::string name) {
     mAudioEngine->removeSoundSource(name.c_str());
 }
