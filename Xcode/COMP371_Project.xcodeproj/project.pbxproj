@@ -25,6 +25,7 @@
 		308A22CC22EFC5E9007B1BC9 /* libGLEW.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 308A22CB22EFC5E9007B1BC9 /* libGLEW.a */; };
 		308A22CE22EFC5F7007B1BC9 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 308A22CD22EFC5F7007B1BC9 /* libglfw3.a */; };
 		308A22D022EFC604007B1BC9 /* libfreeimage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 308A22CF22EFC604007B1BC9 /* libfreeimage.a */; };
+		3098B0FA22FF7728001509FF /* GameEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3098B0F922FF7728001509FF /* GameEngine.cpp */; };
 		30A10F9022FA1E920022E952 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A10F8822FA1E920022E952 /* Renderer.cpp */; };
 		30A10F9122FA1E920022E952 /* TextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A10F8A22FA1E920022E952 /* TextureLoader.cpp */; };
 		30A10F9222FA1E920022E952 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A10F8C22FA1E920022E952 /* Shader.cpp */; };
@@ -40,10 +41,14 @@
 		30A10FB122FA61520022E952 /* GUIElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A10FB022FA61520022E952 /* GUIElement.cpp */; };
 		A5A0F1F822FCF8C800F04F74 /* LevelReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5A0F1F622FCF8C800F04F74 /* LevelReader.cpp */; };
 <<<<<<< HEAD
+<<<<<<< HEAD
 		A5C6B9E822FE3A7D00680F82 /* GameEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5C6B9E622FE3A7D00680F82 /* GameEngine.cpp */; };
 =======
 		B0B20F1322FF2E5400A42828 /* GUIPauseMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B20F1122FF2E5400A42828 /* GUIPauseMenu.cpp */; };
 >>>>>>> in game menu
+=======
+		B0B20F1322FF2E5400A42828 /* GUIPauseMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B20F1122FF2E5400A42828 /* GUIPauseMenu.cpp */; };
+>>>>>>> bf8cac53ce5ecb9bd4526344924f697b542a919c
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -84,6 +89,12 @@
 		308A22CB22EFC5E9007B1BC9 /* libGLEW.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGLEW.a; path = "../ThirdParty/glew-2.1.0/lib/osx/libGLEW.a"; sourceTree = "<group>"; };
 		308A22CD22EFC5F7007B1BC9 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../ThirdParty/glfw-3.3/lib/osx/libglfw3.a"; sourceTree = "<group>"; };
 		308A22CF22EFC604007B1BC9 /* libfreeimage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreeimage.a; path = "../ThirdParty/FreeImage-3170/lib/osx/libfreeimage.a"; sourceTree = "<group>"; };
+<<<<<<< HEAD
+=======
+		3098B0EC22FE79B0001509FF /* GameState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameState.h; sourceTree = "<group>"; };
+		3098B0F822FF7728001509FF /* GameEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameEngine.h; sourceTree = "<group>"; };
+		3098B0F922FF7728001509FF /* GameEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameEngine.cpp; sourceTree = "<group>"; };
+>>>>>>> bf8cac53ce5ecb9bd4526344924f697b542a919c
 		30A10F8822FA1E920022E952 /* Renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
 		30A10F8922FA1E920022E952 /* ResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManager.h; sourceTree = "<group>"; };
 		30A10F8A22FA1E920022E952 /* TextureLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureLoader.cpp; sourceTree = "<group>"; };
@@ -207,6 +218,8 @@
 			children = (
 				30A10F9922FA1EA70022E952 /* Game.cpp */,
 				30A10F9722FA1EA70022E952 /* Game.h */,
+				3098B0F922FF7728001509FF /* GameEngine.cpp */,
+				3098B0F822FF7728001509FF /* GameEngine.h */,
 				30A10F9C22FA1EA70022E952 /* GameLevel.cpp */,
 				30A10F9822FA1EA70022E952 /* GameLevel.h */,
 				30A10F9B22FA1EA70022E952 /* GameObject.cpp */,
@@ -350,6 +363,11 @@
 				30A10F9022FA1E920022E952 /* Renderer.cpp in Sources */,
 				A5C6B9E822FE3A7D00680F82 /* GameEngine.cpp in Sources */,
 				30A10F9322FA1E920022E952 /* ResourceManager.cpp in Sources */,
+<<<<<<< HEAD
+=======
+				307697A322FDDC2B00355205 /* AudioEngine.cpp in Sources */,
+				3098B0FA22FF7728001509FF /* GameEngine.cpp in Sources */,
+>>>>>>> bf8cac53ce5ecb9bd4526344924f697b542a919c
 				30A10F9E22FA1EA70022E952 /* GameObject.cpp in Sources */,
 				B0B20F1322FF2E5400A42828 /* GUIPauseMenu.cpp in Sources */,
 			);

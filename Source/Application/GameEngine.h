@@ -14,6 +14,10 @@
 
 class GameEngine {
 public:
+<<<<<<< HEAD
+=======
+    GameEngine();
+>>>>>>> bf8cac53ce5ecb9bd4526344924f697b542a919c
     GameEngine(GameObject*, std::vector<GameObject>, float, float);
     
     void Update(float dt);

@@ -9,7 +9,13 @@
 #ifndef Game_h
 #define Game_h
 
+<<<<<<< HEAD
 #include <array>
+=======
+#include "GameState.h"
+#include "GameLevel.h"
+#include "GameEngine.h"
+>>>>>>> bf8cac53ce5ecb9bd4526344924f697b542a919c
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -56,7 +62,19 @@ public:
     static Game* GetInstance() { return instance; };
 
 private:
+<<<<<<< HEAD
     static Game* instance;
+=======
+    
+    AudioEngine *mAudio;
+    Renderer *mRenderer;
+    GameObject *mPlayer;
+    TextRenderer *mText;
+    GameEngine *mEngine;
+    
+    std::map<std::string, std::shared_ptr<GUIContainer>> mGUIContainers; // contains all the game's GUI items
+    static Game *mInstance;
+>>>>>>> bf8cac53ce5ecb9bd4526344924f697b542a919c
 };
 
 #endif /* Game_h */

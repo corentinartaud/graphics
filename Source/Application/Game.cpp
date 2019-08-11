@@ -18,11 +18,15 @@
 #include "GUIContainer.h"
 #include "AudioEngine.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "GUIPauseMenu.hpp"
 >>>>>>> added pause menu
 =======
 #include "GUIPauseMenu.h"
 >>>>>>> Fixed StartUp on Pause Menu to Main Menu
+=======
+#include "GUIPauseMenu.h"
+>>>>>>> bf8cac53ce5ecb9bd4526344924f697b542a919c
 #include <string>
 #include <iostream>
 
@@ -30,8 +34,21 @@ using namespace std;
 
 Game* Game::instance;
 
+<<<<<<< HEAD
 Renderer *renderer;
 GameObject *player;
+=======
+Game::Game() {
+    mInstance = this;
+    
+    mRenderer = new Renderer();
+    mText = new TextRenderer();
+    mAudio = new AudioEngine();
+    mEngine = new GameEngine();
+    
+    this->Initialize(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
+}
+>>>>>>> bf8cac53ce5ecb9bd4526344924f697b542a919c
 
 Game::Game(GLuint width, GLuint height)
 : mState(GAME_ACTIVE), mKeys(), mWidth(width), mHeight(height) {
@@ -39,7 +56,15 @@ Game::Game(GLuint width, GLuint height)
 }
 
 Game::~Game() {
+<<<<<<< HEAD
     delete engine;
+=======
+    delete mRenderer;
+    delete mPlayer;
+    delete mText;
+    delete mAudio;
+    delete mEngine;
+>>>>>>> bf8cac53ce5ecb9bd4526344924f697b542a919c
 }
 
 void Game::Initialize() {
@@ -72,11 +97,12 @@ void Game::Initialize() {
 #if defined(PLATFORM_OSX)
     player = one.Load("levels/one.lvl", this->mWidth, this->mHeight * 0.5);
 #else
-	player = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+	mPlayer = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
 #endif
     this->Levels.push_back(one);
     this->Level = 0;
     
+<<<<<<< HEAD
 <<<<<<< HEAD
     engine = new GameEngine(player, one.Bricks, GRAVITY, PLAYER_VELOCITY);
 }
@@ -84,6 +110,10 @@ void Game::Initialize() {
 void Game::Update(float dt) {
     engine->Update(dt);
 =======
+=======
+     mEngine = new GameEngine(mPlayer, one.Bricks, GRAVITY, PLAYER_VELOCITY);
+    
+>>>>>>> bf8cac53ce5ecb9bd4526344924f697b542a919c
     mGUIContainers["MainMenu"] = std::shared_ptr<GUIContainer>(new GUIMainMenu);
     mGUIContainers["PauseMenu"] = std::shared_ptr<GUIPauseMenu>(new GUIPauseMenu);
 
@@ -104,6 +134,8 @@ void Game::SwitchStates(GameState state) {
             mGUIContainers["MainMenu"]->SetActive(true);
             break;
         case GameState::GAME_ACTIVE:
+            GetAudio()->StopAll();
+            GetAudio()->PlaySound("Sounds/awesomeness.wav", true);
             break;
         case GameState::GAME_WIN:
             break;
@@ -112,12 +144,24 @@ void Game::SwitchStates(GameState state) {
         case GameState::GAME_INGAME_MENU:
             mGUIContainers["PauseMenu"]->SetActive(true);
             break;
+        case GameState::GAME_INGAME_MENU:
+            GetAudio()->StopAll();
+            mGUIContainers["PauseMenu"]->SetActive(true);
+            break;
         default:
             break;
     }
 >>>>>>> added pause menu
 }
 
+<<<<<<< HEAD
+=======
+void Game::Update(float dt) {
+    if (mState == GAME_ACTIVE)
+        mEngine->Update(dt);
+}
+
+>>>>>>> bf8cac53ce5ecb9bd4526344924f697b542a919c
 // process input for every frame during game state
 void Game::ProcessInput(GLfloat dt) {
 
@@ -134,8 +178,13 @@ void Game::ProcessInput(GLfloat dt) {
         }
         // Jumping
         // Only allow to jump when player is on a platform
+<<<<<<< HEAD
         if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && player->mVelocity.y == 0.f) {
             player->mVelocity.y = JUMP_VELOCITY;
+=======
+        if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && mPlayer->mVelocity.y == 0.0f) {
+            mPlayer->mVelocity.y = JUMP_VELOCITY;
+>>>>>>> bf8cac53ce5ecb9bd4526344924f697b542a919c
         }
         // check for pause
         if (this->mKeys[GLFW_KEY_P]){
@@ -148,11 +197,19 @@ void Game::Render() {
     EventManager::BeginFrame();
     if (this->mState == GAME_ACTIVE) {
         // Draw background
+<<<<<<< HEAD
         renderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->mWidth, this->mHeight), 360.0f);
         // Get the view matrix
         glm::mat4 viewMatrix = glm::translate(glm::mat4(1.f), glm::vec3(player->mInitialPosition.x - player->mPosition.x, 0.f, 0.f));
         // Draw level
         this->Levels[this->Level].Draw(*renderer, viewMatrix);
+=======
+        mRenderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->mWidth, this->mHeight), 0.0f);
+        // Get the view matrix
+        glm::mat4 viewMatrix = glm::translate(glm::mat4(1.f), glm::vec3(mPlayer->mInitialPosition.x - mPlayer->mPosition.x, 0.f, 0.f));
+        // Draw level
+        this->Levels[this->Level].Draw(*mRenderer, viewMatrix);
+>>>>>>> bf8cac53ce5ecb9bd4526344924f697b542a919c
         // Draw player
 <<<<<<< HEAD
 		ResourceManager::LoadTexture(getAnimationTexture(player->mPosition.x).c_str(), GL_TRUE, "player");	//update texture
@@ -161,11 +218,14 @@ void Game::Render() {
 =======
 		ResourceManager::LoadTexture(getAnimationTexture(mPlayer->mPosition.x).c_str(), GL_TRUE, "player");	//update texture
 		mPlayer->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
-        mPlayer->Draw(*mRenderer);
+        mPlayer->Draw(*mRenderer, viewMatrix);
     }
     for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it) {
         it->second->Render(mRenderer, mText);
+<<<<<<< HEAD
 >>>>>>> Fixed StartUp on Pause Menu to Main Menu
+=======
+>>>>>>> bf8cac53ce5ecb9bd4526344924f697b542a919c
     }
     EventManager::EndFrame();
 }
