@@ -40,8 +40,12 @@ public:
     GLuint Level;
     
     // Constructor / Destructor
-    Game(GLuint width, GLuint height);
+    Game();
     ~Game();
+    
+    void GameLoop();
+    
+    void Initialize(GLuint width, GLuint height);
     
     void Initialize();
     // Game Loop
@@ -56,6 +60,11 @@ public:
     // returns the game's audio sub-system
     AudioEngine* const GetAudio() { return mAudio; };
     
+    // process mouse mouvement in OS-independent manner
+    void ProcessMouseMove(float x, float y);
+    // processes mouse button clicks in OS-independent manner
+    void ProcessMouseClick(bool leftButton);
+    
     // switches the game states
     void SwitchStates(GameState state = GameState::GAME_NULL);
 
@@ -64,6 +73,8 @@ private:
     
     AudioEngine *mAudio;
     GameEngine* engine;
+    Renderer *renderer;
+    GameObject *player;
     
     std::map<std::string, std::shared_ptr<GUIContainer>> mGUIContainers; // contains all the game's GUI items
 

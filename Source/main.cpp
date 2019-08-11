@@ -8,39 +8,14 @@
 
 #include "Game.h"
 #include "EventManager.h"
-#include "GUIMainMenu.h"
-#include <string>
-#include <iostream>
-
-using namespace std;
-
 
 int main(int argv, char* argc[]) {
     EventManager::Initialize();
     
-    GUIMainMenu mainMenu;
-    if(mainMenu.Initialize()){
-        
-        std::cout << "works" << std::endl;
-    }
+    Game goldenSphere;
     
-    // following 3 lines can be put in the game menu cpp. we can manage it there, same with the do-while. 
-    Game goldenSphere(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
-    goldenSphere.Initialize();
-    goldenSphere.mState = GAME_ACTIVE;
+    goldenSphere.GameLoop();
     
-    do {
-        EventManager::Update();
-        
-        float dt = EventManager::GetFrameTime();
-        goldenSphere.ProcessInput(dt);
-        
-        goldenSphere.Update(dt);
-        
-        goldenSphere.Render();
-        
-    } while(!EventManager::ExitRequested());
-
     EventManager::Shutdown();
     
     return 0;
