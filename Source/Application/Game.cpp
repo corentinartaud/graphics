@@ -14,6 +14,7 @@
 #include "GUIContainer.h"
 #include "GUIMainMenu.h"
 #include "GUIPauseMenu.h"
+#include "GUILost.h"
 #include "AudioEngine.h"
 #include "TextRenderer.h"
 #include <string>
@@ -92,7 +93,7 @@ void Game::Initialize(GLuint width, GLuint height) {
     // Set render-specific controls
     renderer = new Renderer(ResourceManager::GetShader("texture"));
     // Load levels
-    GameLevel one;
+    //GameLevel one;
 #if defined(PLATFORM_OSX)
     player = one.Load("levels/one.lvl", this->mWidth, this->mHeight * 0.5);
 #else
@@ -105,11 +106,26 @@ void Game::Initialize(GLuint width, GLuint height) {
     
     mGUIContainers["MainMenu"] = std::shared_ptr<GUIContainer>(new GUIMainMenu);
     mGUIContainers["PauseMenu"] = std::shared_ptr<GUIPauseMenu>(new GUIPauseMenu);
+    mGUIContainers["LostMenu"] = std::shared_ptr<GUILost>(new GUILost);
     
     for(auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
         it->second->Initialize();
     
     SwitchStates(GameState::GAME_MAIN_MENU);
+}
+
+void Game::ReloadGame() {
+#if defined(PLATFORM_OSX)
+    player = one.Load("levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+#else
+    player = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+#endif
+    if (Levels.size() > 0)
+        Levels.clear();
+    this->Levels.push_back(one);
+    this->Level = 0;
+    
+    engine = new GameEngine(player, one.Platforms, one.Spikes, GRAVITY, PLAYER_VELOCITY);
 }
 
 void Game::SwitchStates(GameState state) {
@@ -123,6 +139,8 @@ void Game::SwitchStates(GameState state) {
             mGUIContainers["MainMenu"]->SetActive(true);
             break;
         case GameState::GAME_ACTIVE:
+            if (engine == nullptr && player == nullptr)
+                ReloadGame();
             GetAudio()->StopAll();
             GetAudio()->PlaySound("Sounds/awesomeness.wav", true);
             break;
@@ -135,6 +153,8 @@ void Game::SwitchStates(GameState state) {
             GetAudio()->StopAll();
             mGUIContainers["PauseMenu"]->SetActive(true);
             break;
+        case GameState::GAME_LOSE:
+            mGUIContainers["LostMenu"]->SetActive(true);
         default:
             break;
     }
@@ -143,10 +163,11 @@ void Game::SwitchStates(GameState state) {
 void Game::Update(float dt) {
     if (mState == GAME_ACTIVE) {
         engine->Update(dt);
-        if (engine->HitSpikes())
-            cout << "HITTTTT" << endl;
-        else
-            cout << "NOT HIT" << endl;
+        if (engine->HitSpikes()) {
+            SwitchStates(GAME_LOSE);
+            engine = nullptr; player = nullptr;
+        }
+        
     }
 }
 
@@ -190,6 +211,7 @@ void Game::Render() {
 		player->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
         player->Draw(*renderer, viewMatrix);
     }
+    std::cout << (mState == GAME_LOSE) << std::endl;
     for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
         it->second->Render(renderer, mText);
     EventManager::EndFrame();

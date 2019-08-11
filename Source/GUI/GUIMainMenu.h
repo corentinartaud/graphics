@@ -23,7 +23,7 @@ public:
     int currentSelection;
     GUIMainMenu();
     
-    // initializes the in-game menu and its all its relevant controls
+    // initializes the game menu and its all its relevant controls
     bool Initialize();
     // updates the game menu plus all its controls
     void Update(float dt);

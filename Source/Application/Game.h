@@ -67,6 +67,9 @@ public:
     
     // switches the game states
     void SwitchStates(GameState state = GameState::GAME_NULL);
+    
+    // reloads game if lost
+    void ReloadGame();
 
 private:
     static Game* instance;
@@ -76,6 +79,7 @@ private:
     Renderer *renderer;
     GameObject *player;
     TextRenderer *mText;
+    GameLevel one;
     
     std::map<std::string, std::shared_ptr<GUIContainer>> mGUIContainers; // contains all the game's GUI items
 
