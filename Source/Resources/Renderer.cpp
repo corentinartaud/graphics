@@ -11,6 +11,7 @@
 Renderer::Renderer(Shader &shader) {
     this->shader = shader;
     this->configureQuad();
+    this->configureTriangle();
 }
 
 Renderer::~Renderer() {
