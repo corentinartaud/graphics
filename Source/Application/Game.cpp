@@ -115,6 +115,8 @@ void Game::Initialize(GLuint width, GLuint height) {
 }
 
 void Game::ReloadGame() {
+    delete player; delete engine;
+    player = new GameObject();
 #if defined(PLATFORM_OSX)
     player = one.Load("levels/one.lvl", this->mWidth, this->mHeight * 0.5);
 #else
