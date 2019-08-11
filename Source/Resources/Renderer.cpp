@@ -55,21 +55,27 @@ void Renderer::Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size
 void Renderer::configureQuad() {
     GLfloat vertices[] = {
         // Pos      // Tex
-        0.0f, 0.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f, 1.0f,
-        
-        0.0f, 1.0f, 0.0f, 1.0f,
-        1.0f, 0.0f, 1.0f, 0.0f,
-        1.0f, 1.0f, 1.0f, 1.0f
+        0.0f, 0.0f, 0.0f, 0.0f, // bottom left
+        1.0f, 0.0f, 1.0f, 0.0f, // bottom right
+        0.0f, 1.0f, 0.0f, 1.0f, // top left
+        1.0f, 1.0f, 1.0f, 1.0f // top right
+    };
+    
+    unsigned int indicesArray[] {
+        0, 1, 2, // First Triangle
+        2, 1, 3 // Second Triangle
     };
     
     glGenVertexArrays(1, &mQuadVAO);
     glGenBuffers(1, &mVBO);
+    glGenBuffers(1, &mEBO);
     glBindVertexArray(mQuadVAO);
     
     glBindBuffer(GL_ARRAY_BUFFER, mVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicesArray), indicesArray, GL_STATIC_DRAW);
     
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
     glEnableVertexAttribArray(0);
@@ -79,7 +85,7 @@ void Renderer::configureQuad() {
 
 void Renderer::renderQuad() {
     glBindVertexArray(mQuadVAO);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
 

@@ -75,7 +75,7 @@ void Game::SwitchStates(GameState state) {
     // de-activate all GUI containers in order to avoid irrelevant sounds
 //    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
 //        it->second->SetActive(false);
-//    
+//
 //    switch(state) {
 //        case GameState::GAME_MAIN_MENU:
 //            mGUIContainers["MainMenu"]->SetActive(true);
