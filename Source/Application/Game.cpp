@@ -70,6 +70,34 @@ void Game::Initialize() {
     engine = new GameEngine(player, one.Platforms, one.Spikes, GRAVITY, PLAYER_VELOCITY);
 }
 
+void Game::SwitchStates(GameState state) {
+    mState = (state == GameState::GAME_NULL ? mState : state);
+    // de-activate all GUI containers in order to avoid irrelevant sounds
+//    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
+//        it->second->SetActive(false);
+//    
+//    switch(state) {
+//        case GameState::GAME_MAIN_MENU:
+//            mGUIContainers["MainMenu"]->SetActive(true);
+//            break;
+//        case GameState::GAME_ACTIVE:
+//            GetAudio()->StopAll();
+//            GetAudio()->PlaySound("Sounds/awesomeness.wav", true);
+//            break;
+//        case GameState::GAME_WIN:
+//            break;
+//        case GameState::GAME_NULL:
+//            EventManager::SetWindowShouldClose();
+//            break;
+//        case GameState::GAME_INGAME_MENU:
+//            GetAudio()->StopAll();
+//            mGUIContainers["PauseMenu"]->SetActive(true);
+//            break;
+//        default:
+//            break;
+//    }
+}
+
 void Game::Update(float dt) {
     engine->Update(dt);
     if (engine->HitSpikes())

@@ -20,8 +20,11 @@
 enum GameState {
     GAME_ACTIVE,
     GAME_MENU,
+    GAME_NULL,
     GAME_WIN
 };
+
+class AudioEngine;
 
 // Initial size of the player paddle
 const glm::vec2 PLAYER_SIZE(100, 100);
@@ -54,9 +57,17 @@ public:
 	std::string getAnimationTexture(float positionX);
     
     static Game* GetInstance() { return instance; };
+    
+    // returns the game's audio sub-system
+    AudioEngine* const GetAudio() { return mAudio; };
+    
+    // switches the game states
+    void SwitchStates(GameState state = GameState::GAME_NULL);
 
 private:
     static Game* instance;
+    
+    AudioEngine *mAudio;
 };
 
 #endif /* Game_h */
