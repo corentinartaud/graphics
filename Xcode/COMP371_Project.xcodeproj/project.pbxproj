@@ -113,6 +113,7 @@
 		30A50A0C2300755F001ED2FE /* GUIPauseMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIPauseMenu.cpp; sourceTree = "<group>"; };
 		30A50A0F23007590001ED2FE /* TextRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextRenderer.h; sourceTree = "<group>"; };
 		30A50A1023007590001ED2FE /* TextRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextRenderer.cpp; sourceTree = "<group>"; };
+		30A50A1223007D89001ED2FE /* GameState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameState.h; sourceTree = "<group>"; };
 		30B901B722EF83FC005246B4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		A52EF06322FF9AAA00263CEC /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfreetype.6.dylib; path = ../../../../../../../usr/local/Cellar/freetype/2.10.1/lib/libfreetype.6.dylib; sourceTree = "<group>"; };
 		A5A0F1F622FCF8C800F04F74 /* LevelReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelReader.cpp; sourceTree = "<group>"; };
@@ -217,6 +218,7 @@
 				30A10F9822FA1EA70022E952 /* GameLevel.h */,
 				30A10F9B22FA1EA70022E952 /* GameObject.cpp */,
 				30A10F9A22FA1EA70022E952 /* GameObject.h */,
+				30A50A1223007D89001ED2FE /* GameState.h */,
 				A5A0F1F622FCF8C800F04F74 /* LevelReader.cpp */,
 				A5A0F1F722FCF8C800F04F74 /* LevelReader.h */,
 			);

@@ -24,6 +24,7 @@ public:
     static void Update();
     
     static float GetFrameTime();
+    static void SetWindowShouldClose();
     static bool ExitRequested();
     
     static GLuint GetScreenWidth() { return SCREEN_WIDTH; };

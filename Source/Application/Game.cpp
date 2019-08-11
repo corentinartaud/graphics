@@ -11,6 +11,10 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 #include "GameObject.h"
+#include "GUIContainer.h"
+#include "GUIMainMenu.h"
+#include "GUIPauseMenu.h"
+#include "AudioEngine.h"
 #include <string>
 #include <iostream>
 
@@ -24,6 +28,7 @@ GameObject *player;
 Game::Game(GLuint width, GLuint height)
 : mState(GAME_ACTIVE), mKeys(), mWidth(width), mHeight(height) {
     instance = this;
+    mAudio = new AudioEngine();
 }
 
 Game::~Game() {
@@ -68,34 +73,42 @@ void Game::Initialize() {
     this->Level = 0;
     
     engine = new GameEngine(player, one.Platforms, one.Spikes, GRAVITY, PLAYER_VELOCITY);
+    
+    mGUIContainers["MainMenu"] = std::shared_ptr<GUIContainer>(new GUIMainMenu);
+    mGUIContainers["PauseMenu"] = std::shared_ptr<GUIPauseMenu>(new GUIPauseMenu);
+    
+    for(auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
+        it->second->Initialize();
+    
+    SwitchStates(GameState::GAME_ACTIVE);
 }
 
 void Game::SwitchStates(GameState state) {
     mState = (state == GameState::GAME_NULL ? mState : state);
     // de-activate all GUI containers in order to avoid irrelevant sounds
-//    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
-//        it->second->SetActive(false);
-//
-//    switch(state) {
-//        case GameState::GAME_MAIN_MENU:
-//            mGUIContainers["MainMenu"]->SetActive(true);
-//            break;
-//        case GameState::GAME_ACTIVE:
-//            GetAudio()->StopAll();
-//            GetAudio()->PlaySound("Sounds/awesomeness.wav", true);
-//            break;
-//        case GameState::GAME_WIN:
-//            break;
-//        case GameState::GAME_NULL:
-//            EventManager::SetWindowShouldClose();
-//            break;
-//        case GameState::GAME_INGAME_MENU:
-//            GetAudio()->StopAll();
-//            mGUIContainers["PauseMenu"]->SetActive(true);
-//            break;
-//        default:
-//            break;
-//    }
+    for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
+        it->second->SetActive(false);
+
+    switch(state) {
+        case GameState::GAME_MAIN_MENU:
+            mGUIContainers["MainMenu"]->SetActive(true);
+            break;
+        case GameState::GAME_ACTIVE:
+            GetAudio()->StopAll();
+            GetAudio()->PlaySound("Sounds/awesomeness.wav", true);
+            break;
+        case GameState::GAME_WIN:
+            break;
+        case GameState::GAME_NULL:
+            EventManager::SetWindowShouldClose();
+            break;
+        case GameState::GAME_INGAME_MENU:
+            GetAudio()->StopAll();
+            mGUIContainers["PauseMenu"]->SetActive(true);
+            break;
+        default:
+            break;
+    }
 }
 
 void Game::Update(float dt) {

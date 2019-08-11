@@ -118,6 +118,10 @@ float EventManager::GetFrameTime() {
     return sFrameTime;
 }
 
+void EventManager::SetWindowShouldClose() {
+    glfwSetWindowShouldClose(spWindow, GL_TRUE);
+}
+
 bool EventManager::ExitRequested() {
     return glfwGetKey(spWindow, GLFW_KEY_ESCAPE ) == GLFW_PRESS || glfwWindowShouldClose(spWindow);
 }

@@ -14,17 +14,13 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "GameState.h"
 #include "GameLevel.h"
 #include "GameEngine.h"
 
-enum GameState {
-    GAME_ACTIVE,
-    GAME_MENU,
-    GAME_NULL,
-    GAME_WIN
-};
-
 class AudioEngine;
+class GUIContainer;
+class TextRenderer;
 
 // Initial size of the player paddle
 const glm::vec2 PLAYER_SIZE(100, 100);
@@ -42,7 +38,6 @@ public:
     GLuint mWidth, mHeight;
     std::vector<GameLevel> Levels;
     GLuint Level;
-    GameEngine* engine;
     
     // Constructor / Destructor
     Game(GLuint width, GLuint height);
@@ -68,6 +63,10 @@ private:
     static Game* instance;
     
     AudioEngine *mAudio;
+    GameEngine* engine;
+    
+    std::map<std::string, std::shared_ptr<GUIContainer>> mGUIContainers; // contains all the game's GUI items
+
 };
 
 #endif /* Game_h */
