@@ -59,7 +59,6 @@ void GUIContainer::RenderBackground(Renderer *renderer, TextRenderer *textRender
 }
 
 void GUIContainer::OnMouseMove(float x, float y) {
-    std::cout << mIsActive << std::endl;
     if (mIsActive) {
         for (auto it = mElements.begin(); it != mElements.end(); ++it) {
             (*it)->SetMouseEntered(false);
