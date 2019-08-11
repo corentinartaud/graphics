@@ -18,13 +18,11 @@ Shader &Shader::Use() {
 void Shader::Compile(const GLchar* vertexSource, const GLchar* fragmentSource) {
     GLuint sVertex, sFragment;
     // Vertex Shader
-    printf("Compiling shader : %s\n", vertexSource);
     sVertex = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(sVertex, 1, &vertexSource, NULL);
     glCompileShader(sVertex);
     checkCompileErrors(sVertex, "VERTEX");
     // Fragment Shader
-    printf("Compiling shader : %s\n", fragmentSource);
     sFragment = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(sFragment, 1, &fragmentSource, NULL);
     glCompileShader(sFragment);

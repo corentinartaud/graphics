@@ -47,6 +47,10 @@ private:
     static const GLuint SCREEN_WIDTH = 1024;
     // The height of the screen
     static const GLuint SCREEN_HEIGHT = 768;
+    
+    // GLFW function declerations
+    static void mouse_move_callback(GLFWwindow* window, double x, double y);
+    static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 };
 
 #endif /* EventManager_h */
