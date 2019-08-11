@@ -41,8 +41,11 @@
 		30A50A0E23007560001ED2FE /* GUIPauseMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A50A0C2300755F001ED2FE /* GUIPauseMenu.cpp */; };
 		30A50A1123007590001ED2FE /* TextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A50A1023007590001ED2FE /* TextRenderer.cpp */; };
 <<<<<<< HEAD
+<<<<<<< HEAD
 		A52EF0652300865B00263CEC /* libfreetype.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A52EF06322FF9AAA00263CEC /* libfreetype.6.dylib */; };
 =======
+=======
+>>>>>>> 199b51a23ba52e7b4a0daa2f0fc7a4719c318aec
 		30A50A1523009211001ED2FE /* GUILost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A50A1423009211001ED2FE /* GUILost.cpp */; };
 		A52EF06422FF9AAA00263CEC /* libfreetype.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A52EF06322FF9AAA00263CEC /* libfreetype.6.dylib */; };
 >>>>>>> Game Over Scenario Finished
