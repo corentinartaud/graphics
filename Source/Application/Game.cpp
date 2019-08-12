@@ -73,6 +73,8 @@ void Game::Initialize(float width, float height) {
     glm::mat4 projection = glm::ortho(0.0f, width, 0.0f, height, -1.0f, 1.0f);
     ResourceManager::GetShader("texture").Use().SetInteger("image", 0);
     ResourceManager::GetShader("texture").SetMatrix4("projection", projection);
+    // Set render-specific controls
+    mRenderer->Initialize(ResourceManager::GetShader("texture"));
     // Set text-specific control
     mText->Initialize(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
     // Load Fonts
@@ -83,26 +85,23 @@ void Game::Initialize(float width, float height) {
 #endif
     // Load textures
 #if defined(PLATFORM_OSX)	
-	ResourceManager::LoadTexture("Textures/background.jpg", GL_TRUE, "background");
-	ResourceManager::LoadTexture("Textures/Player/stand/s1.png", GL_TRUE, "player");
-	ResourceManager::LoadTexture("Textures/Platform/Grass.png", GL_TRUE, "grass");
-	ResourceManager::LoadTexture("Textures/Platform/Ground.png", GL_TRUE, "ground");
-    ResourceManager::LoadTexture("Textures/Spikes/setB/spike.png", GL_TRUE, "spike");
+	ResourceManager::LoadTexture("Textures/background.jpg", "background");
+	ResourceManager::LoadTexture("Textures/Player/stand/s1.png", "player");
+	ResourceManager::LoadTexture("Textures/Platform/Grass.png", "grass");
+	ResourceManager::LoadTexture("Textures/Platform/Ground.png", "ground");
+    ResourceManager::LoadTexture("Textures/Spikes/setB/spike.png", "spike");
 #else
-	ResourceManager::LoadTexture("../Assets/Textures/background.jpg", GL_TRUE, "background");
-	ResourceManager::LoadTexture("../Assets/Textures/Player/stand/s1.png", GL_TRUE, "player");
-	ResourceManager::LoadTexture("../Assets/Textures/Platform/Grass.png", GL_TRUE, "grass");
-	ResourceManager::LoadTexture("../Assets/Textures/Platform/Ground.png", GL_TRUE, "ground");
-    ResourceManager::LoadTexture("../Assets/Textures/Spikes/setB/spike.png", GL_TRUE, "spike");
+	ResourceManager::LoadTexture("../Assets/Textures/background.jpg", "background");
+	ResourceManager::LoadTexture("../Assets/Textures/Player/stand/s1.png", "player");
+	ResourceManager::LoadTexture("../Assets/Textures/Platform/Grass.png", "grass");
+	ResourceManager::LoadTexture("../Assets/Textures/Platform/Ground.png", "ground");
+    ResourceManager::LoadTexture("../Assets/Textures/Spikes/setB/spike.png", "spike");
 #endif
-    // Set render-specific controls
-    mRenderer->Initialize(ResourceManager::GetShader("texture"));
     // Load levels
-    //GameLevel one;
 #if defined(PLATFORM_OSX)
     mPlayer = one.Load("levels/two.lvl", this->mWidth, this->mHeight * 0.5);
 #else
-	mPlayer = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+	mPlayer = one.Load("../Assets/levels/two.lvl", this->mWidth, this->mHeight * 0.5);
 #endif
     this->Levels.push_back(one);
     this->Level = 0;
@@ -126,7 +125,7 @@ void Game::ReloadGame() {
 #if defined(PLATFORM_OSX)
     mPlayer = one.Load("levels/two.lvl", this->mWidth, this->mHeight * 0.5);
 #else
-    mPlayer = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+    mPlayer = one.Load("../Assets/levels/two.lvl", this->mWidth, this->mHeight * 0.5);
 #endif
     if (Levels.size() > 0)
         Levels.clear();
@@ -176,13 +175,11 @@ void Game::Update(float dt) {
             SwitchStates(GAME_LOSE);
             mEngine = nullptr; mPlayer = nullptr;
         }
-        
     }
 }
 
 // process input for every frame during game state
 void Game::ProcessInput(GLfloat dt) {
-
     if (this->mState == GAME_ACTIVE) {
         // Jumping
         if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && mPlayer->mVelocity.y == 0.f) {
@@ -214,7 +211,6 @@ void Game::Render() {
 		//Draw Player
 		mPlayer->Draw(*mRenderer, viewMatrix);
     }
-    std::cout << (mState == GAME_LOSE) << std::endl;
     for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
         it->second->Render(mRenderer, mText);
     EventManager::EndFrame();

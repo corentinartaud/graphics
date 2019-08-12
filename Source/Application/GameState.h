@@ -9,6 +9,7 @@
 #ifndef GameState_h
 #define GameState_h
 
+// holds all states of the game
 enum GameState {
     GAME_NULL,
     GAME_MAIN_MENU,

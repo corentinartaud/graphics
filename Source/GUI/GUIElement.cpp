@@ -19,12 +19,10 @@ void GUIElement::SetName(std::string name) {
 
 void GUIElement::SetPosition(glm::vec2 position) {
     mPosition = position;
-    CalculateModel();
 }
 
 void GUIElement::SetScale(glm::vec2 scale) {
     mScale = scale;
-    CalculateModel();
 }
 
 void GUIElement::SetForeColor(glm::vec3 foreColor) {

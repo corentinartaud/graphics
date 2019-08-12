@@ -27,9 +27,11 @@ struct Character {
 };
 
 
-// A renderer class for rendering text displayed by a font loaded using the
-// FreeType library. A single font is loaded, processed into a list of Character
-// items for later rendering.
+/*
+ A renderer class for rendering text displayed by a font loaded using the
+ FreeType library. A single font is loaded, processed into a list of Character
+ items for later rendering.
+*/
 class TextRenderer {
 public:
     // Constructor // Destructor
@@ -47,7 +49,8 @@ public:
     void RenderText(std::string text, float x, float y, float scale, glm::vec3 color = glm::vec3(1.0f));
 private:
     // Render state
-    unsigned int mVAO, mVBO;
+    unsigned int mVAO;
+    unsigned int mVBO;
 };
 
 #endif /* TextRenderer_h */

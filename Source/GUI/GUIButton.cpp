@@ -24,12 +24,6 @@ void GUIButton::SetHoverColor(glm::vec4 color) {
     mHoverColor = color;
 }
 
-void GUIButton::CalculateModel() {
-    mModel = glm::mat4(1.0f);
-    mModel *= glm::translate(glm::vec3(mPosition, 1.0f));
-    mModel *= glm::scale(glm::vec3(mScale, 1.0f));
-}
-
 void GUIButton::Render(Renderer *renderer, TextRenderer *text, Shader shader) {
     text->RenderText(mText, mPosition.x, mPosition.y, 1.0f, mMouseEntered ? mHoverColor : mForeColor);
 }

@@ -19,8 +19,10 @@
 #include "ResourceManager.h"
 
 
-/// GameLevel holds all Tiles as part of a Breakout level and
-/// hosts functionality to Load/render levels from the harddisk.
+/*
+ GameLevel holds all Tiles as part of the level and
+ hosts functionality to Load/render levels from the files.
+*/
 class GameLevel {
 public:
     // Level state
@@ -32,8 +34,6 @@ public:
     GameObject* Load(const GLchar *file, GLuint levelWidth, GLuint levelHeight);
     // Render level
     void Draw(Renderer &renderer, glm::mat4 viewMatrix);
-    // Check if the level is completed (all non-solid tiles are destroyed)
-    GLboolean IsCompleted();
 };
 
 #endif /* GameLevel_h */
