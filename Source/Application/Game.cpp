@@ -172,14 +172,17 @@ void Game::SwitchStates(GameState state) {
             mGUIContainers["LevelMenu"]->SetActive(true);
             break;
         case GameState::GAME_LEVEL_1:
+            GetAudio()->StopAll();
             this->Level = 0;
             SwitchStates(GAME_ACTIVE);
             break;
         case GameState::GAME_LEVEL_2:
+            GetAudio()->StopAll();
             this->Level = 1;
             SwitchStates(GAME_ACTIVE);
             break;
         case GameState::GAME_LEVEL_3:
+            GetAudio()->StopAll();
             this->Level = 2;
             SwitchStates(GAME_ACTIVE);
             break;
@@ -205,7 +208,7 @@ void Game::Update(float dt) {
 void Game::ProcessInput(GLfloat dt) {
     if (this->mState == GAME_ACTIVE) {
         // Jumping
-        if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && mPlayer[this->Level]->mVelocity.y == 0.f) {
+        if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP] || this->mKeys[GLFW_KEY_W] || this->mKeys[GLFW_MOUSE_BUTTON_LEFT]) && mPlayer[this->Level]->mVelocity.y == 0.f) {
             mPlayer[this->Level]->mVelocity.y = JUMP_VELOCITY;
 			mAnimations->addSmoke(*mPlayer[this->Level], Jump);
         }

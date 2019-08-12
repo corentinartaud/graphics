@@ -86,7 +86,8 @@ void GUIPauseMenu::Activate() {
 }
 
 void GUIPauseMenu::Deactivate() {
-    Game::GetInstance()->GetAudio()->Play("Sounds/the_final_battle.wav");
+    if (!(Game::GetInstance()->GetGameState() == GameState::GAME_LEVEL))
+        Game::GetInstance()->GetAudio()->Stop("Sounds/the_final_battle.wav");
 }
 
 void GUIPauseMenu::ButtonPressed(std::shared_ptr<GUIButton> button){
