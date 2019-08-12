@@ -13,11 +13,7 @@ struct GameObjectWithTimestamp{
 	GameObject object;
 	double timestamp;
 };
-struct AnimationObject {
-	GameObject object;
-	double timestamp;
-	int id;
-};
+
 enum smokeTypes {
 	Run,
 	Jump

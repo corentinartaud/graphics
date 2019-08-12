@@ -175,7 +175,7 @@ void Animation::DrawSmoke(Renderer& renderer, glm::mat4 viewMatrix) {
 
 void Animation::addSmoke(GameObject player, smokeTypes type) {
 	GameObject tempObj;
-	ResourceManager::LoadTexture("../Assets/Textures/smoke.png", "jumpSmoke");	//load jumpSmoke texture
+	ResourceManager::LoadTexture("Textures/smoke.png", "jumpSmoke");	//load jumpSmoke texture
 	tempObj.mTexture = ResourceManager::GetTexture("jumpSmoke");	//set texture
 	tempObj.mPosition = player.mPosition;	//place at position of input object
 	tempObj.mSize = glm::vec2(80.0f, 20.0f);	//set size

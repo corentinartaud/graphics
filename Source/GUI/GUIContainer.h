@@ -17,6 +17,12 @@
 class Renderer;
 class TextRenderer;
 
+/*
+ A container is used for rendering and containing GUI elements. A GUI container
+ is required to render the GUI components; each GUI element requires a parent GUI
+ container. The GUI Container stores any number of GUI elements and processes their
+ actions respectively.
+ */
 class GUIContainer {
 public:
     GUIContainer();
