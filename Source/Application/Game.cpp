@@ -101,6 +101,7 @@ void Game::Initialize(float width, float height) {
 #if defined(PLATFORM_OSX)
     mPlayer = one.Load("levels/two.lvl", this->mWidth, this->mHeight * 0.5);
 #else
+
 	mPlayer = one.Load("../Assets/levels/two.lvl", this->mWidth, this->mHeight * 0.5);
 #endif
     this->Levels.push_back(one);
