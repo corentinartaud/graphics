@@ -74,11 +74,11 @@ void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *text) {
 
 void GUIMainMenu::Activate() {
     Game::GetInstance()->GetAudio()->StopAll();
-    Game::GetInstance()->GetAudio()->PlaySound("Sounds/caketown.wav", true);
+    Game::GetInstance()->GetAudio()->Play("Sounds/caketown.wav", true);
 }
 
 void GUIMainMenu::Deactivate() {
-    Game::GetInstance()->GetAudio()->StopSound("Sounds/caketown.wav");
+    Game::GetInstance()->GetAudio()->Stop("Sounds/caketown.wav");
 }
 
 void GUIMainMenu::ButtonPressed(std::shared_ptr<GUIButton> button) {
