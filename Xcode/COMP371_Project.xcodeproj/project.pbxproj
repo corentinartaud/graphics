@@ -41,7 +41,8 @@
 		30A50A0E23007560001ED2FE /* GUIPauseMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A50A0C2300755F001ED2FE /* GUIPauseMenu.cpp */; };
 		30A50A1123007590001ED2FE /* TextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A50A1023007590001ED2FE /* TextRenderer.cpp */; };
 		30A50A1523009211001ED2FE /* GUILost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A50A1423009211001ED2FE /* GUILost.cpp */; };
-		30A50A162300A190001ED2FE /* libfreetype.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 307697A822FDE84B00355205 /* libfreetype.6.dylib */; };
+		A50449C62300A549000800C7 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A50449C42300A549000800C7 /* Animation.cpp */; };
+		A59443C52300A83700E8311A /* libfreetype.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A52EF06322FF9AAA00263CEC /* libfreetype.6.dylib */; };
 		A5A0F1F822FCF8C800F04F74 /* LevelReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5A0F1F622FCF8C800F04F74 /* LevelReader.cpp */; };
 		A5C6B9E822FE3A7D00680F82 /* GameEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5C6B9E622FE3A7D00680F82 /* GameEngine.cpp */; };
 /* End PBXBuildFile section */
@@ -118,6 +119,8 @@
 		30A50A13230090A1001ED2FE /* GUILost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GUILost.h; sourceTree = "<group>"; };
 		30A50A1423009211001ED2FE /* GUILost.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GUILost.cpp; sourceTree = "<group>"; };
 		30B901B722EF83FC005246B4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		A50449C42300A549000800C7 /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
+		A50449C52300A549000800C7 /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
 		A52EF06322FF9AAA00263CEC /* libfreetype.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfreetype.6.dylib; path = ../../../../../../../usr/local/Cellar/freetype/2.10.1/lib/libfreetype.6.dylib; sourceTree = "<group>"; };
 		A5A0F1F622FCF8C800F04F74 /* LevelReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelReader.cpp; sourceTree = "<group>"; };
 		A5A0F1F722FCF8C800F04F74 /* LevelReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LevelReader.h; sourceTree = "<group>"; };
@@ -131,7 +134,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				30A50A162300A190001ED2FE /* libfreetype.6.dylib in Frameworks */,
+				A59443C52300A83700E8311A /* libfreetype.6.dylib in Frameworks */,
 				307697B522FE3B4400355205 /* libirrklang.dylib in Frameworks */,
 				307697A722FDDC6B00355205 /* OpenAL.framework in Frameworks */,
 				307697A522FDDC6300355205 /* CoreServices.framework in Frameworks */,
@@ -213,6 +216,8 @@
 		30A10F8522FA1E440022E952 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				A50449C42300A549000800C7 /* Animation.cpp */,
+				A50449C52300A549000800C7 /* Animation.h */,
 				30A10F9922FA1EA70022E952 /* Game.cpp */,
 				30A10F9722FA1EA70022E952 /* Game.h */,
 				A5C6B9E622FE3A7D00680F82 /* GameEngine.cpp */,
@@ -378,6 +383,7 @@
 				30A10F9D22FA1EA70022E952 /* Game.cpp in Sources */,
 				30A10F9022FA1E920022E952 /* Renderer.cpp in Sources */,
 				A5C6B9E822FE3A7D00680F82 /* GameEngine.cpp in Sources */,
+				A50449C62300A549000800C7 /* Animation.cpp in Sources */,
 				30A10F9322FA1E920022E952 /* ResourceManager.cpp in Sources */,
 				30A10F9E22FA1EA70022E952 /* GameObject.cpp in Sources */,
 				30A50A0E23007560001ED2FE /* GUIPauseMenu.cpp in Sources */,
@@ -514,6 +520,7 @@
 					"$(PROJECT_DIR)",
 					/opt/X11/lib,
 					"../ThirdParty/irrKlang-1.6.0/lib/osx",
+					/usr/local/Cellar/freetype/2.10.1/lib,
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -544,6 +551,7 @@
 					"$(PROJECT_DIR)",
 					/opt/X11/lib,
 					"../ThirdParty/irrKlang-1.6.0/lib/osx",
+					/usr/local/Cellar/freetype/2.10.1/lib,
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";

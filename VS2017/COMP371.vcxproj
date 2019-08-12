@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\Application\Animation.cpp" />
     <ClCompile Include="..\Source\Application\Game.cpp" />
+    <ClCompile Include="..\Source\Application\GameEngine.cpp" />
     <ClCompile Include="..\Source\Application\GameLevel.cpp" />
     <ClCompile Include="..\Source\Application\GameObject.cpp" />
     <ClCompile Include="..\Source\Application\LevelReader.cpp" />
@@ -34,7 +36,9 @@
     <ClCompile Include="..\Source\Resources\TextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Source\Application\Animation.h" />
     <ClInclude Include="..\Source\Application\Game.h" />
+    <ClInclude Include="..\Source\Application\GameEngine.h" />
     <ClInclude Include="..\Source\Application\GameLevel.h" />
     <ClInclude Include="..\Source\Application\GameObject.h" />
     <ClInclude Include="..\Source\Application\LevelReader.h" />
@@ -49,6 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Assets\Levels\one.lvl" />
+    <None Include="..\Assets\Shaders\texture.fragmentshader" />
+    <None Include="..\Assets\Shaders\texture.vertexshader" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{277EAE68-9EED-4EFF-BAD3-2A70787A3E8D}</ProjectGuid>

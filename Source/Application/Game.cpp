@@ -19,7 +19,7 @@
 #include "TextRenderer.h"
 #include <string>
 #include <iostream>
-
+#include <list>
 using namespace std;
 
 Game* Game::instance;
@@ -103,6 +103,7 @@ void Game::Initialize(GLuint width, GLuint height) {
     this->Level = 0;
     
     engine = new GameEngine(player, one.Platforms, one.Spikes, GRAVITY, PLAYER_VELOCITY);
+    animations = new Animation();
     
     mGUIContainers["MainMenu"] = std::shared_ptr<GUIContainer>(new GUIMainMenu);
     mGUIContainers["PauseMenu"] = std::shared_ptr<GUIPauseMenu>(new GUIPauseMenu);
@@ -128,6 +129,7 @@ void Game::ReloadGame() {
     this->Level = 0;
     
     engine = new GameEngine(player, one.Platforms, one.Spikes, GRAVITY, PLAYER_VELOCITY);
+    animations = new Animation();
 }
 
 void Game::SwitchStates(GameState state) {
@@ -177,20 +179,11 @@ void Game::Update(float dt) {
 void Game::ProcessInput(GLfloat dt) {
 
     if (this->mState == GAME_ACTIVE) {
-        GLfloat velocity = PLAYER_VELOCITY * dt;
-        // Move player
-        if (this->mKeys[GLFW_KEY_A] || this->mKeys[GLFW_KEY_LEFT]) {
-            if (player->mPosition.x >= 0)
-                player->mPosition.x -= velocity;
-        }
-        if (this->mKeys[GLFW_KEY_D] || this->mKeys[GLFW_KEY_RIGHT] ) {
-            if (player->mPosition.x <= this->mWidth - player->mSize.x)
-                player->mPosition.x += velocity;
-        }
         // Jumping
         // Only allow to jump when player is on a platform
         if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && player->mVelocity.y == 0.f) {
             player->mVelocity.y = JUMP_VELOCITY;
+			animations->addSmoke(*player, Jump);
         }
         // check for pause
         if (this->mKeys[GLFW_KEY_P]){
@@ -208,10 +201,14 @@ void Game::Render() {
         glm::mat4 viewMatrix = glm::translate(glm::mat4(1.f), glm::vec3(player->mInitialPosition.x - player->mPosition.x, 0.f, 0.f));
         // Draw level
         this->Levels[this->Level].Draw(*renderer, viewMatrix);
-        // Draw player
-		ResourceManager::LoadTexture(getAnimationTexture(player->mPosition.x).c_str(), GL_TRUE, "player");	//update texture
+        // Set Player Animation
+        animations->setPlayerAnimation(*player);
 		player->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
-        player->Draw(*renderer, viewMatrix);
+		//Draw Phantoms
+        animations->DrawPhantom(*renderer, viewMatrix);
+        animations->DrawSmoke(*renderer, viewMatrix);
+		//Draw Player
+		player->Draw(*renderer, viewMatrix);
     }
     std::cout << (mState == GAME_LOSE) << std::endl;
     for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
@@ -227,98 +224,4 @@ void Game::ProcessMouseMove(float x, float y) {
 void Game::ProcessMouseClick(bool leftButton) {
     for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
         it->second->OnMouseClick(leftButton);
-}
-
-float Game::floatModulo(float top, float bottom)
-{
-	uint8_t division = top / bottom;
-	return top - (bottom * (float)division);
-}
-
-std::string Game::getAnimationTexture(float positionX) {
-	const std::string standRight[6] = {
-		"Textures/Player/stand/s1.png",
-		"Textures/Player/stand/s2.png",
-		"Textures/Player/stand/s3.png",
-		"Textures/Player/stand/s4.png",
-		"Textures/Player/stand/s5.png",
-		"Textures/Player/stand/s6.png"
-	};
-	const std::string walkRight[6] = {
-		"Textures/Player/walk/w1.png",
-		"Textures/Player/walk/w2.png",
-		"Textures/Player/walk/w3.png",
-		"Textures/Player/walk/w4.png",
-		"Textures/Player/walk/w5.png",
-		"Textures/Player/walk/w6.png"
-	};
-	const std::string standLeft[6] = {
-		"Textures/Player/stand/Mirrored/s1.png",
-		"Textures/Player/stand/Mirrored/s2.png",
-		"Textures/Player/stand/Mirrored/s3.png",
-		"Textures/Player/stand/Mirrored/s4.png",
-		"Textures/Player/stand/Mirrored/s5.png",
-		"Textures/Player/stand/Mirrored/s6.png"
-	};
-	const std::string walkLeft[6] = {
-		"Textures/Player/walk/Mirrored/w1.png",
-		"Textures/Player/walk/Mirrored/w2.png",
-		"Textures/Player/walk/Mirrored/w3.png",
-		"Textures/Player/walk/Mirrored/w4.png",
-		"Textures/Player/walk/Mirrored/w5.png",
-		"Textures/Player/walk/Mirrored/w6.png"
-	};
-#define still 0
-#define forward 1
-#define backward 2
-	static uint8_t pastDirection = 0;	//stores past direction of movement, everytime the movement direction changes, restart the animation timer
-	static float pastPositionX = 0;	//stores past position, knowign past position and new position give direction, basically velocity beign positive or negative
-	static bool mirroredStatus = false;	//stores whether player texture should be mirrored
-	uint8_t direction = 0;	//direction of movement
-		//checking current movement direction
-	if (positionX > pastPositionX) {
-		direction = forward;
-		mirroredStatus = false;
-	}
-	else if (positionX < pastPositionX) {
-		direction = backward;
-		mirroredStatus = true;
-	}
-	else {
-		direction = still;
-	}
-	pastPositionX = positionX;
-	//calculating time since animation began
-	static float timeElapsed = 0;
-	if (pastDirection != direction) {
-		timeElapsed = 0;
-	}
-	else {
-		timeElapsed += EventManager::GetFrameTime();
-	}
-	pastDirection = direction;
-	//calculate which animation frame to be in
-#define totalCycleTime 0.5f //in seconds
-	float cycleTime = floatModulo(timeElapsed, totalCycleTime);
-	int frameNumber = cycleTime / (totalCycleTime / 6);	//calculate frame number from 0-5
-	frameNumber = min(frameNumber, 5);	//clamp upper
-	frameNumber = max(frameNumber, 0);	//clamp lower
-	std::string framePath;
-	if (mirroredStatus == true) {
-		if (direction == 0) {
-			framePath = standLeft[frameNumber];
-		}
-		else framePath = walkLeft[frameNumber];
-	}
-	else {
-		if (direction == 0) {
-			framePath = standRight[frameNumber];
-		}
-		else framePath = walkRight[frameNumber];
-	}
-#if defined(PLATFORM_OSX)	
-	return framePath;
-#else 
-	return "../Assets/" + framePath;
-#endif
 }

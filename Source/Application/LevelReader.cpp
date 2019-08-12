@@ -65,7 +65,7 @@ GameObject* LevelReader::ReadPlayer(std::ifstream& fstream) {
 
 GameObject LevelReader::ReadGround(std::ifstream& fstream) {
     GameObject object;
-    object.mColor = glm::vec3(0.8f, 0.8f, 0.7f);
+    object.mColor = glm::vec4(glm::vec3(0.8f, 0.8f, 0.7f),1.0f);
     object.mTexture = ResourceManager::GetTexture("ground");
     
     std::string line;

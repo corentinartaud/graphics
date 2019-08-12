@@ -17,6 +17,7 @@
 #include "GameState.h"
 #include "GameLevel.h"
 #include "GameEngine.h"
+#include "Animation.h"
 
 class AudioEngine;
 class GUIContainer;
@@ -38,7 +39,7 @@ public:
     GLuint mWidth, mHeight;
     std::vector<GameLevel> Levels;
     GLuint Level;
-    
+	Animation* animations;
     // Constructor / Destructor
     Game();
     ~Game();
@@ -52,8 +53,6 @@ public:
     void ProcessInput(GLfloat dt);
     void Update(GLfloat dt);
     void Render();
-	float floatModulo(float top, float bottom);
-	std::string getAnimationTexture(float positionX);
     
     static Game* GetInstance() { return instance; };
     
