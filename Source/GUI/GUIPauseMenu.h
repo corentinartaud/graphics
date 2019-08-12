@@ -22,7 +22,6 @@ class GUIButton;
 
 class GUIPauseMenu : public GUIContainer {
 public:
-    int currentSelection;
     GUIPauseMenu();
     
     // initializes the in-game menu and its all its relevant controls

@@ -31,7 +31,3 @@ void GameLevel::Draw(Renderer &renderer, glm::mat4 viewMatrix) {
     for (GameObject &spike : Spikes)
         spike.Draw(renderer, viewMatrix, false);
 }
-
-GLboolean GameLevel::IsCompleted() {
-    return GL_FALSE;
-}

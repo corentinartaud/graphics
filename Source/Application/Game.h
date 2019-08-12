@@ -25,11 +25,11 @@ class TextRenderer;
 // Initial size of the player
 const glm::vec2 PLAYER_SIZE(100, 100);
 // Initial velocity of the player
-const GLfloat PLAYER_VELOCITY(150.0f);
+const float PLAYER_VELOCITY(150.0f);
 // Gravity acceleration towards the ground
-const GLfloat GRAVITY(-400.f);
+const float GRAVITY(-400.f);
 // Player initial jump velocity
-const GLfloat JUMP_VELOCITY(300.f);
+const float JUMP_VELOCITY(300.f);
 
 class Game {
 public:
@@ -48,8 +48,8 @@ public:
     void Initialize(float width, float height);
     
     // Game Loop
-    void ProcessInput(GLfloat dt);
-    void Update(GLfloat dt);
+    void ProcessInput(float dt);
+    void Update(float dt);
     void Render();
 	float floatModulo(float top, float bottom);
 	std::string getAnimationTexture(float positionX);

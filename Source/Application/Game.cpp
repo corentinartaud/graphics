@@ -72,6 +72,8 @@ void Game::Initialize(float width, float height) {
     glm::mat4 projection = glm::ortho(0.0f, width, 0.0f, height, -1.0f, 1.0f);
     ResourceManager::GetShader("texture").Use().SetInteger("image", 0);
     ResourceManager::GetShader("texture").SetMatrix4("projection", projection);
+    // Set render-specific controls
+    mRenderer->Initialize(ResourceManager::GetShader("texture"));
     // Set text-specific control
     mText->Initialize(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
     // Load Fonts
@@ -82,11 +84,11 @@ void Game::Initialize(float width, float height) {
 #endif
     // Load textures
 #if defined(PLATFORM_OSX)	
-	ResourceManager::LoadTexture("Textures/background.jpg", GL_TRUE, "background");
-	ResourceManager::LoadTexture("Textures/Player/stand/s1.png", GL_TRUE, "player");
-	ResourceManager::LoadTexture("Textures/Platform/Grass.png", GL_TRUE, "grass");
-	ResourceManager::LoadTexture("Textures/Platform/Ground.png", GL_TRUE, "ground");
-    ResourceManager::LoadTexture("Textures/Spikes/setB/spike.png", GL_TRUE, "spike");
+	ResourceManager::LoadTexture("Textures/background.jpg", "background");
+	ResourceManager::LoadTexture("Textures/Player/stand/s1.png", "player");
+	ResourceManager::LoadTexture("Textures/Platform/Grass.png", "grass");
+	ResourceManager::LoadTexture("Textures/Platform/Ground.png", "ground");
+    ResourceManager::LoadTexture("Textures/Spikes/setB/spike.png", "spike");
 #else
 	ResourceManager::LoadTexture("../Assets/Textures/background.jpg", GL_TRUE, "background");
 	ResourceManager::LoadTexture("../Assets/Textures/Player/stand/s1.png", GL_TRUE, "player");
@@ -94,14 +96,11 @@ void Game::Initialize(float width, float height) {
 	ResourceManager::LoadTexture("../Assets/Textures/Platform/Ground.png", GL_TRUE, "ground");
     ResourceManager::LoadTexture("../Assets/Textures/Spikes/setB/spike.png", GL_TRUE, "spike");
 #endif
-    // Set render-specific controls
-    mRenderer->Initialize(ResourceManager::GetShader("texture"));
     // Load levels
-    //GameLevel one;
 #if defined(PLATFORM_OSX)
     mPlayer = one.Load("levels/two.lvl", this->mWidth, this->mHeight * 0.5);
 #else
-	player = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+	player = one.Load("../Assets/levels/two.lvl", this->mWidth, this->mHeight * 0.5);
 #endif
     this->Levels.push_back(one);
     this->Level = 0;
@@ -124,7 +123,7 @@ void Game::ReloadGame() {
 #if defined(PLATFORM_OSX)
     mPlayer = one.Load("levels/two.lvl", this->mWidth, this->mHeight * 0.5);
 #else
-    player = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+    player = one.Load("../Assets/levels/two.lvl", this->mWidth, this->mHeight * 0.5);
 #endif
     if (Levels.size() > 0)
         Levels.clear();
@@ -173,26 +172,13 @@ void Game::Update(float dt) {
             SwitchStates(GAME_LOSE);
             mEngine = nullptr; mPlayer = nullptr;
         }
-        
     }
 }
 
 // process input for every frame during game state
 void Game::ProcessInput(GLfloat dt) {
-
     if (this->mState == GAME_ACTIVE) {
-        GLfloat velocity = PLAYER_VELOCITY * dt;
-        // Move player
-        if (this->mKeys[GLFW_KEY_A] || this->mKeys[GLFW_KEY_LEFT]) {
-            if (mPlayer->mPosition.x >= 0)
-                mPlayer->mPosition.x -= velocity;
-        }
-        if (this->mKeys[GLFW_KEY_D] || this->mKeys[GLFW_KEY_RIGHT] ) {
-            if (mPlayer->mPosition.x <= this->mWidth - mPlayer->mSize.x)
-                mPlayer->mPosition.x += velocity;
-        }
         // Jumping
-        // Only allow to jump when player is on a platform
         if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && mPlayer->mVelocity.y == 0.f) {
             mPlayer->mVelocity.y = JUMP_VELOCITY;
         }
@@ -213,11 +199,10 @@ void Game::Render() {
         // Draw level
         this->Levels[this->Level].Draw(*mRenderer, viewMatrix);
         // Draw player
-		ResourceManager::LoadTexture(getAnimationTexture(mPlayer->mPosition.x).c_str(), GL_TRUE, "player");	//update texture
+		ResourceManager::LoadTexture(getAnimationTexture(mPlayer->mPosition.x).c_str(), "player");	//update texture
 		mPlayer->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
         mPlayer->Draw(*mRenderer, viewMatrix);
     }
-    std::cout << (mState == GAME_LOSE) << std::endl;
     for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
         it->second->Render(mRenderer, mText);
     EventManager::EndFrame();

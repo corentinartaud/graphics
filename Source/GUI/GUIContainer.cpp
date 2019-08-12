@@ -35,9 +35,11 @@ void GUIContainer::SetActive(bool active) {
     else if(changed)
         Deactivate();
 }
+
 void GUIContainer::SetPosition(glm::vec2 position) {
     mPosition = position;
 }
+
 void GUIContainer::SetScale(glm::vec2 scale) {
     mScale = scale;
 }
@@ -55,7 +57,7 @@ void GUIContainer::Render(Renderer *renderer, TextRenderer *textRenderer) {
 }
 
 void GUIContainer::RenderBackground(Renderer *renderer, TextRenderer *textRenderer) {
-    // by default there is no background, initialize in derived classes if necessary
+    // no background here, initialize in derived classes
 }
 
 void GUIContainer::OnMouseMove(float x, float y) {
@@ -70,14 +72,14 @@ void GUIContainer::OnMouseMove(float x, float y) {
 
 void GUIContainer::OnMouseClick(bool leftButton) {
     if (mIsActive) {
-        std::shared_ptr<GUIButton> pButton;
+        std::shared_ptr<GUIButton> button;
         for (auto it = mElements.begin(); it != mElements.end(); ++it) {
             if((*it)->GetMouseEntered())
-                pButton = std::dynamic_pointer_cast<GUIButton>((*it));
+                button = std::dynamic_pointer_cast<GUIButton>((*it));
         }
-        if (pButton) // button has been pressed; call generic button pressed function and let class derivations manage logic based on button properties
-            ButtonPressed(pButton);
+        if (button)
+            ButtonPressed(button);
     }
 }
 
-void GUIContainer::ButtonPressed(std::shared_ptr<GUIButton> pButton) { }
+void GUIContainer::ButtonPressed(std::shared_ptr<GUIButton> button) { }

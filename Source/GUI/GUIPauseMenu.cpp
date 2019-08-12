@@ -44,7 +44,6 @@ bool GUIPauseMenu::Initialize() {
     saveGame->SetHoverColor(glm::vec4(0.0f));
     saveGame->SetText("Save Game");
     
-    
     // Quit Game
     std::shared_ptr<GUIButton> quitGame(new GUIButton);
     quitGame->SetName("quitGame");
@@ -54,17 +53,17 @@ bool GUIPauseMenu::Initialize() {
     quitGame->SetHoverColor(glm::vec4(0.0f));
     quitGame->SetText("Quit Game");
 
- 
     AddElement(resumeGame);
     AddElement(saveGame);
     AddElement(quitGame);
-
-    
     
     return true;
 }
 
+void GUIPauseMenu::Update(float dt) { }
+
 void GUIPauseMenu::RenderBackground(Renderer *renderer, TextRenderer *text){
+    // render background
     renderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(EventManager::GetScreenWidth(), EventManager::GetScreenHeight()), 0.0f);
     // render title
     text->RenderText("PAUSED GAME", 360.0f, EventManager::GetScreenHeight() / 2 - 300.0f, 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
@@ -86,15 +85,11 @@ void GUIPauseMenu::ButtonPressed(std::shared_ptr<GUIButton> button){
     } else if (buttonName == "quitGame"){
         Game::GetInstance()->SwitchStates(GAME_NULL);
     } else if (buttonName == "saveGame") {
-        
+        // to be implemented
     } else {
         // do nothing
     }
 }
-
-void GUIPauseMenu::Update(float dt){
-    
-};
 
 
 
