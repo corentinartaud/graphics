@@ -35,7 +35,7 @@ Game::Game() {
 }
 
 Game::~Game() {
-    delete mEngine;
+//    delete mEngine;
     delete mAudio;
     delete mRenderer;
     delete mText;
