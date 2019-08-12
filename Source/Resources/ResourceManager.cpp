@@ -28,8 +28,8 @@ Shader &ResourceManager::GetShader(std::string name) {
     return Shaders[name];
 }
 
-TextureLoader ResourceManager::LoadTexture(const GLchar *file, GLboolean alpha, std::string name) {
-    Textures[name] = loadTextureFromFile(file, alpha);
+TextureLoader ResourceManager::LoadTexture(const GLchar *file, std::string name) {
+    Textures[name] = loadTextureFromFile(file);
     return Textures[name];
 }
 
@@ -38,16 +38,16 @@ TextureLoader &ResourceManager::GetTexture(std::string name) {
 }
 
 void ResourceManager::Clear() {
-    // (Properly) delete all shaders
+    // delete all shaders
     for (auto iter : Shaders)
         glDeleteProgram(iter.second.mID);
-    // (Properly) delete all textures
+    // delete all textures
     for (auto iter : Textures)
         glDeleteTextures(1, &iter.second.mID);
 }
 
 Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLchar *fShaderFile) {
-    // 1. Retrieve the vertex/fragment source code from filePath
+    // code handlers
     std::string vertexCode;
     std::string fragmentCode;
     
@@ -72,7 +72,7 @@ Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLch
     const GLchar *vShaderCode = vertexCode.c_str();
     const GLchar *fShaderCode = fragmentCode.c_str();
     
-    // 2. Now create shader object from source code
+    // create shader object from source code
     Shader shader;
     printf("Compiling shader : %s\n", vShaderFile);
     printf("Compiling shader : %s\n", fShaderFile);
@@ -80,7 +80,7 @@ Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLch
     return shader;
 }
 
-TextureLoader ResourceManager::loadTextureFromFile(const GLchar *file, GLboolean alpha) {
+TextureLoader ResourceManager::loadTextureFromFile(const GLchar *file) {
     // Create Texture object
     TextureLoader texture;
     

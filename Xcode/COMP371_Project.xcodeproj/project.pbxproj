@@ -517,10 +517,9 @@
 					"../ThirdParty/glew-2.1.0/lib/osx",
 					"../ThirdParty/glfw-3.3/lib/osx",
 					"../ThirdParty/FreeImage-3170/lib/osx",
-					"$(PROJECT_DIR)",
-					/opt/X11/lib,
 					"../ThirdParty/irrKlang-1.6.0/lib/osx",
-					/usr/local/Cellar/freetype/2.10.1/lib,
+					/opt/X11/lib,
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -548,10 +547,9 @@
 					"../ThirdParty/glew-2.1.0/lib/osx",
 					"../ThirdParty/glfw-3.3/lib/osx",
 					"../ThirdParty/FreeImage-3170/lib/osx",
-					"$(PROJECT_DIR)",
-					/opt/X11/lib,
 					"../ThirdParty/irrKlang-1.6.0/lib/osx",
-					/usr/local/Cellar/freetype/2.10.1/lib,
+					/opt/X11/lib,
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";

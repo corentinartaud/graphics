@@ -20,7 +20,6 @@ class GUIButton;
 
 class GUIMainMenu : public GUIContainer {
 public:
-    int currentSelection;
     GUIMainMenu();
     
     // initializes the game menu and its all its relevant controls
@@ -37,11 +36,6 @@ public:
     
     // occurs when a button is pressed
     void ButtonPressed(std::shared_ptr<GUIButton> pButton);
-    
-    void changeMenuState();
-    void selectionUp();
-    void selectionDown();
-    void select();
 };
 
 #endif /* GUIGameMenu_h */

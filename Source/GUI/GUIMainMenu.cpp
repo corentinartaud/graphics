@@ -19,12 +19,10 @@
 
 #include <glm/glm.hpp>
 
-using namespace std;
 
 GUIMainMenu::GUIMainMenu() { }
 
 bool GUIMainMenu::Initialize() {
-    currentSelection = 0;
     // set scale
     SetScale(glm::vec2(EventManager::GetScreenWidth(), EventManager::GetScreenHeight()));
     
@@ -60,10 +58,7 @@ bool GUIMainMenu::Initialize() {
     return true;
 }
 
-void GUIMainMenu::Update(float dt) {
-    
-    
-}
+void GUIMainMenu::Update(float dt) { }
 
 void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *text) {
     // render background
@@ -74,11 +69,11 @@ void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *text) {
 
 void GUIMainMenu::Activate() {
     Game::GetInstance()->GetAudio()->StopAll();
-    Game::GetInstance()->GetAudio()->PlaySound("Sounds/caketown.wav", true);
+    Game::GetInstance()->GetAudio()->Play("Sounds/caketown.wav", true);
 }
 
 void GUIMainMenu::Deactivate() {
-    Game::GetInstance()->GetAudio()->StopSound("Sounds/caketown.wav");
+    Game::GetInstance()->GetAudio()->Stop("Sounds/caketown.wav");
 }
 
 void GUIMainMenu::ButtonPressed(std::shared_ptr<GUIButton> button) {
@@ -93,40 +88,3 @@ void GUIMainMenu::ButtonPressed(std::shared_ptr<GUIButton> button) {
         // do nothing
     }
 }
-
-void GUIMainMenu::select(){
-    switch(currentSelection){
-        case 0: ; // start game
-        case 1: ; // continue game
-        case 2: ; // exit game
-    }
-};
-
-
-void GUIMainMenu::changeMenuState(){
-    if(GLFW_KEY_W | GLFW_KEY_UP){
-        selectionUp();
-    };
-    if(GLFW_KEY_S | GLFW_KEY_DOWN){
-        selectionDown();
-    };
-    if(GLFW_KEY_ENTER){
-        select();
-    };
-};
-
-void GUIMainMenu::selectionUp(){
-    currentSelection--;
-    
-    if(currentSelection == -1){
-        currentSelection = 2;
-    };
-};
-
-void GUIMainMenu::selectionDown(){
-    currentSelection++;
-    
-    if(currentSelection == 3){
-        currentSelection = 0;
-    };
-};

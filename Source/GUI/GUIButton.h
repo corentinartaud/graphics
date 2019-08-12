@@ -37,8 +37,6 @@ public:
     void SetText(std::string text);
     void SetHoverColor(glm::vec4 color);
     
-    // calcualtes the world-space model matrix for rendering the button
-    void CalculateModel();
     // renders the button's background contained and foreground text
     void Render(Renderer *renderer, TextRenderer *textRenderer, Shader Shader);
     
