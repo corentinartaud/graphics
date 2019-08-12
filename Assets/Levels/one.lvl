@@ -5,7 +5,7 @@ textureSize : 100.0 100.0
 
 [Ground]
 textureSize : 100.0 100.0
-scale : 30.0 1.0
+scale : 50.0 1.0
 [End]
 
 [Platform]
