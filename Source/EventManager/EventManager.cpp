@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <time.h>
 
+#include <string.h>
 
 // Time
 double EventManager::sLastFrameTime = glfwGetTime();
@@ -25,6 +26,10 @@ float  EventManager::sFrameTime = 0.0f;
 
 // Window
 GLFWwindow* EventManager::spWindow = nullptr;
+
+// FPS
+float EventManager::time = 0.0f;
+int EventManager::fps = 0;
 
 void EventManager::Initialize() {
     // Initialise GLFW
@@ -107,13 +112,21 @@ void EventManager::EndFrame() {
 }
 
 void EventManager::Update() {
-    // Update inputs / events
-    glfwPollEvents();
-    
     // Update frame time
     double currentTime = glfwGetTime();
     sFrameTime = static_cast<float>(currentTime - sLastFrameTime);
     sLastFrameTime = currentTime;
+    
+    time += sFrameTime;
+    ++fps;
+    if (time >= 1.0f) {
+        time = 1.0 - time;
+        glfwSetWindowTitle(spWindow, std::string("Golden Sphere || FPS: " + std::to_string(fps)).c_str());
+        fps = 0;
+    }
+    
+    // Update inputs / events
+    glfwPollEvents();
 }
 
 float EventManager::GetFrameTime() {
