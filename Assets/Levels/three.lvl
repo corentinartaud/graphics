@@ -1,0 +1,63 @@
+[Player]
+position : 300.0 100.0
+textureSize : 100.0 100.0
+[End]
+
+[Ground]
+textureSize : 100.0 100.0
+scale : 100.0 1.0
+[End]
+
+[Platform]
+textureSize : 50 50
+scale : 3.0 1.0
+position : {
+    1000.0 150.0
+    1230.0 250.0
+    1460.0 350.0
+    1920.0 150.0
+    2150.0 150.0
+    2380.0 150.0
+    2610.0 150.0
+    2840.0 150.0
+    3070.0 150.0
+    3300.0 150.0
+    3530.0 150.0
+}
+[End]
+
+[Platform]
+textureSize : 50 50
+scale : 5.0 1.0
+position : {
+    1690.0 450.0
+}
+[End]
+
+[Spike]
+textureSize : 50 50
+scale : 1.0 1.0
+position : {
+    1100.0 200.0
+    1330.0 300.0
+    1570.0 400.0
+}
+[End]
+
+[Spike]
+textureSize : 50 50
+scale : 2.0 1.0
+position : {
+    1150.0 100.0
+    1380.0 100.0
+    1610.0 100.0
+}
+[End]
+
+[Spike]
+textureSize : 50 50
+scale : 2.0 1.0
+position : {
+    1750.0 500.0
+}
+[End]

@@ -73,13 +73,14 @@ void GUIMainMenu::Activate() {
 }
 
 void GUIMainMenu::Deactivate() {
-    Game::GetInstance()->GetAudio()->Stop("Sounds/caketown.wav");
+    if (!(Game::GetInstance()->GetGameState() == GameState::GAME_LEVEL))
+        Game::GetInstance()->GetAudio()->Stop("Sounds/caketown.wav");
 }
 
 void GUIMainMenu::ButtonPressed(std::shared_ptr<GUIButton> button) {
     std::string buttonName = button->GetName();
     if (buttonName == "startGame") {
-        Game::GetInstance()->SwitchStates(GAME_ACTIVE);
+        Game::GetInstance()->SwitchStates(GAME_LEVEL);
     } else if (buttonName == "continueGame") {
         fprintf(stderr, "Continue Button Not Yet Set!\n");
     } else if (buttonName == "quitGame") {

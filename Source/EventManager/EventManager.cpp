@@ -117,8 +117,7 @@ void EventManager::Update() {
     sFrameTime = static_cast<float>(currentTime - sLastFrameTime);
     sLastFrameTime = currentTime;
     
-    time += sFrameTime;
-    ++fps;
+    time += sFrameTime; ++fps;
     if (time >= 1.0f) {
         time = 1.0 - time;
         glfwSetWindowTitle(spWindow, std::string("Golden Sphere || FPS: " + std::to_string(fps)).c_str());

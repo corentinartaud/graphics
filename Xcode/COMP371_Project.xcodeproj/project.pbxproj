@@ -41,6 +41,7 @@
 		30A50A0E23007560001ED2FE /* GUIPauseMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A50A0C2300755F001ED2FE /* GUIPauseMenu.cpp */; };
 		30A50A1123007590001ED2FE /* TextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A50A1023007590001ED2FE /* TextRenderer.cpp */; };
 		30A50A1523009211001ED2FE /* GUILost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A50A1423009211001ED2FE /* GUILost.cpp */; };
+		30A6D51E23011BAB00CCFD28 /* GUILevelMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30A6D51D23011BAB00CCFD28 /* GUILevelMenu.cpp */; };
 		A50449C62300A549000800C7 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A50449C42300A549000800C7 /* Animation.cpp */; };
 		A59443C52300A83700E8311A /* libfreetype.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A52EF06322FF9AAA00263CEC /* libfreetype.6.dylib */; };
 		A5A0F1F822FCF8C800F04F74 /* LevelReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5A0F1F622FCF8C800F04F74 /* LevelReader.cpp */; };
@@ -118,6 +119,8 @@
 		30A50A1223007D89001ED2FE /* GameState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameState.h; sourceTree = "<group>"; };
 		30A50A13230090A1001ED2FE /* GUILost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GUILost.h; sourceTree = "<group>"; };
 		30A50A1423009211001ED2FE /* GUILost.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GUILost.cpp; sourceTree = "<group>"; };
+		30A6D51C23011B5700CCFD28 /* GUILevelMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GUILevelMenu.h; sourceTree = "<group>"; };
+		30A6D51D23011BAB00CCFD28 /* GUILevelMenu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GUILevelMenu.cpp; sourceTree = "<group>"; };
 		30B901B722EF83FC005246B4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		A50449C42300A549000800C7 /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
 		A50449C52300A549000800C7 /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
@@ -268,6 +271,8 @@
 				30A50A092300755F001ED2FE /* GUIContainer.h */,
 				30A10FB022FA61520022E952 /* GUIElement.cpp */,
 				30A10FAF22FA5FB80022E952 /* GUIElement.h */,
+				30A6D51D23011BAB00CCFD28 /* GUILevelMenu.cpp */,
+				30A6D51C23011B5700CCFD28 /* GUILevelMenu.h */,
 				30A50A1423009211001ED2FE /* GUILost.cpp */,
 				30A50A13230090A1001ED2FE /* GUILost.h */,
 				30A10FAD22FA5A890022E952 /* GUIMainMenu.cpp */,
@@ -382,6 +387,7 @@
 				30A10F9222FA1E920022E952 /* Shader.cpp in Sources */,
 				30A10F9D22FA1EA70022E952 /* Game.cpp in Sources */,
 				30A10F9022FA1E920022E952 /* Renderer.cpp in Sources */,
+				30A6D51E23011BAB00CCFD28 /* GUILevelMenu.cpp in Sources */,
 				A5C6B9E822FE3A7D00680F82 /* GameEngine.cpp in Sources */,
 				A50449C62300A549000800C7 /* Animation.cpp in Sources */,
 				30A10F9322FA1E920022E952 /* ResourceManager.cpp in Sources */,

@@ -39,7 +39,7 @@ public:
     float mWidth, mHeight;
     std::vector<GameLevel> Levels;
     int Level;
-	Animation* animations;
+    
     // Constructor / Destructor
     Game();
     ~Game();
@@ -53,10 +53,14 @@ public:
     void Update(float dt);
     void Render();
     
+    std::vector<GameLevel> GetLevels() { return Levels; };
+    
     static Game* GetInstance() { return instance; };
     
     // returns the game's audio sub-system
     AudioEngine* const GetAudio() { return mAudio; };
+    
+    GameState GetGameState() { return mState; };
     
     // process mouse mouvement in OS-independent manner
     void ProcessMouseMove(float x, float y);
@@ -66,16 +70,17 @@ public:
     // switches the game states
     void SwitchStates(GameState state = GameState::GAME_NULL);
     
-    // reloads game if lost
-    void ReloadGame();
+    // loads the game
+    void LoadGame();
 
 private:
     GameEngine* mEngine;
-    GameObject* mPlayer;
-    GameLevel one;
+    std::vector<GameObject*> mPlayer;
+    GameLevel gameLevel;
     Renderer* mRenderer;
     TextRenderer* mText;
     AudioEngine* mAudio;
+    Animation* mAnimations;
     
     // contains all the game's GUI items
     std::map<std::string, std::shared_ptr<GUIContainer>> mGUIContainers;

@@ -35,10 +35,20 @@ bool GUIPauseMenu::Initialize() {
     resumeGame->SetHoverColor(glm::vec4(0.0f));
     resumeGame->SetText("Resume Game");
     
+    // Resume Game
+    std::shared_ptr<GUIButton> changeLevel(new GUIButton);
+    changeLevel->SetName("changeLevel");
+    changeLevel->SetPosition(glm::vec2(mScale.x * 0.35f, mScale.y / 2));
+    changeLevel->SetScale(glm::vec2(mScale.x * 0.4f, 20.0f));
+    changeLevel->SetForeColor(glm::vec3(1.0f));
+    changeLevel->SetHoverColor(glm::vec4(0.0f));
+    changeLevel->SetText("Change Level");
+    
+    
     // Save Game
     std::shared_ptr<GUIButton> saveGame(new GUIButton);
     saveGame->SetName("saveGame");
-    saveGame->SetPosition(glm::vec2(mScale.x * 0.35f, mScale.y / 2));
+    saveGame->SetPosition(glm::vec2(mScale.x * 0.35f, mScale.y / 2 + 100.0f));
     saveGame->SetScale(glm::vec2(mScale.x * 0.4f, 20.0f));
     saveGame->SetForeColor(glm::vec3(1.0f));
     saveGame->SetHoverColor(glm::vec4(0.0f));
@@ -47,7 +57,7 @@ bool GUIPauseMenu::Initialize() {
     // Quit Game
     std::shared_ptr<GUIButton> quitGame(new GUIButton);
     quitGame->SetName("quitGame");
-    quitGame->SetPosition(glm::vec2(mScale.x * 0.35f, mScale.y / 2 + 100.0f));
+    quitGame->SetPosition(glm::vec2(mScale.x * 0.35f, mScale.y / 2 + 200.0f));
     quitGame->SetScale(glm::vec2(mScale.x * 0.4f, 20.0f));
     quitGame->SetForeColor(glm::vec3(1.0f));
     quitGame->SetHoverColor(glm::vec4(0.0f));
@@ -55,6 +65,7 @@ bool GUIPauseMenu::Initialize() {
 
     AddElement(resumeGame);
     AddElement(saveGame);
+    AddElement(changeLevel);
     AddElement(quitGame);
     
     return true;
@@ -86,6 +97,8 @@ void GUIPauseMenu::ButtonPressed(std::shared_ptr<GUIButton> button){
         Game::GetInstance()->SwitchStates(GAME_NULL);
     } else if (buttonName == "saveGame") {
         // to be implemented
+    } else  if (buttonName == "changeLevel") {
+        Game::GetInstance()->SwitchStates(GAME_LEVEL);
     } else {
         // do nothing
     }

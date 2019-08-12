@@ -62,7 +62,7 @@ void GUILost::Deactivate() { }
 void GUILost::ButtonPressed(std::shared_ptr<GUIButton> button) {
     std::string buttonName = button->GetName();
     if (buttonName == "startNewGame") {
-        Game::GetInstance()->SwitchStates(GAME_ACTIVE);
+        Game::GetInstance()->SwitchStates(GAME_LEVEL);
     } else if (buttonName == "quitGame") {
         Game::GetInstance()->SwitchStates(GAME_NULL);
     } else {

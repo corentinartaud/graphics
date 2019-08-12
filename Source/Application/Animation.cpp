@@ -82,7 +82,6 @@ void Animation::setPlayerAnimation(GameObject player) {
 #define totalCycleTime 0.5f //in seconds
 	float cycleTime = floatModulo(timeElapsed, totalCycleTime);
 	int frameNumber = cycleTime / (totalCycleTime / 6);	//calculate frame number from 0-5
-	std::cout << timeElapsed << endl;
 	frameNumber = min(frameNumber, 5);	//clamp upper
 	frameNumber = max(frameNumber, 0);	//clamp lower
 	std::string framePath;

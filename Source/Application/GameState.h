@@ -16,6 +16,10 @@ enum GameState {
     GAME_INGAME_MENU,
     GAME_ACTIVE,
     GAME_LOSE,
+    GAME_LEVEL,
+    GAME_LEVEL_1,
+    GAME_LEVEL_2,
+    GAME_LEVEL_3,
     GAME_WIN
 };
 
