@@ -86,7 +86,7 @@ void Game::Initialize(GLuint width, GLuint height) {
 #else
 	ResourceManager::LoadTexture("../Assets/Textures/background.jpg", GL_TRUE, "background");
 	ResourceManager::LoadTexture("../Assets/Textures/Player/stand/s1.png", GL_TRUE, "player");
-	ResourceManager::LoadTexture("../Assets/Textures/Spikes/setB/spike.png", GL_TRUE, "grass");
+	ResourceManager::LoadTexture("../Assets/Textures/Platform/Grass.png", GL_TRUE, "grass");
 	ResourceManager::LoadTexture("../Assets/Textures/Platform/Ground.png", GL_TRUE, "ground");
     ResourceManager::LoadTexture("../Assets/Textures/Spikes/setB/spike.png", GL_TRUE, "spike");
 #endif
@@ -129,6 +129,7 @@ void Game::ReloadGame() {
     this->Level = 0;
     
     engine = new GameEngine(player, one.Platforms, one.Spikes, GRAVITY, PLAYER_VELOCITY);
+    animations = new Animation();
 }
 
 void Game::SwitchStates(GameState state) {
@@ -178,16 +179,6 @@ void Game::Update(float dt) {
 void Game::ProcessInput(GLfloat dt) {
 
     if (this->mState == GAME_ACTIVE) {
-        GLfloat velocity = PLAYER_VELOCITY * dt;
-        // Move player
-        if (this->mKeys[GLFW_KEY_A] || this->mKeys[GLFW_KEY_LEFT]) {
-            if (player->mPosition.x >= 0)
-                player->mPosition.x -= velocity;
-        }
-        if (this->mKeys[GLFW_KEY_D] || this->mKeys[GLFW_KEY_RIGHT] ) {
-            if (player->mPosition.x <= this->mWidth - player->mSize.x)
-                player->mPosition.x += velocity;
-        }
         // Jumping
         // Only allow to jump when player is on a platform
         if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && player->mVelocity.y == 0.f) {
@@ -211,11 +202,11 @@ void Game::Render() {
         // Draw level
         this->Levels[this->Level].Draw(*renderer, viewMatrix);
         // Set Player Animation
-		animations->setPlayerAnimation(*player);
+        animations->setPlayerAnimation(*player);
 		player->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
 		//Draw Phantoms
-		animations->DrawPhantom(*renderer, viewMatrix);
-		animations->DrawSmoke(*renderer, viewMatrix);
+        animations->DrawPhantom(*renderer, viewMatrix);
+        animations->DrawSmoke(*renderer, viewMatrix);
 		//Draw Player
 		player->Draw(*renderer, viewMatrix);
     }
