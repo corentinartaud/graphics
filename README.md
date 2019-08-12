@@ -1,5 +1,9 @@
 # Golden Sphere
-Golden Sphere is an open-source game made for Concordia COMP371 (Computer Graphics) course. It is our take of the game Geometry Dash, built with OpenGL.
+Golden Sphere is an open-source game made for Concordia COMP371 (Computer Graphics) course.
+It is our take of the game Geometry Dash, built with OpenGL.
+
+![Screenshot 1](screenshot1.png)
+![Screenshot 2](screenshot2.png)
 
 ## Requirements
 Golden Sphere requires an *OpenGl 3.3* capable graphics card and a display
