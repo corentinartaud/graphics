@@ -20,7 +20,6 @@
 #include <string>
 #include <iostream>
 #include <list>
-using namespace std;
 
 Game* Game::instance;
 
@@ -29,8 +28,17 @@ Game::Game() {
     
     mAudio = new AudioEngine();
     mText = new TextRenderer();
+    mRenderer = new Renderer();
     
     this->Initialize(EventManager::GetScreenWidth(), EventManager::GetScreenHeight());
+}
+
+Game::~Game() {
+    delete mEngine;
+    delete mAudio;
+    delete mPlayer;
+    delete mRenderer;
+    delete mText;
 }
 
 void Game::GameLoop() {
@@ -43,15 +51,12 @@ void Game::GameLoop() {
     } while(!EventManager::ExitRequested());
 }
 
-Game::~Game() {
-    delete engine;
-    delete mAudio;
-}
-
-void Game::Initialize(GLuint width, GLuint height) {
+void Game::Initialize(float width, float height) {
+    // set width and height of the game
     mWidth = width;
     mHeight = height;
     
+    // load all audio
     mAudio->Load();
     
     // Load shaders
@@ -65,7 +70,7 @@ void Game::Initialize(GLuint width, GLuint height) {
     ResourceManager::LoadShader("../Assets/Shaders/gui.vertexshader", "../Assets/Shaders/gui.fragmentshader", "gui");
 #endif
     // Configure shaders
-    glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->mWidth), 0.0f, static_cast<GLfloat>(this->mHeight), -1.0f, 1.0f);
+    glm::mat4 projection = glm::ortho(0.0f, width, 0.0f, height, -1.0f, 1.0f);
     ResourceManager::GetShader("texture").Use().SetInteger("image", 0);
     ResourceManager::GetShader("texture").SetMatrix4("projection", projection);
     // Set text-specific control
@@ -91,18 +96,18 @@ void Game::Initialize(GLuint width, GLuint height) {
     ResourceManager::LoadTexture("../Assets/Textures/Spikes/setB/spike.png", GL_TRUE, "spike");
 #endif
     // Set render-specific controls
-    renderer = new Renderer(ResourceManager::GetShader("texture"));
+    mRenderer->Initialize(ResourceManager::GetShader("texture"));
     // Load levels
     //GameLevel one;
 #if defined(PLATFORM_OSX)
-    player = one.Load("levels/two.lvl", this->mWidth, this->mHeight * 0.5);
+    mPlayer = one.Load("levels/two.lvl", this->mWidth, this->mHeight * 0.5);
 #else
-	player = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+	mPlayer = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
 #endif
     this->Levels.push_back(one);
     this->Level = 0;
     
-    engine = new GameEngine(player, one.Platforms, one.Spikes, GRAVITY, PLAYER_VELOCITY);
+    mEngine = new GameEngine(mPlayer, one.Platforms, one.Spikes, GRAVITY, PLAYER_VELOCITY);
     animations = new Animation();
     
     mGUIContainers["MainMenu"] = std::shared_ptr<GUIContainer>(new GUIMainMenu);
@@ -116,19 +121,19 @@ void Game::Initialize(GLuint width, GLuint height) {
 }
 
 void Game::ReloadGame() {
-    delete player; delete engine;
-    player = new GameObject();
+    delete mPlayer; delete mEngine;
+    mPlayer = new GameObject();
 #if defined(PLATFORM_OSX)
-    player = one.Load("levels/two.lvl", this->mWidth, this->mHeight * 0.5);
+    mPlayer = one.Load("levels/two.lvl", this->mWidth, this->mHeight * 0.5);
 #else
-    player = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+    mPlayer = one.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
 #endif
     if (Levels.size() > 0)
         Levels.clear();
     this->Levels.push_back(one);
     this->Level = 0;
     
-    engine = new GameEngine(player, one.Platforms, one.Spikes, GRAVITY, PLAYER_VELOCITY);
+    mEngine = new GameEngine(mPlayer, one.Platforms, one.Spikes, GRAVITY, PLAYER_VELOCITY);
     animations = new Animation();
 }
 
@@ -143,10 +148,10 @@ void Game::SwitchStates(GameState state) {
             mGUIContainers["MainMenu"]->SetActive(true);
             break;
         case GameState::GAME_ACTIVE:
-            if (engine == nullptr && player == nullptr)
+            if (mEngine == nullptr && mPlayer == nullptr)
                 ReloadGame();
             GetAudio()->StopAll();
-            GetAudio()->PlaySound("Sounds/awesomeness.wav", true);
+            GetAudio()->Play("Sounds/awesomeness.wav", true);
             break;
         case GameState::GAME_WIN:
             break;
@@ -166,10 +171,10 @@ void Game::SwitchStates(GameState state) {
 
 void Game::Update(float dt) {
     if (mState == GAME_ACTIVE) {
-        engine->Update(dt);
-        if (engine->HitSpikes()) {
+        mEngine->Update(dt);
+        if (mEngine->HitSpikes()) {
             SwitchStates(GAME_LOSE);
-            engine = nullptr; player = nullptr;
+            mEngine = nullptr; mPlayer = nullptr;
         }
         
     }
@@ -180,10 +185,9 @@ void Game::ProcessInput(GLfloat dt) {
 
     if (this->mState == GAME_ACTIVE) {
         // Jumping
-        // Only allow to jump when player is on a platform
-        if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && player->mVelocity.y == 0.f) {
-            player->mVelocity.y = JUMP_VELOCITY;
-			animations->addSmoke(*player, Jump);
+        if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP]) && mPlayer->mVelocity.y == 0.f) {
+            mPlayer->mVelocity.y = JUMP_VELOCITY;
+			animations->addSmoke(*mPlayer, Jump);
         }
         // check for pause
         if (this->mKeys[GLFW_KEY_P]){
@@ -196,23 +200,23 @@ void Game::Render() {
     EventManager::BeginFrame();
     if (this->mState == GAME_ACTIVE) {
         // Draw background
-        renderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->mWidth, this->mHeight), 360.0f);
+        mRenderer->Render(ResourceManager::GetTexture("background"), glm::vec2(0, 0), glm::vec2(this->mWidth, this->mHeight), 360.0f);
         // Get the view matrix
-        glm::mat4 viewMatrix = glm::translate(glm::mat4(1.f), glm::vec3(player->mInitialPosition.x - player->mPosition.x, 0.f, 0.f));
+        glm::mat4 viewMatrix = glm::translate(glm::mat4(1.f), glm::vec3(mPlayer->mInitialPosition.x - mPlayer->mPosition.x, 0.f, 0.f));
         // Draw level
-        this->Levels[this->Level].Draw(*renderer, viewMatrix);
+        this->Levels[this->Level].Draw(*mRenderer, viewMatrix);
         // Set Player Animation
-        animations->setPlayerAnimation(*player);
-		player->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
+        animations->setPlayerAnimation(*mPlayer);
+		mPlayer->mTexture = ResourceManager::GetTexture("player");	//update player with new texture
 		//Draw Phantoms
-        animations->DrawPhantom(*renderer, viewMatrix);
-        animations->DrawSmoke(*renderer, viewMatrix);
+        animations->DrawPhantom(*mRenderer, viewMatrix);
+        animations->DrawSmoke(*mRenderer, viewMatrix);
 		//Draw Player
-		player->Draw(*renderer, viewMatrix);
+		mPlayer->Draw(*mRenderer, viewMatrix);
     }
     std::cout << (mState == GAME_LOSE) << std::endl;
     for (auto it = mGUIContainers.begin(); it != mGUIContainers.end(); ++it)
-        it->second->Render(renderer, mText);
+        it->second->Render(mRenderer, mText);
     EventManager::EndFrame();
 }
 

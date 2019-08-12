@@ -23,9 +23,9 @@ class AudioEngine;
 class GUIContainer;
 class TextRenderer;
 
-// Initial size of the player paddle
+// Initial size of the player
 const glm::vec2 PLAYER_SIZE(100, 100);
-// Initial velocity of the player paddle
+// Initial velocity of the player
 const GLfloat PLAYER_VELOCITY(150.0f);
 // Gravity acceleration towards the ground
 const GLfloat GRAVITY(-400.f);
@@ -35,10 +35,10 @@ const GLfloat JUMP_VELOCITY(300.f);
 class Game {
 public:
     GameState mState;
-    GLboolean mKeys[1024];
-    GLuint mWidth, mHeight;
+    bool mKeys[1024];
+    float mWidth, mHeight;
     std::vector<GameLevel> Levels;
-    GLuint Level;
+    int Level;
 	Animation* animations;
     // Constructor / Destructor
     Game();
@@ -46,9 +46,8 @@ public:
     
     void GameLoop();
     
-    void Initialize(GLuint width, GLuint height);
+    void Initialize(float width, float height);
     
-    void Initialize();
     // Game Loop
     void ProcessInput(GLfloat dt);
     void Update(GLfloat dt);
@@ -71,16 +70,17 @@ public:
     void ReloadGame();
 
 private:
-    static Game* instance;
-    
-    AudioEngine *mAudio;
-    GameEngine* engine;
-    Renderer *renderer;
-    GameObject *player;
-    TextRenderer *mText;
+    GameEngine* mEngine;
+    GameObject* mPlayer;
     GameLevel one;
+    Renderer* mRenderer;
+    TextRenderer* mText;
+    AudioEngine* mAudio;
     
-    std::map<std::string, std::shared_ptr<GUIContainer>> mGUIContainers; // contains all the game's GUI items
+    // contains all the game's GUI items
+    std::map<std::string, std::shared_ptr<GUIContainer>> mGUIContainers;
+    // holds the instance of the game
+    static Game* instance;
 
 };
 

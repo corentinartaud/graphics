@@ -25,25 +25,21 @@
 
 #include <string>
 
-// Manages all audio-related functionality and abstracts from OS-specific commands.
+// manages all audio-related functionality
 class AudioEngine {
 public:
+    // constructor / destructor
     AudioEngine();
     ~AudioEngine();
     
-    // plays a sound with or without loop and a given volume
-    void PlaySound(std::string name, bool loop = false, float volume = 1.0f, bool startRandom = false);
-     // plays a sound with or without loop and a give volume at a given location; volume will be reduced at range
-    void PlaySoundLocation(std::string name, glm::vec2 location, bool loop = false, float volume = 1.0f, bool startRandom = false);
+    // plays a sound with/out loop and at a volume (set to full volume if not given)
+    void Play(std::string name, bool loop = false, float volume = 1.0f, bool startRandom = false);
     // stops playing a sound
-    void StopSound(std::string name);
+    void Stop(std::string name);
     // stops playing all sounds
     void StopAll();
     // checks if sound is playing
     bool IsPlaying(std::string name);
-    
-    // defines the position of the player for 2D/3D positional audio
-    void SetPlayerPosition(glm::vec2 position);
     
     // pre-loads sound-files
     void Load();
