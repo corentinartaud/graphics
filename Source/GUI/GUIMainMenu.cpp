@@ -69,12 +69,23 @@ void GUIMainMenu::RenderBackground(Renderer *renderer, TextRenderer *text) {
 
 void GUIMainMenu::Activate() {
     Game::GetInstance()->GetAudio()->StopAll();
-    Game::GetInstance()->GetAudio()->Play("Sounds/caketown.wav", true);
+#if defined(PLATFORM_OSX)	
+	Game::GetInstance()->GetAudio()->Play("Sounds/caketown.wav", true);
+#else
+	Game::GetInstance()->GetAudio()->Play("../Assets/Sounds/caketown.wav", true);
+#endif
+
 }
 
 void GUIMainMenu::Deactivate() {
-    if (!(Game::GetInstance()->GetGameState() == GameState::GAME_LEVEL))
-        Game::GetInstance()->GetAudio()->Stop("Sounds/caketown.wav");
+	if (!(Game::GetInstance()->GetGameState() == GameState::GAME_LEVEL))
+	{
+#if defined(PLATFORM_OSX)	
+		Game::GetInstance()->GetAudio()->Stop("Sounds/caketown.wav");
+#else
+		Game::GetInstance()->GetAudio()->Stop("../Assets/Sounds/caketown.wav");
+#endif
+	}
 }
 
 void GUIMainMenu::ButtonPressed(std::shared_ptr<GUIButton> button) {
