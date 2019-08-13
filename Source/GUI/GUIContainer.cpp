@@ -24,7 +24,16 @@ void GUIContainer::AddElement(std::shared_ptr<GUIElement> element) {
 }
 
 void GUIContainer::RemoveElement(std::shared_ptr<GUIElement> element) {
-    mElements.erase(std::remove(mElements.begin(), mElements.end(), element), mElements.end());
+#if defined(PLATFORM_OSX)	
+	mElements.erase(std::remove(mElements.begin(), mElements.end(), element), mElements.end());
+#else
+	for (int i = 0; i < mElements.size() - 1; i++){
+		if (mElements[i] == element){
+			mElements.erase(mElements.begin() + i, mElements.end());
+			break;
+		}
+	}
+#endif
 }
 
 void GUIContainer::SetActive(bool active) {

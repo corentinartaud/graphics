@@ -130,11 +130,11 @@ void Game::LoadGame() {
     mPlayer.push_back(gameLevel.Load("levels/three.lvl", this->mWidth, this->mHeight * 0.5));
     this->Levels.push_back(gameLevel);
 #else
-    mPlayer = gameLevel.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5);
+    mPlayer.push_back(gameLevel.Load("../Assets/levels/one.lvl", this->mWidth, this->mHeight * 0.5));
     this->Levels.push_back(gameLevel);
-    mPlayer = gameLevel.Load("../Assets/levels/two.lvl", this->mWidth, this->mHeight * 0.5);
+    mPlayer.push_back(gameLevel.Load("../Assets/levels/two.lvl", this->mWidth, this->mHeight * 0.5));
     this->Levels.push_back(gameLevel);
-    mPlayer = gameLevel.Load("../Assets/levels/three.lvl", this->mWidth, this->mHeight * 0.5);
+    mPlayer.push_back(gameLevel.Load("../Assets/levels/three.lvl", this->mWidth, this->mHeight * 0.5));
     this->Levels.push_back(gameLevel);
 #endif
     
@@ -156,7 +156,11 @@ void Game::SwitchStates(GameState state) {
             break;
         case GameState::GAME_ACTIVE:
             GetAudio()->StopAll();
-            GetAudio()->Play("Sounds/awesomeness.wav", true);
+#if defined(PLATFORM_OSX)	
+			GetAudio()->Play("Sounds/awesomeness.wav", true);
+#else
+			GetAudio()->Play("../Assets/Sounds/awesomeness.wav", true);
+#endif
             LoadGame();
             break;
         case GameState::GAME_WIN:
@@ -207,15 +211,30 @@ void Game::Update(float dt) {
 // process input for every frame during game state
 void Game::ProcessInput(GLfloat dt) {
     if (this->mState == GAME_ACTIVE) {
-        // Jumping
+#if defined(PLATFORM_OSX)
+		// Jumping
         if ((this->mKeys[GLFW_KEY_SPACE] || this->mKeys[GLFW_KEY_UP] || this->mKeys[GLFW_KEY_W] || this->mKeys[GLFW_MOUSE_BUTTON_LEFT]) && mPlayer[this->Level]->mVelocity.y == 0.f) {
             mPlayer[this->Level]->mVelocity.y = JUMP_VELOCITY;
 			mAnimations->addSmoke(*mPlayer[this->Level], Jump);
         }
-        // check for pause
-        if (this->mKeys[GLFW_KEY_P]){
-            Game::GetInstance()->SwitchStates(GAME_INGAME_MENU);
-        }
+		// check for pause
+		if (this->mKeys[GLFW_KEY_P]) {
+			Game::GetInstance()->SwitchStates(GAME_INGAME_MENU);
+		}
+#else
+		if (((glfwGetKey(EventManager::GetWindow(), GLFW_KEY_UP) == GLFW_PRESS) ||
+			(glfwGetKey(EventManager::GetWindow(), GLFW_KEY_W) == GLFW_PRESS) ||
+			(glfwGetKey(EventManager::GetWindow(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) ||
+			(glfwGetKey(EventManager::GetWindow(), GLFW_KEY_SPACE) == GLFW_PRESS)) &&
+			mPlayer[this->Level]->mVelocity.y == 0.f){
+				mPlayer[this->Level]->mVelocity.y = JUMP_VELOCITY;
+				mAnimations->addSmoke(*mPlayer[this->Level], Jump);
+		}
+		// check for pause
+		if (glfwGetKey(EventManager::GetWindow(), GLFW_KEY_P) == GLFW_PRESS) {
+			Game::GetInstance()->SwitchStates(GAME_INGAME_MENU);
+		}
+#endif
     }
 }
 

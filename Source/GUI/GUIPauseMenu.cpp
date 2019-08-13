@@ -82,12 +82,23 @@ void GUIPauseMenu::RenderBackground(Renderer *renderer, TextRenderer *text){
 
 void GUIPauseMenu::Activate() {
     Game::GetInstance()->GetAudio()->StopAll();
-    Game::GetInstance()->GetAudio()->Play("Sounds/the_final_battle.wav", true);
+#if defined(PLATFORM_OSX)	
+	Game::GetInstance()->GetAudio()->Play("Sounds/the_final_battle.wav", true);
+#else
+	Game::GetInstance()->GetAudio()->Play("../Assets/Sounds/the_final_battle.wav", true);
+#endif
+    
 }
 
 void GUIPauseMenu::Deactivate() {
-    if (!(Game::GetInstance()->GetGameState() == GameState::GAME_LEVEL))
-        Game::GetInstance()->GetAudio()->Stop("Sounds/the_final_battle.wav");
+	if (!(Game::GetInstance()->GetGameState() == GameState::GAME_LEVEL))
+	{
+#if defined(PLATFORM_OSX)	
+		Game::GetInstance()->GetAudio()->Stop("Sounds/the_final_battle.wav");
+#else
+		Game::GetInstance()->GetAudio()->Stop("../Assets/Sounds/the_final_battle.wav");
+#endif
+	}
 }
 
 void GUIPauseMenu::ButtonPressed(std::shared_ptr<GUIButton> button){

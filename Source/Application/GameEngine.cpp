@@ -80,7 +80,12 @@ bool GameEngine::TwoLinesIntersect(glm::vec2 a1, glm::vec2 a2, glm::vec2 b1, glm
     glm::vec2 line3 = b1 - a1;
     float t1 = (line3.x * line2.y - line3.y * line2.x) / dotProd;
     float t2 = (line3.x * line1.y - line3.y * line1.x) / dotProd;
-    if (t1 > 0 and t1 < 1 and t2 > 0 and t2 < 1)
-        return true;
+#if defined(PLATFORM_OSX)	
+	if (t1 > 0 and t1 < 1 and t2 > 0 and t2 < 1)
+		return true;
+#else
+	if (t1 > 0 && t1 < 1 && t2 > 0 && t2 < 1)
+		return true;
+#endif
     return false;
 }

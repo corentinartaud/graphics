@@ -45,6 +45,11 @@ bool AudioEngine::IsPlaying(std::string name) {
 }
 
 void AudioEngine::Load() {
-    mAudioEngine->addSoundSourceFromFile("Sounds/caketown.wav", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
-    mAudioEngine->addSoundSourceFromFile("Sounds/scratch.wav", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+#if defined(PLATFORM_OSX)	
+	mAudioEngine->addSoundSourceFromFile("Sounds/caketown.wav", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+	mAudioEngine->addSoundSourceFromFile("Sounds/scratch.wav", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+#else
+	mAudioEngine->addSoundSourceFromFile("../Assets/Sounds/caketown.wav", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+	mAudioEngine->addSoundSourceFromFile("../Assets/Sounds/scratch.wav", irrklang::E_STREAM_MODE::ESM_AUTO_DETECT, true);
+#endif
 }

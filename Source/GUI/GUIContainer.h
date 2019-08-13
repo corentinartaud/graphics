@@ -13,7 +13,9 @@
 #include "GUIButton.h"
 
 #include <vector>
-
+#if !defined(PLATFORM_OSX)	
+#include <memory>
+#endif
 class Renderer;
 class TextRenderer;
 
