@@ -24,23 +24,22 @@ Each loaded texture and/or shader is also stored for future reference by string 
 */
 class ResourceManager {
 public:
-    // Resource storage
     static std::map<std::string, Shader>    Shaders;
     static std::map<std::string, TextureLoader> Textures;
-    // Loads (and generates) a shader program from file loading vertex, fragment (and geometry) shader's source code. If gShaderFile is not nullptr, it also loads a geometry shader
+    // loads a shader
     static Shader LoadShader(const GLchar *vShaderFile, const GLchar *fShaderFile, std::string name);
-    // Retrieves a stored shader by reference
+    // retrieves a shader by reference
     static Shader &GetShader(std::string name);
-    // Loads (and generates) a texture from file
+    // loads a texture from file
     static TextureLoader LoadTexture(const GLchar *file, std::string name);
-    // Retrieves a stored texture by reference
+    // retrieves a texture by reference
     static TextureLoader &GetTexture(std::string name);
-    // Properly de-allocates all loaded resources
+    // de-allocates all
     static void Clear();
 private:
-    // Loads and generates a shader from file
+    // loads and generate shader from file
     static Shader loadShaderFromFile(const GLchar *vShaderFile, const GLchar *fShaderFile);
-    // Loads a single texture from file
+    // loads and generate texture from file
     static TextureLoader loadTextureFromFile(const GLchar *file);
 };
 

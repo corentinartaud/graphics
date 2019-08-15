@@ -27,6 +27,7 @@ class TextRenderer;
  */
 class GUIContainer {
 public:
+    // constructor
     GUIContainer();
     
     // getters
@@ -39,13 +40,13 @@ public:
     void SetPosition(glm::vec2 position);
     void SetScale(glm::vec2 scale);
     
-    // initializes the GUI container;
+    // initializes the GUI container
     virtual bool Initialize() = 0;
-    
+    // update method
     virtual void Update(float dt) = 0;
-    
+    // render the GUIContainers contained
     virtual void Render(Renderer *renderer, TextRenderer *textRenderer);
-    
+    // renders the background of the GUIElement
     virtual void RenderBackground(Renderer *renderer, TextRenderer *textRenderer);
     
     // sets the current GUI container as the active GUI container
@@ -66,12 +67,15 @@ protected:
     void AddElement(std::shared_ptr<GUIElement> element);
     // remove a GUI element from the container
     void RemoveElement(std::shared_ptr<GUIElement> element);
-    
-    bool mIsActive; // is the container currently active (being rendered, responding to user inputs)
-    glm::vec2 mPosition; // sets the top-left position of the container
-    glm::vec2 mScale; // defines the scale of the container
+    // is the container currently active
+    bool mIsActive;
+    // position of the container
+    glm::vec2 mPosition;
+    // scale of the container
+    glm::vec2 mScale;
 private:
-    std::vector<std::shared_ptr<GUIElement>> mElements; // a list of GUI elements contained
+    // a list of GUI elements contained
+    std::vector<std::shared_ptr<GUIElement>> mElements;
 };
 
 

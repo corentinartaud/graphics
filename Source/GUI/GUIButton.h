@@ -23,7 +23,7 @@ class Shader;
 /*
  A button to be used for GUIs. GUIButton contains text and a background color
  on a rectangle surrounding the text. A mouse hovering over the rectangle the text
- color amplifies.
+ color changes.
 */
 class GUIButton : public GUIElement {
 public:
@@ -37,12 +37,14 @@ public:
     void SetText(std::string text);
     void SetHoverColor(glm::vec4 color);
     
-    // renders the button's background contained and foreground text
+    // renders the text of the button
     void Render(Renderer *renderer, TextRenderer *textRenderer, Shader Shader);
     
 private:
-    std::string mText; // text to render at the center of the button
-    glm::vec4 mHoverColor; // color of the th text when the mouse hovers the button
+    // text to render for the button
+    std::string mText;
+    // color of the text when the mouse hovers the button
+    glm::vec4 mHoverColor;
 };
 
 #endif /* GUIButton_h */

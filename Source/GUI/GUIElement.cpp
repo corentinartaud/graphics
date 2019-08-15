@@ -48,7 +48,3 @@ bool GUIElement::IsMouseInside(float x, float y) {
         inside = false;
     return inside;
 }
-
-void GUIElement::OnMouseEnter() { }
-void GUIElement::OnMouseLeave() { }
-void GUIElement::OnMouseClick() { }

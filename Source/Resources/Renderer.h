@@ -19,18 +19,18 @@
 
 class Renderer {
 public:
-    // Constructor
+    // constructor
     Renderer();
-    // Destructor
+    // destructor
     ~Renderer();
     // init shaders and shapes
     void Initialize(Shader &shader);
-    // Renders a defined quad textured with given sprite
+    // renders a defined quad textured
     void Render(TextureLoader &texture, glm::vec2 position, glm::vec2 size = glm::vec2(10, 10), GLfloat rotate = 0.0f, glm::vec4 color = glm::vec4(1.0f), glm::vec2 textureScaling = glm::vec2(1.f, 1.f), glm::mat4 viewMatrix = glm::mat4(1.f), bool quad = true);
 private:
-    // Render state
+    // render state
     Shader shader;
-    // Initializes and configures the quad's buffer and vertex attributes
+    // initializes and configures the quad's buffer and vertex attributes
     void configureQuad();
     void renderQuad();
     void configureTriangle();

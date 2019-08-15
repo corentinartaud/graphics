@@ -14,7 +14,6 @@
 
 #include <FreeImageIO.h>
 
-// Instantiate static variables
 std::map<std::string, TextureLoader> ResourceManager::Textures;
 std::map<std::string, Shader> ResourceManager::Shaders;
 
@@ -47,7 +46,6 @@ void ResourceManager::Clear() {
 }
 
 Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLchar *fShaderFile) {
-    // code handlers
     std::string vertexCode;
     std::string fragmentCode;
     
@@ -72,7 +70,6 @@ Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLch
     const GLchar *vShaderCode = vertexCode.c_str();
     const GLchar *fShaderCode = fragmentCode.c_str();
     
-    // create shader object from source code
     Shader shader;
     printf("Compiling shader : %s\n", vShaderFile);
     printf("Compiling shader : %s\n", fShaderFile);
@@ -81,21 +78,16 @@ Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLch
 }
 
 TextureLoader ResourceManager::loadTextureFromFile(const GLchar *file) {
-    // Create Texture object
     TextureLoader texture;
     
-    // Load image using the Free Image library
     FREE_IMAGE_FORMAT format = FreeImage_GetFileType(file, 0);
     FIBITMAP* image = FreeImage_Load(format, file);
     FIBITMAP* image32bits = FreeImage_ConvertTo32Bits(image);
     
-    // Load image
     int width = FreeImage_GetWidth(image32bits);
     int height = FreeImage_GetHeight(image32bits);
-    // Now generate texture
     texture.Generate(width, height, FreeImage_GetBits(image32bits));
     
-    // And finally free image data
     FreeImage_Unload(image);
     FreeImage_Unload(image32bits);
     return texture;

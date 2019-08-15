@@ -17,13 +17,14 @@
 #include "TextureLoader.h"
 #include "Shader.h"
 
-
-// Holds all state information relevant to a character as loaded using FreeType
+// All characters of the fonts are loaded here
 struct Character {
-    int TextureID;   // ID handle of the glyph texture
-    glm::vec2 Size;    // Size of glyph
-    glm::vec2 Bearing; // Offset from baseline to left/top of glyph
-    int Advance;     // Horizontal offset to advance to next glyph
+    int TextureID;
+    glm::vec2 Size;
+    // Offset from baseline to left/top of glyph
+    glm::vec2 Bearing;
+    // Horizontal offset to advance to next glyph
+    int Advance;
 };
 
 
@@ -37,10 +38,6 @@ public:
     // Constructor // Destructor
     TextRenderer();
     ~TextRenderer();
-    // Holds a list of pre-compiled Characters
-    std::map<char, Character> Characters;
-    // Shader used for text rendering
-    Shader TextShader;
     // Initializer
     void Initialize(float width, float height);
     // Pre-compiles a list of characters from the given font
@@ -48,7 +45,11 @@ public:
     // Renders a string of text using the precompiled list of characters
     void RenderText(std::string text, float x, float y, float scale, glm::vec3 color = glm::vec3(1.0f));
 private:
-    // Render state
+    // Shader used for text rendering
+    Shader TextShader;
+    // Holds a list of pre-compiled Characters
+    std::map<char, Character> Characters;
+    
     unsigned int mVAO;
     unsigned int mVBO;
 };
